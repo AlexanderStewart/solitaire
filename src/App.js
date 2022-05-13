@@ -4,7 +4,10 @@ import './styles/Game.css';
 
 const App = () => {
 
-  // state
+  // STATE
+
+  // Each card in the deck is an object which represents the current state of the card.
+  // The deck is an array of these objects.
   const [deck, setDeck] = useState([
     { name: 'AClub', faceUp: false, selected: false },
     { name: 'ADiamond', faceUp: false, selected: false },
@@ -60,6 +63,8 @@ const App = () => {
     { name: 'KSpade', faceUp: false, selected: false },
   ]);
 
+  // Each column in the Tableau is an array of card objects.
+  // Right now they're empty but when shuffleAndDeal() is called they will be filled according to the start game rules 
   const [colA, setColA] = useState([]);
   const [colB, setColB] = useState([]);
   const [colC, setColC] = useState([]);
@@ -68,20 +73,23 @@ const App = () => {
   const [colF, setColF] = useState([]);
   const [colG, setColG] = useState([]);
 
+  // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
 
-  // ref
+  // REF
   const passedFirstRender = useRef(false);
 
-  // functions
+  // FUNCTIONS
   const shuffleAndDeal = () => {
+
+    // Randomize the order of the deck array
     const shuffledDeck = randomizeArray(deck);
     setDeck(shuffledDeck);
 
     for (let i = 0; i < deck.length; i++) {
       const card = deck[i];
 
-      // colG shuffle
+      // fill colG
       if (i < 7) {
         let tempColG = colG;
         tempColG.push(card);
@@ -89,7 +97,7 @@ const App = () => {
         continue;
       }
 
-      // colF shuffle
+      // fill colF
       if (i < 13) {
         let tempColF = colF;
         tempColF.push(card);
@@ -97,7 +105,7 @@ const App = () => {
         continue;
       }
 
-      // colE shuffle
+      // fill colE
       if (i < 18) {
         let tempColE = colE;
         tempColE.push(card);
@@ -105,7 +113,7 @@ const App = () => {
         continue;
       }
 
-      // colD shuffle
+      // fill colD
       if (i < 22) {
         let tempColD = colD;
         tempColD.push(card);
@@ -113,7 +121,7 @@ const App = () => {
         continue;
       }
 
-      // colC shuffle
+      // fill colC
       if (i < 25) {
         let tempColC = colC;
         tempColC.push(card);
@@ -121,7 +129,7 @@ const App = () => {
         continue;
       }
 
-      // colB shuffle
+      // fill colB
       if (i < 27) {
         let tempColB = colB;
         tempColB.push(card);
@@ -129,7 +137,7 @@ const App = () => {
         continue;
       }
 
-      // colA shuffle
+      // fill colA
       if (i < 28) {
         let tempColA = colA;
         tempColA.push(card);
@@ -184,13 +192,16 @@ const App = () => {
     return array;
   }
 
-  const selectOrDeselect = (colName, colData, index) => {
+  // TODO: Use select data to do stuff...
+  const onSelect = (colName, colData, index) => {
     console.log(colName);
     console.log(colData);
     console.log('index: ' + index);
   };
 
-  // useEffects
+  // USE EFFECT
+
+  // Shuffle deck only when the page refreshes
   useEffect(() => {
     if (passedFirstRender.current) return;
     else {
@@ -221,7 +232,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colA', colA, index)}
+                  onClick={() => onSelect('colA', colA, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -246,7 +257,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colB', colB, index)}
+                  onClick={() => onSelect('colB', colB, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -270,7 +281,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colC', colC, index)}
+                  onClick={() => onSelect('colC', colC, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -294,7 +305,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colD', colD, index)}
+                  onClick={() => onSelect('colD', colD, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -318,7 +329,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colE', colE, index)}
+                  onClick={() => onSelect('colE', colE, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -342,7 +353,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colF', colF, index)}
+                  onClick={() => onSelect('colF', colF, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -367,7 +378,7 @@ const App = () => {
               >
                 <img
                   alt="card"
-                  onClick={() => selectOrDeselect('colG', colG, index)}
+                  onClick={() => onSelect('colG', colG, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -394,7 +405,9 @@ const App = () => {
               src={GetCards('CardBlank')}
             />
           </div>
-          <div style={{ height: 20 }} />
+
+          <div className="space" />
+
           <div style={{ display: 'flex', flexDirection: 'col' }}>
             <img
               alt="card"
