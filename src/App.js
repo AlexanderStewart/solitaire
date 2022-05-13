@@ -6,7 +6,7 @@ const App = () => {
 
   // STATE
 
-  // Each card in the deck is an object which represents the current state of the card.
+  // Each card in the deck is an object which contains the current state of the card.
   // The deck is an array of these objects.
   const [deck, setDeck] = useState([
     { name: 'AClub', faceUp: false, selected: false },
@@ -146,7 +146,7 @@ const App = () => {
       }
     }
 
-    // Flip the bottom card of each column array up
+    // Flip the bottom card of each column up
     const tempColA = colA;
     tempColA[tempColA.length - 1].faceUp = true;
     setColA(tempColA);
