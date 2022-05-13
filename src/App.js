@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import GetCards from './GetCards';
 import './styles/Game.css';
 
@@ -6,69 +6,72 @@ const App = () => {
 
   // state
   const [deck, setDeck] = useState([
-    { name: 'AClub', faceUp: false },
-    { name: 'ADiamond', faceUp: false },
-    { name: 'AHeart', faceUp: false },
-    { name: 'ASpade', faceUp: false },
-    { name: '2Club', faceUp: false },
-    { name: '2Diamond', faceUp: false },
-    { name: '2Heart', faceUp: false },
-    { name: '2Spade', faceUp: false },
-    { name: '3Club', faceUp: false },
-    { name: '3Diamond', faceUp: false },
-    { name: '3Heart', faceUp: false },
-    { name: '3Spade', faceUp: false },
-    { name: '4Club', faceUp: false },
-    { name: '4Diamond', faceUp: false },
-    { name: '4Heart', faceUp: false },
-    { name: '4Spade', faceUp: false },
-    { name: '5Club', faceUp: false },
-    { name: '5Diamond', faceUp: false },
-    { name: '5Heart', faceUp: false },
-    { name: '5Spade', faceUp: false },
-    { name: '6Club', faceUp: false },
-    { name: '6Diamond', faceUp: false },
-    { name: '6Heart', faceUp: false },
-    { name: '6Spade', faceUp: false },
-    { name: '7Club', faceUp: false },
-    { name: '7Diamond', faceUp: false },
-    { name: '7Heart', faceUp: false },
-    { name: '7Spade', faceUp: false },
-    { name: '8Club', faceUp: false },
-    { name: '8Diamond', faceUp: false },
-    { name: '8Heart', faceUp: false },
-    { name: '8Spade', faceUp: false },
-    { name: '9Club', faceUp: false },
-    { name: '9Diamond', faceUp: false },
-    { name: '9Heart', faceUp: false },
-    { name: '9Spade', faceUp: false },
-    { name: '10Club', faceUp: false },
-    { name: '10Diamond', faceUp: false },
-    { name: '10Heart', faceUp: false },
-    { name: '10Spade', faceUp: false },
-    { name: 'JClub', faceUp: false },
-    { name: 'JDiamond', faceUp: false },
-    { name: 'JHeart', faceUp: false },
-    { name: 'JSpade', faceUp: false },
-    { name: 'QClub', faceUp: false },
-    { name: 'QDiamond', faceUp: false },
-    { name: 'QHeart', faceUp: false },
-    { name: 'QSpade', faceUp: false },
-    { name: 'KClub', faceUp: false },
-    { name: 'KDiamond', faceUp: false },
-    { name: 'KHeart', faceUp: false },
-    { name: 'KSpade', faceUp: false },
+    { name: 'AClub', faceUp: false, selected: false },
+    { name: 'ADiamond', faceUp: false, selected: false },
+    { name: 'AHeart', faceUp: false, selected: false },
+    { name: 'ASpade', faceUp: false, selected: false },
+    { name: '2Club', faceUp: false, selected: false },
+    { name: '2Diamond', faceUp: false, selected: false },
+    { name: '2Heart', faceUp: false, selected: false },
+    { name: '2Spade', faceUp: false, selected: false },
+    { name: '3Club', faceUp: false, selected: false },
+    { name: '3Diamond', faceUp: false, selected: false },
+    { name: '3Heart', faceUp: false, selected: false },
+    { name: '3Spade', faceUp: false, selected: false },
+    { name: '4Club', faceUp: false, selected: false },
+    { name: '4Diamond', faceUp: false, selected: false },
+    { name: '4Heart', faceUp: false, selected: false },
+    { name: '4Spade', faceUp: false, selected: false },
+    { name: '5Club', faceUp: false, selected: false },
+    { name: '5Diamond', faceUp: false, selected: false },
+    { name: '5Heart', faceUp: false, selected: false },
+    { name: '5Spade', faceUp: false, selected: false },
+    { name: '6Club', faceUp: false, selected: false },
+    { name: '6Diamond', faceUp: false, selected: false },
+    { name: '6Heart', faceUp: false, selected: false },
+    { name: '6Spade', faceUp: false, selected: false },
+    { name: '7Club', faceUp: false, selected: false },
+    { name: '7Diamond', faceUp: false, selected: false },
+    { name: '7Heart', faceUp: false, selected: false },
+    { name: '7Spade', faceUp: false, selected: false },
+    { name: '8Club', faceUp: false, selected: false },
+    { name: '8Diamond', faceUp: false, selected: false },
+    { name: '8Heart', faceUp: false, selected: false },
+    { name: '8Spade', faceUp: false, selected: false },
+    { name: '9Club', faceUp: false, selected: false },
+    { name: '9Diamond', faceUp: false, selected: false },
+    { name: '9Heart', faceUp: false, selected: false },
+    { name: '9Spade', faceUp: false, selected: false },
+    { name: '10Club', faceUp: false, selected: false },
+    { name: '10Diamond', faceUp: false, selected: false },
+    { name: '10Heart', faceUp: false, selected: false },
+    { name: '10Spade', faceUp: false, selected: false },
+    { name: 'JClub', faceUp: false, selected: false },
+    { name: 'JDiamond', faceUp: false, selected: false },
+    { name: 'JHeart', faceUp: false, selected: false },
+    { name: 'JSpade', faceUp: false, selected: false },
+    { name: 'QClub', faceUp: false, selected: false },
+    { name: 'QDiamond', faceUp: false, selected: false },
+    { name: 'QHeart', faceUp: false, selected: false },
+    { name: 'QSpade', faceUp: false, selected: false },
+    { name: 'KClub', faceUp: false, selected: false },
+    { name: 'KDiamond', faceUp: false, selected: false },
+    { name: 'KHeart', faceUp: false, selected: false },
+    { name: 'KSpade', faceUp: false, selected: false },
   ]);
 
-  const [rowA, setRowA] = useState([]);
-  const [rowB, setRowB] = useState([]);
-  const [rowC, setRowC] = useState([]);
-  const [rowD, setRowD] = useState([]);
-  const [rowE, setRowE] = useState([]);
-  const [rowF, setRowF] = useState([]);
-  const [rowG, setRowG] = useState([]);
+  const [colA, setColA] = useState([]);
+  const [colB, setColB] = useState([]);
+  const [colC, setColC] = useState([]);
+  const [colD, setColD] = useState([]);
+  const [colE, setColE] = useState([]);
+  const [colF, setColF] = useState([]);
+  const [colG, setColG] = useState([]);
 
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
+
+  // ref
+  const passedFirstRender = useRef(false);
 
   // functions
   const shuffleAndDeal = () => {
@@ -78,62 +81,92 @@ const App = () => {
     for (let i = 0; i < deck.length; i++) {
       const card = deck[i];
 
-      // rowG shuffle
+      // colG shuffle
       if (i < 7) {
-        let tempRowG = rowG;
-        tempRowG.push(card);
-        setRowG(tempRowG);
+        let tempColG = colG;
+        tempColG.push(card);
+        setColG(tempColG);
         continue;
       }
 
-      // rowF shuffle
+      // colF shuffle
       if (i < 13) {
-        let tempRowF = rowF;
-        tempRowF.push(card);
-        setRowF(tempRowF);
+        let tempColF = colF;
+        tempColF.push(card);
+        setColF(tempColF);
         continue;
       }
 
-      // rowE shuffle
+      // colE shuffle
       if (i < 18) {
-        let tempRowE = rowE;
-        tempRowE.push(card);
-        setRowE(tempRowE);
+        let tempColE = colE;
+        tempColE.push(card);
+        setColE(tempColE);
         continue;
       }
 
-      // rowD shuffle
+      // colD shuffle
       if (i < 22) {
-        let tempRowD = rowD;
-        tempRowD.push(card);
-        setRowD(tempRowD);
+        let tempColD = colD;
+        tempColD.push(card);
+        setColD(tempColD);
         continue;
       }
 
-      // rowC shuffle
+      // colC shuffle
       if (i < 25) {
-        let tempRowC = rowC;
-        tempRowC.push(card);
-        setRowC(tempRowC);
+        let tempColC = colC;
+        tempColC.push(card);
+        setColC(tempColC);
         continue;
       }
 
-      // rowB shuffle
+      // colB shuffle
       if (i < 27) {
-        let tempRowB = rowB;
-        tempRowB.push(card);
-        setRowB(tempRowB);
+        let tempColB = colB;
+        tempColB.push(card);
+        setColB(tempColB);
         continue;
       }
 
-      // rowA shuffle
+      // colA shuffle
       if (i < 28) {
-        let tempRowA = rowA;
-        tempRowA.push(card);
-        setRowA(tempRowA);
+        let tempColA = colA;
+        tempColA.push(card);
+        setColA(tempColA);
         continue;
       }
     }
+
+    // Flip the bottom card of each column array up
+    const tempColA = colA;
+    tempColA[tempColA.length - 1].faceUp = true;
+    setColA(tempColA);
+
+    const tempColB = colB;
+    tempColB[tempColB.length - 1].faceUp = true;
+    setColB(tempColB);
+
+    const tempColC = colC;
+    tempColC[tempColC.length - 1].faceUp = true;
+    setColC(tempColC);
+
+    const tempColD = colD;
+    tempColD[tempColD.length - 1].faceUp = true;
+    setColD(tempColD);
+
+    const tempColE = colE;
+    tempColE[tempColE.length - 1].faceUp = true;
+    setColE(tempColE);
+
+    const tempColF = colF;
+    tempColF[tempColF.length - 1].faceUp = true;
+    setColF(tempColF);
+
+    const tempColG = colG;
+    tempColG[tempColG.length - 1].faceUp = true;
+    setColG(tempColG);
+
     setShuffledAndDealt(true);
   };
 
@@ -151,53 +184,20 @@ const App = () => {
     return array;
   }
 
+  const selectOrDeselect = (colName, colData, index) => {
+    console.log(colName);
+    console.log(colData);
+    console.log('index: ' + index);
+  };
+
   // useEffects
   useEffect(() => {
-    console.log('useEffect fired');
-    shuffleAndDeal();
+    if (passedFirstRender.current) return;
+    else {
+      shuffleAndDeal();
+      passedFirstRender.current = true;
+    }
   }, []);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row A');
-    console.log(rowA);
-  }, [rowA]);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row B');
-    console.log(rowB);
-  }, [rowB]);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row C');
-    console.log(rowC);
-  }, [rowC]);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row D');
-    console.log(rowD);
-  }, [rowD]);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row E');
-    console.log(rowE);
-  }, [rowE]);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row F');
-    console.log(rowF);
-  }, [rowF]);
-
-  useEffect(() => {
-    console.log('');
-    console.log('row G');
-    console.log(rowG);
-  }, [rowG]);
 
   if (!shuffledAndDealt) {
     return null;
@@ -205,19 +205,23 @@ const App = () => {
 
   return (
     <div className="container">
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: 'flex', flexDirection: 'col' }}>
 
         <div>
-          {rowA?.map(card => {
+          {colA?.map((card, index) => {
 
             let CardImage;
             if (card.faceUp) CardImage = GetCards(card.name);
             else CardImage = GetCards('CardReverse');
 
             return (
-              <div className='card-container'>
+              <div
+                className='card-container'
+                key={card.name}
+              >
                 <img
-                  key={card.name}
+                  alt="card"
+                  onClick={() => selectOrDeselect('colA', colA, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -229,16 +233,20 @@ const App = () => {
         <div className="space" />
 
         <div>
-          {rowB?.map(card => {
+          {colB?.map((card, index) => {
 
             let CardImage;
             if (card.faceUp) CardImage = GetCards(card.name);
             else CardImage = GetCards('CardReverse');
 
             return (
-              <div className='card-container'>
+              <div
+                className='card-container'
+                key={card.name}
+              >
                 <img
-                  key={card.name}
+                  alt="card"
+                  onClick={() => selectOrDeselect('colB', colB, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -250,36 +258,19 @@ const App = () => {
         <div className="space" />
 
         <div>
-          {rowC?.map(card => {
-            // TODO: comment this out when we want to hide certain cards
-            // let CardImage;
-            // if (card.faceUp) CardImage = GetCards(card.name);
-            // else CardImage = GetCards('CardReverse');
-            const CardImage = GetCards(card.name);
-            return (
-              <div className='card-container'>
-                <img
-                  key={card.name}
-                  className='card'
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-
-        <div>
-          {rowD?.map(card => {
+          {colC?.map((card, index) => {
             let CardImage;
             if (card.faceUp) CardImage = GetCards(card.name);
             else CardImage = GetCards('CardReverse');
 
             return (
-              <div className='card-container'>
+              <div
+                className='card-container'
+                key={card.name}
+              >
                 <img
-                  key={card.name}
+                  alt="card"
+                  onClick={() => selectOrDeselect('colC', colC, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -291,16 +282,19 @@ const App = () => {
         <div className="space" />
 
         <div>
-          {rowE?.map(card => {
-            // TODO: comment this out when we want to hide certain cards
-            // let CardImage;
-            // if (card.faceUp) CardImage = GetCards(card.name);
-            // else CardImage = GetCards('CardReverse');
-            const CardImage = GetCards(card.name);
+          {colD?.map((card, index) => {
+            let CardImage;
+            if (card.faceUp) CardImage = GetCards(card.name);
+            else CardImage = GetCards('CardReverse');
+
             return (
-              <div className='card-container'>
+              <div
+                className='card-container'
+                key={card.name}
+              >
                 <img
-                  key={card.name}
+                  alt="card"
+                  onClick={() => selectOrDeselect('colD', colD, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -312,16 +306,19 @@ const App = () => {
         <div className="space" />
 
         <div>
-          {rowF?.map(card => {
-            // TODO: comment this out when we want to hide certain cards
-            // let CardImage;
-            // if (card.faceUp) CardImage = GetCards(card.name);
-            // else CardImage = GetCards('CardReverse');
-            const CardImage = GetCards(card.name);
+          {colE?.map((card, index) => {
+            let CardImage;
+            if (card.faceUp) CardImage = GetCards(card.name);
+            else CardImage = GetCards('CardReverse');
+
             return (
-              <div className='card-container'>
+              <div
+                className='card-container'
+                key={card.name}
+              >
                 <img
-                  key={card.name}
+                  alt="card"
+                  onClick={() => selectOrDeselect('colE', colE, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -333,16 +330,44 @@ const App = () => {
         <div className="space" />
 
         <div>
-          {rowG?.map(card => {
-            // TODO: comment this out when we want to hide certain cards
-            // let CardImage;
-            // if (card.faceUp) CardImage = GetCards(card.name);
-            // else CardImage = GetCards('CardReverse');
-            const CardImage = GetCards(card.name);
+          {colF?.map((card, index) => {
+            let CardImage;
+            if (card.faceUp) CardImage = GetCards(card.name);
+            else CardImage = GetCards('CardReverse');
+
             return (
-              <div className='card-container'>
+              <div
+                className='card-container'
+                key={card.name}
+              >
                 <img
-                  key={card.name}
+                  alt="card"
+                  onClick={() => selectOrDeselect('colF', colF, index)}
+                  className='card'
+                  src={CardImage}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="space" />
+
+        <div>
+          {colG?.map((card, index) => {
+
+            let CardImage;
+            if (card.faceUp) CardImage = GetCards(card.name);
+            else CardImage = GetCards('CardReverse');
+
+            return (
+              <div
+                className='card-container'
+                key={card.name}
+              >
+                <img
+                  alt="card"
+                  onClick={() => selectOrDeselect('colG', colG, index)}
                   className='card'
                   src={CardImage}
                 />
@@ -355,26 +380,30 @@ const App = () => {
         <div className="space" />
 
         {/* TODO: make this work, just images right now */}
-        <div class="card-container">
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className="card-container">
+          <div style={{ display: 'flex', flexDirection: 'col' }}>
             <img
+              alt="card"
               className='card'
               src={GetCards('CardBlank')}
             />
             <div className="space" />
             <img
+              alt="card"
               className='card'
               src={GetCards('CardBlank')}
             />
           </div>
           <div style={{ height: 20 }} />
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex', flexDirection: 'col' }}>
             <img
+              alt="card"
               className='card'
               src={GetCards('CardBlank')}
             />
             <div className="space" />
             <img
+              alt="card"
               className='card'
               src={GetCards('CardBlank')}
             />
