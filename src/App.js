@@ -76,10 +76,15 @@ const App = () => {
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
 
+  // Used to force state update.
+  const [state, setState] = useState(0);
+
   // REF
+
   const passedFirstRender = useRef(false);
 
   // FUNCTIONS
+
   const shuffleAndDeal = () => {
 
     // Randomize the order of the deck array
@@ -192,11 +197,112 @@ const App = () => {
     return array;
   }
 
-  // TODO: Use select data to do stuff...
+  // TODO: Use the data of selected card to do stuff...
   const onSelect = (colName, colData, index) => {
-    console.log(colName);
-    console.log(colData);
-    console.log('index: ' + index);
+    // console.log(colName);
+    // console.log(colData);
+    // console.log('index: ' + index);
+
+    if (colData.length - 1 === index) {
+
+      const currentSelected = colData[index].selected;
+
+      if (numSelected() > 0) {
+        deselect();
+      }
+
+      if (!currentSelected) {
+        colData[index].selected = true;
+        updateColInTableau(colName, colData);
+      }
+
+      // using this to forcing a rerender. For some reason this is needed, 
+      // the above stuff isn't triggering a render update. (I'm pretty sure this is bad programming.)
+      setState(state + 1);
+    }
+  };
+
+  const updateColInTableau = (colName, colData) => {
+    if (colName === 'colA') setColA(colData);
+    if (colName === 'colB') setColB(colData);
+    if (colName === 'colC') setColC(colData);
+    if (colName === 'colD') setColD(colData);
+    if (colName === 'colE') setColE(colData);
+    if (colName === 'colF') setColF(colData);
+    if (colName === 'colG') setColG(colData);
+  };
+
+  const numSelected = () => {
+    let count = 0;
+
+    for (let i = 0; i < colA.length; i++) {
+      if (colA[i].selected) count++;
+    }
+    for (let i = 0; i < colB.length; i++) {
+      if (colB[i].selected) count++;
+    }
+    for (let i = 0; i < colC.length; i++) {
+      if (colC[i].selected) count++;
+    }
+    for (let i = 0; i < colD.length; i++) {
+      if (colD[i].selected) count++;
+    }
+    for (let i = 0; i < colE.length; i++) {
+      if (colE[i].selected) count++;
+    }
+    for (let i = 0; i < colF.length; i++) {
+      if (colF[i].selected) count++;
+    }
+    for (let i = 0; i < colG.length; i++) {
+      if (colG[i].selected) count++;
+    }
+
+    return count;
+  };
+
+  const deselect = () => {
+
+    let tempColA = colA;
+    for (let i = 0; i < tempColA.length; i++) {
+      tempColA[i].selected = false;
+    }
+    setColA(tempColA);
+
+    let tempColB = colB;
+    for (let i = 0; i < tempColB.length; i++) {
+      tempColB[i].selected = false;
+    }
+    setColB(tempColB);
+
+    let tempColC = colC;
+    for (let i = 0; i < tempColC.length; i++) {
+      tempColC[i].selected = false;
+    }
+    setColC(tempColC);
+
+    let tempColD = colD;
+    for (let i = 0; i < tempColD.length; i++) {
+      tempColD[i].selected = false;
+    }
+    setColD(tempColD);
+
+    let tempColE = colE;
+    for (let i = 0; i < tempColE.length; i++) {
+      tempColE[i].selected = false;
+    }
+    setColE(tempColE);
+
+    let tempColF = colF;
+    for (let i = 0; i < tempColF.length; i++) {
+      tempColF[i].selected = false;
+    }
+    setColF(tempColF);
+
+    let tempColG = colG;
+    for (let i = 0; i < tempColG.length; i++) {
+      tempColG[i].selected = false;
+    }
+    setColG(tempColG);
   };
 
   // USE EFFECT
@@ -234,6 +340,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colA', colA, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
@@ -259,6 +366,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colB', colB, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
@@ -283,6 +391,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colC', colC, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
@@ -307,6 +416,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colD', colD, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
@@ -331,6 +441,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colE', colE, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
@@ -355,6 +466,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colF', colF, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
@@ -380,6 +492,7 @@ const App = () => {
                   alt="card"
                   onClick={() => onSelect('colG', colG, index)}
                   className='card'
+                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
                   src={CardImage}
                 />
               </div>
