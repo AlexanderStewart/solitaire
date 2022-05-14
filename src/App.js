@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import GetCards from './GetCards';
+import CardDraggable from './components/CardDraggable';
+import Card from './components/Card';
+import DropTarget from './components/DropTarget';
+
 import './styles/Game.css';
 
 const App = () => {
@@ -75,9 +82,7 @@ const App = () => {
 
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
-
-  // Used to force state update.
-  const [state, setState] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   // REF
 
@@ -197,39 +202,18 @@ const App = () => {
     return array;
   }
 
-  // TODO: Use the data of selected card to do stuff...
-  const onSelect = (colName, colData, index) => {
-    // console.log(colName);
-    // console.log(colData);
-    // console.log('index: ' + index);
-
-    if (colData.length - 1 === index) {
-
-      const currentSelected = colData[index].selected;
-
-      if (numSelected() > 0) {
-        deselect();
-      }
-
-      if (!currentSelected) {
-        colData[index].selected = true;
-        updateColInTableau(colName, colData);
-      }
-
-      // using this to forcing a rerender. For some reason this is needed, 
-      // the above stuff isn't triggering a render update. (I'm pretty sure this is bad programming.)
-      setState(state + 1);
-    }
-  };
-
   const updateColInTableau = (colName, colData) => {
     if (colName === 'colA') setColA(colData);
-    if (colName === 'colB') setColB(colData);
-    if (colName === 'colC') setColC(colData);
-    if (colName === 'colD') setColD(colData);
-    if (colName === 'colE') setColE(colData);
-    if (colName === 'colF') setColF(colData);
-    if (colName === 'colG') setColG(colData);
+    else if (colName === 'colB') setColB(colData);
+    else if (colName === 'colC') setColC(colData);
+    else if (colName === 'colD') setColD(colData);
+    else if (colName === 'colE') setColE(colData);
+    else if (colName === 'colF') setColF(colData);
+    else if (colName === 'colG') setColG(colData);
+  };
+
+  const changeIsDragging = e => {
+    setIsDragging(e);
   };
 
   const numSelected = () => {
@@ -322,221 +306,170 @@ const App = () => {
 
   return (
     <div className="container">
-      <div style={{ display: 'flex', flexDirection: 'col' }}>
+      <DndProvider backend={HTML5Backend}>
+        <div style={{ display: 'flex', flexDirection: 'col' }}>
 
-        <div>
-          {colA?.map((card, index) => {
+          <div>
+            {colA?.map((card, index) => {
 
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
 
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colA', colA, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
+              return colA.length - 1 === index ? (
 
-        <div className="space" />
-
-        <div>
-          {colB?.map((card, index) => {
-
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
-
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colB', colB, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-
-        <div>
-          {colC?.map((card, index) => {
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
-
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colC', colC, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-
-        <div>
-          {colD?.map((card, index) => {
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
-
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colD', colD, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-
-        <div>
-          {colE?.map((card, index) => {
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
-
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colE', colE, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-
-        <div>
-          {colF?.map((card, index) => {
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
-
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colF', colF, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-
-        <div>
-          {colG?.map((card, index) => {
-
-            let CardImage;
-            if (card.faceUp) CardImage = GetCards(card.name);
-            else CardImage = GetCards('CardReverse');
-
-            return (
-              <div
-                className='card-container'
-                key={card.name}
-              >
-                <img
-                  alt="card"
-                  onClick={() => onSelect('colG', colG, index)}
-                  className='card'
-                  style={card.selected ? { borderColor: '#4ade80', backgroundColor: '#f0fdf4' } : {}}
-                  src={CardImage}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="space" />
-        <div className="space" />
-
-        {/* TODO: make this work, just images right now */}
-        <div className="card-container">
-          <div style={{ display: 'flex', flexDirection: 'col' }}>
-            <img
-              alt="card"
-              className='card'
-              src={GetCards('CardBlank')}
-            />
-            <div className="space" />
-            <img
-              alt="card"
-              className='card'
-              src={GetCards('CardBlank')}
-            />
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colA} fromColName="colA" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colA} toColName="colA" />}
           </div>
 
           <div className="space" />
 
-          <div style={{ display: 'flex', flexDirection: 'col' }}>
-            <img
-              alt="card"
-              className='card'
-              src={GetCards('CardBlank')}
-            />
-            <div className="space" />
-            <img
-              alt="card"
-              className='card'
-              src={GetCards('CardBlank')}
-            />
-          </div>
-        </div>
+          <div>
+            {colB?.map((card, index) => {
 
-      </div>
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
+
+              return colB.length - 1 === index ? (
+
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colB} fromColName="colB" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colB} toColName="colB" />}
+          </div>
+
+          <div className="space" />
+
+          <div>
+            {colC?.map((card, index) => {
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
+
+              return colC.length - 1 === index ? (
+
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colC} fromColName="colC" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colC} toColName="colC" />}
+          </div>
+
+          <div className="space" />
+
+          <div>
+            {colD?.map((card, index) => {
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
+
+              return colD.length - 1 === index ? (
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colD} fromColName="colD" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colD} toColName="colD" />}
+          </div>
+
+          <div className="space" />
+
+          <div>
+            {colE?.map((card, index) => {
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
+
+              return colE.length - 1 === index ? (
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colE} fromColName="colE" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colE} toColName="colE" />}
+          </div>
+
+          <div className="space" />
+
+          <div>
+            {colF?.map((card, index) => {
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
+
+              return colF.length - 1 === index ? (
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colF} fromColName="colF" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colF} toColName="colF" />}
+          </div>
+
+          <div className="space" />
+
+          <div>
+            {colG?.map((card, index) => {
+
+              let CardImage;
+              if (card.faceUp) CardImage = GetCards(card.name);
+              else CardImage = GetCards('CardReverse');
+
+              return colG.length - 1 === index ? (
+                <CardDraggable draggable key={card.name} card={card} src={CardImage} fromColData={colG} fromColName="colG" changeIsDragging={changeIsDragging} />
+              ) : (
+                <Card key={card.name} card={card} src={CardImage} />
+              );
+            })}
+            {isDragging && <DropTarget updateColInTableau={updateColInTableau} toColData={colG} toColName="colG" />}
+          </div>
+
+          <div className="space" />
+          <div className="space" />
+
+          {/* TODO: make this work, just images right now */}
+          <div className="card-container">
+            <div style={{ display: 'flex', flexDirection: 'col' }}>
+              <img
+                alt="card"
+                className='card'
+                src={GetCards('CardBlank')}
+              />
+              <div className="space" />
+              <img
+                alt="card"
+                className='card'
+                src={GetCards('CardBlank')}
+              />
+            </div>
+
+            <div className="space" />
+
+            <div style={{ display: 'flex', flexDirection: 'col' }}>
+              <img
+                alt="card"
+                className='card'
+                src={GetCards('CardBlank')}
+              />
+              <div className="space" />
+              <img
+                alt="card"
+                className='card'
+                src={GetCards('CardBlank')}
+              />
+            </div>
+          </div>
+
+        </div>
+      </DndProvider>
     </div>
   );
 };

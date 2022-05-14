@@ -1,7 +1,7 @@
 .container {
   height: 100vh;
-  padding: 20px;
-  padding-top: 140px;
+  padding: 30px;
+  padding-top: 150px;
   background-color: #fffbeb;
 }
 
@@ -13,6 +13,12 @@
   background-color: #fff;
   border-style: solid;
   border-color: #000;
+  width: 120px;
+}
+
+.drop-target {
+  border-style: solid;
+  border-color: rgb(101, 195, 84);
   width: 120px;
 }
 
