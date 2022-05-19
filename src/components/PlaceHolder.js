@@ -7,12 +7,12 @@ const Card = (props) => {
 
   return (
     <div
-      className='card-container'
+      className='place-holder-container'
     >
       <img
         alt='card'
         draggable='false'
-        className='card'
+        className='place-holder'
         src={src}
       />
     </div>

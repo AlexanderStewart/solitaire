@@ -27,6 +27,7 @@ const CardDraggable = (props) => {
     <div ref={drag}>
       <div
         className='card-container'
+        style={isDragging ? { opacity: 0 } : { opacity: 1 }}
       >
         <img
           alt='card'
