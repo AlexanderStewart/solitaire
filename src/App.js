@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import GetCards from './GetCards';
 import CardDraggable from './components/CardDraggable';
 import Card from './components/Card';
+import PlaceHolder from './components/PlaceHolder';
 import DropTarget from './components/DropTarget';
 
 import './styles/Game.css';
@@ -16,58 +17,58 @@ const App = () => {
   // Each card in the deck is an object which contains the current state of the card.
   // The deck is an array of these objects.
   const [deck, setDeck] = useState([
-    { name: 'AClub', faceUp: false, selected: false },
-    { name: 'ADiamond', faceUp: false, selected: false },
-    { name: 'AHeart', faceUp: false, selected: false },
-    { name: 'ASpade', faceUp: false, selected: false },
-    { name: '2Club', faceUp: false, selected: false },
-    { name: '2Diamond', faceUp: false, selected: false },
-    { name: '2Heart', faceUp: false, selected: false },
-    { name: '2Spade', faceUp: false, selected: false },
-    { name: '3Club', faceUp: false, selected: false },
-    { name: '3Diamond', faceUp: false, selected: false },
-    { name: '3Heart', faceUp: false, selected: false },
-    { name: '3Spade', faceUp: false, selected: false },
-    { name: '4Club', faceUp: false, selected: false },
-    { name: '4Diamond', faceUp: false, selected: false },
-    { name: '4Heart', faceUp: false, selected: false },
-    { name: '4Spade', faceUp: false, selected: false },
-    { name: '5Club', faceUp: false, selected: false },
-    { name: '5Diamond', faceUp: false, selected: false },
-    { name: '5Heart', faceUp: false, selected: false },
-    { name: '5Spade', faceUp: false, selected: false },
-    { name: '6Club', faceUp: false, selected: false },
-    { name: '6Diamond', faceUp: false, selected: false },
-    { name: '6Heart', faceUp: false, selected: false },
-    { name: '6Spade', faceUp: false, selected: false },
-    { name: '7Club', faceUp: false, selected: false },
-    { name: '7Diamond', faceUp: false, selected: false },
-    { name: '7Heart', faceUp: false, selected: false },
-    { name: '7Spade', faceUp: false, selected: false },
-    { name: '8Club', faceUp: false, selected: false },
-    { name: '8Diamond', faceUp: false, selected: false },
-    { name: '8Heart', faceUp: false, selected: false },
-    { name: '8Spade', faceUp: false, selected: false },
-    { name: '9Club', faceUp: false, selected: false },
-    { name: '9Diamond', faceUp: false, selected: false },
-    { name: '9Heart', faceUp: false, selected: false },
-    { name: '9Spade', faceUp: false, selected: false },
-    { name: '10Club', faceUp: false, selected: false },
-    { name: '10Diamond', faceUp: false, selected: false },
-    { name: '10Heart', faceUp: false, selected: false },
-    { name: '10Spade', faceUp: false, selected: false },
-    { name: 'JClub', faceUp: false, selected: false },
-    { name: 'JDiamond', faceUp: false, selected: false },
-    { name: 'JHeart', faceUp: false, selected: false },
-    { name: 'JSpade', faceUp: false, selected: false },
-    { name: 'QClub', faceUp: false, selected: false },
-    { name: 'QDiamond', faceUp: false, selected: false },
-    { name: 'QHeart', faceUp: false, selected: false },
-    { name: 'QSpade', faceUp: false, selected: false },
-    { name: 'KClub', faceUp: false, selected: false },
-    { name: 'KDiamond', faceUp: false, selected: false },
-    { name: 'KHeart', faceUp: false, selected: false },
-    { name: 'KSpade', faceUp: false, selected: false },
+    { name: 'AClub', faceUp: false, rank: 1, isRed: false },
+    { name: 'ADiamond', faceUp: false, rank: 1, isRed: true },
+    { name: 'AHeart', faceUp: false, rank: 1, isRed: true },
+    { name: 'ASpade', faceUp: false, rank: 1, isRed: false },
+    { name: '2Club', faceUp: false, rank: 2, isRed: false },
+    { name: '2Diamond', faceUp: false, rank: 2, isRed: true },
+    { name: '2Heart', faceUp: false, rank: 2, isRed: true },
+    { name: '2Spade', faceUp: false, rank: 2, isRed: false },
+    { name: '3Club', faceUp: false, rank: 3, isRed: false },
+    { name: '3Diamond', faceUp: false, rank: 3, isRed: true },
+    { name: '3Heart', faceUp: false, rank: 3, isRed: true },
+    { name: '3Spade', faceUp: false, rank: 3, isRed: false },
+    { name: '4Club', faceUp: false, rank: 4, isRed: false },
+    { name: '4Diamond', faceUp: false, rank: 4, isRed: true },
+    { name: '4Heart', faceUp: false, rank: 4, isRed: true },
+    { name: '4Spade', faceUp: false, rank: 4, isRed: false },
+    { name: '5Club', faceUp: false, rank: 5, isRed: false },
+    { name: '5Diamond', faceUp: false, rank: 5, isRed: true },
+    { name: '5Heart', faceUp: false, rank: 5, isRed: true },
+    { name: '5Spade', faceUp: false, rank: 5, isRed: false },
+    { name: '6Club', faceUp: false, rank: 6, isRed: false },
+    { name: '6Diamond', faceUp: false, rank: 6, isRed: true },
+    { name: '6Heart', faceUp: false, rank: 6, isRed: true },
+    { name: '6Spade', faceUp: false, rank: 6, isRed: false },
+    { name: '7Club', faceUp: false, rank: 7, isRed: false },
+    { name: '7Diamond', faceUp: false, rank: 7, isRed: true },
+    { name: '7Heart', faceUp: false, rank: 7, isRed: true },
+    { name: '7Spade', faceUp: false, rank: 7, isRed: false },
+    { name: '8Club', faceUp: false, rank: 8, isRed: false },
+    { name: '8Diamond', faceUp: false, rank: 8, isRed: true },
+    { name: '8Heart', faceUp: false, rank: 8, isRed: true },
+    { name: '8Spade', faceUp: false, rank: 8, isRed: false },
+    { name: '9Club', faceUp: false, rank: 9, isRed: false },
+    { name: '9Diamond', faceUp: false, rank: 9, isRed: true },
+    { name: '9Heart', faceUp: false, rank: 9, isRed: true },
+    { name: '9Spade', faceUp: false, rank: 9, isRed: false },
+    { name: '10Club', faceUp: false, rank: 10, isRed: false },
+    { name: '10Diamond', faceUp: false, rank: 10, isRed: true },
+    { name: '10Heart', faceUp: false, rank: 10, isRed: true },
+    { name: '10Spade', faceUp: false, rank: 10, isRed: false },
+    { name: 'JClub', faceUp: false, rank: 11, isRed: false },
+    { name: 'JDiamond', faceUp: false, rank: 11, isRed: true },
+    { name: 'JHeart', faceUp: false, rank: 11, isRed: true },
+    { name: 'JSpade', faceUp: false, rank: 11, isRed: false },
+    { name: 'QClub', faceUp: false, rank: 12, isRed: false },
+    { name: 'QDiamond', faceUp: false, rank: 12, isRed: true },
+    { name: 'QHeart', faceUp: false, rank: 12, isRed: true },
+    { name: 'QSpade', faceUp: false, rank: 12, isRed: false },
+    { name: 'KClub', faceUp: false, rank: 13, isRed: false },
+    { name: 'KDiamond', faceUp: false, rank: 13, isRed: true },
+    { name: 'KHeart', faceUp: false, rank: 13, isRed: true },
+    { name: 'KSpade', faceUp: false, rank: 13, isRed: false },
   ]);
 
   // Each column in the Tableau is an array of card objects.
@@ -244,51 +245,6 @@ const App = () => {
     return count;
   };
 
-  const deselect = () => {
-
-    let tempColA = colA;
-    for (let i = 0; i < tempColA.length; i++) {
-      tempColA[i].selected = false;
-    }
-    setColA(tempColA);
-
-    let tempColB = colB;
-    for (let i = 0; i < tempColB.length; i++) {
-      tempColB[i].selected = false;
-    }
-    setColB(tempColB);
-
-    let tempColC = colC;
-    for (let i = 0; i < tempColC.length; i++) {
-      tempColC[i].selected = false;
-    }
-    setColC(tempColC);
-
-    let tempColD = colD;
-    for (let i = 0; i < tempColD.length; i++) {
-      tempColD[i].selected = false;
-    }
-    setColD(tempColD);
-
-    let tempColE = colE;
-    for (let i = 0; i < tempColE.length; i++) {
-      tempColE[i].selected = false;
-    }
-    setColE(tempColE);
-
-    let tempColF = colF;
-    for (let i = 0; i < tempColF.length; i++) {
-      tempColF[i].selected = false;
-    }
-    setColF(tempColF);
-
-    let tempColG = colG;
-    for (let i = 0; i < tempColG.length; i++) {
-      tempColG[i].selected = false;
-    }
-    setColG(tempColG);
-  };
-
   // USE EFFECT
 
   // Shuffle deck only when the page refreshes
@@ -310,6 +266,7 @@ const App = () => {
         <div style={{ display: 'flex', flexDirection: 'col' }}>
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colA?.map((card, index) => {
 
               let CardImage;
@@ -329,6 +286,7 @@ const App = () => {
           <div className="space" />
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colB?.map((card, index) => {
 
               let CardImage;
@@ -348,6 +306,7 @@ const App = () => {
           <div className="space" />
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colC?.map((card, index) => {
               let CardImage;
               if (card.faceUp) CardImage = GetCards(card.name);
@@ -366,6 +325,7 @@ const App = () => {
           <div className="space" />
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colD?.map((card, index) => {
               let CardImage;
               if (card.faceUp) CardImage = GetCards(card.name);
@@ -383,6 +343,7 @@ const App = () => {
           <div className="space" />
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colE?.map((card, index) => {
               let CardImage;
               if (card.faceUp) CardImage = GetCards(card.name);
@@ -400,6 +361,7 @@ const App = () => {
           <div className="space" />
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colF?.map((card, index) => {
               let CardImage;
               if (card.faceUp) CardImage = GetCards(card.name);
@@ -417,6 +379,7 @@ const App = () => {
           <div className="space" />
 
           <div>
+            <PlaceHolder src={GetCards('CardBlank')} />
             {colG?.map((card, index) => {
 
               let CardImage;

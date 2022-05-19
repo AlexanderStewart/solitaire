@@ -1,5 +1,6 @@
 import { useDrop } from 'react-dnd';
 import GetCards from '../GetCards';
+import ValidMove from '../ValidMove';
 
 const DropTarget = (props) => {
 
@@ -11,19 +12,22 @@ const DropTarget = (props) => {
   }));
 
   const onDrop = (data) => {
-    console.log(data);
-
     const fromColName = data.fromColName;
     const fromColData = [...data.fromColData];
     const toColName = props.toColName;
     const toColData = [...props.toColData];
+    const movedCard = data.card;
 
-    // first remove the card from the column it was taken from
-    const movedCard = fromColData.pop();
-    props.updateColInTableau(fromColName, fromColData);
+    if (ValidMove(fromColData, toColData, movedCard)) {
+      // first remove the card from the column it was taken from
+      const movedCard = fromColData.pop();
+      fromColData[fromColData.length - 1].faceUp = true;
+      props.updateColInTableau(fromColName, fromColData);
 
-    toColData.push(movedCard);
-    props.updateColInTableau(toColName, toColData);
+      // then add card to new column
+      toColData.push(movedCard);
+      props.updateColInTableau(toColName, toColData);
+    }
   };
 
   return (
