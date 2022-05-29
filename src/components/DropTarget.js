@@ -1,6 +1,7 @@
 import { useDrop } from 'react-dnd';
 import GetCards from '../GetCards';
 import ValidMove from '../ValidMove';
+import Card from './PlaceHolder';
 
 const DropTarget = (props) => {
 
@@ -17,6 +18,7 @@ const DropTarget = (props) => {
     const toColName = props.toColName;
     const toColData = [...props.toColData];
     const movedCard = data.card;
+  
 
     if (ValidMove(fromColData, toColData, movedCard)) {
       // first remove the card from the column it was taken from
@@ -28,7 +30,7 @@ const DropTarget = (props) => {
       toColData.push(movedCard);
       props.updateColInTableau(toColName, toColData);
     }
-  };
+  }; 
 
   return (
     <div ref={drop}>
