@@ -7,7 +7,7 @@ import CardDraggable from "./components/CardDraggable";
 import Card from "./components/Card";
 import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
-import ValidMove from './ValidMove';
+import ValidMoveFoundation from './ValidMoveFoundation';
 
 import "./styles/Game.css";
 
@@ -188,18 +188,6 @@ const App = () => {
     const tempColG = colG;
     tempColG[tempColG.length - 1].faceUp = true;
     setColG(tempColG);
-
-    const tempFoun1 = foun1;
-    setFoun1(tempFoun1);
-
-    const tempFoun2 = foun2;
-    setFoun1(tempFoun2);
-
-    const tempFoun3 = foun3;
-    setFoun1(tempFoun3);
-
-    const tempFoun4 = foun4;
-    setFoun1(tempFoun4);
 
     setShuffledAndDealt(true);
   };
@@ -521,12 +509,8 @@ const App = () => {
                 <img alt="card" className="card" src={GetCards("CardBlank")} />
                 {foun1?.map((card) => {
                   let CardImage = GetCards(card.name);
-                  if(ValidMove(foun1, foun1, CardImage )){
-                    return <Card key={card.name} card={card} src={CardImage} />;
-                  }
-                }
-                )
-              }
+                  return <Card key={card.name} card={card} src={CardImage} />;
+                })}
 
                 {isDragging && (
                   <DropTarget
