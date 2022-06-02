@@ -7,7 +7,7 @@ import CardDraggable from "./components/CardDraggable";
 import Card from "./components/Card";
 import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
-import ValidMoveFoundation from "./ValidMoveFoundation"
+import ValidMoveFoundation from "./ValidMoveFoundation";
 
 import "./styles/Game.css";
 
@@ -297,6 +297,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colA}
                 toColName="colA"
@@ -329,6 +330,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colB}
                 toColName="colB"
@@ -361,6 +363,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colC}
                 toColName="colC"
@@ -393,6 +396,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colD}
                 toColName="colD"
@@ -425,6 +429,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colE}
                 toColName="colE"
@@ -457,6 +462,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colF}
                 toColName="colF"
@@ -489,6 +495,7 @@ const App = () => {
             })}
             {isDragging && (
               <DropTarget
+                changeIsDragging={changeIsDragging}
                 updateColInTableau={updateColInTableau}
                 toColData={colG}
                 toColName="colG"
@@ -507,16 +514,15 @@ const App = () => {
             <div style={{ display: "flex", flexDirection: "col" }}>
               <div>
                 <img alt="card" className="card" src={GetCards("CardBlank")} />
-                
+
                 {foun1?.map((card) => {
                   let CardImage = GetCards(card.name);
-                  if (ValidMoveFoundation){
                   return <Card key={card.name} card={card} src={CardImage} />;
-                  }
                 })}
 
                 {isDragging && (
                   <DropTarget
+                    changeIsDragging={changeIsDragging}
                     updateColInTableau={updateColInTableau}
                     toColData={foun1}
                     toColName="foun1"
@@ -527,16 +533,15 @@ const App = () => {
               <div className="space" />
               <div>
                 <img alt="card" className="card" src={GetCards("CardBlank")} />
-                
+
                 {foun2?.map((card) => {
                   let CardImage = GetCards(card.name);
-                  if (ValidMoveFoundation){
                   return <Card key={card.name} card={card} src={CardImage} />;
-                  }
                 })}
 
                 {isDragging && (
                   <DropTarget
+                    changeIsDragging={changeIsDragging}
                     updateColInTableau={updateColInTableau}
                     toColData={foun2}
                     toColName="foun2"
@@ -548,18 +553,17 @@ const App = () => {
             <div className="space" />
 
             <div style={{ display: "flex", flexDirection: "col" }}>
-            <div>
+              <div>
                 <img alt="card" className="card" src={GetCards("CardBlank")} />
-                
+
                 {foun3?.map((card) => {
                   let CardImage = GetCards(card.name);
-                  if (ValidMoveFoundation){
                   return <Card key={card.name} card={card} src={CardImage} />;
-                  }
                 })}
 
                 {isDragging && (
                   <DropTarget
+                    changeIsDragging={changeIsDragging}
                     updateColInTableau={updateColInTableau}
                     toColData={foun3}
                     toColName="foun3"
@@ -569,16 +573,15 @@ const App = () => {
               <div className="space" />
               <div>
                 <img alt="card" className="card" src={GetCards("CardBlank")} />
-                
+
                 {foun4?.map((card) => {
                   let CardImage = GetCards(card.name);
-                  if (ValidMoveFoundation){
                   return <Card key={card.name} card={card} src={CardImage} />;
-                  }
                 })}
 
                 {isDragging && (
                   <DropTarget
+                    changeIsDragging={changeIsDragging}
                     updateColInTableau={updateColInTableau}
                     toColData={foun4}
                     toColName="foun4"
