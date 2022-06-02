@@ -7,6 +7,7 @@ import CardDraggable from "./components/CardDraggable";
 import Card from "./components/Card";
 import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
+import ValidMoveFoundation from "./ValidMoveFoundation"
 
 import "./styles/Game.css";
 
@@ -524,15 +525,66 @@ const App = () => {
               </div>
 
               <div className="space" />
-              <img alt="card" className="card" src={GetCards("CardBlank")} />
+              <div>
+                <img alt="card" className="card" src={GetCards("CardBlank")} />
+                
+                {foun2?.map((card) => {
+                  let CardImage = GetCards(card.name);
+                  if (ValidMoveFoundation){
+                  return <Card key={card.name} card={card} src={CardImage} />;
+                  }
+                })}
+
+                {isDragging && (
+                  <DropTarget
+                    updateColInTableau={updateColInTableau}
+                    toColData={foun2}
+                    toColName="foun2"
+                  />
+                )}
+              </div>
             </div>
 
             <div className="space" />
 
             <div style={{ display: "flex", flexDirection: "col" }}>
-              <img alt="card" className="card" src={GetCards("CardBlank")} />
+            <div>
+                <img alt="card" className="card" src={GetCards("CardBlank")} />
+                
+                {foun3?.map((card) => {
+                  let CardImage = GetCards(card.name);
+                  if (ValidMoveFoundation){
+                  return <Card key={card.name} card={card} src={CardImage} />;
+                  }
+                })}
+
+                {isDragging && (
+                  <DropTarget
+                    updateColInTableau={updateColInTableau}
+                    toColData={foun3}
+                    toColName="foun3"
+                  />
+                )}
+              </div>
               <div className="space" />
-              <img alt="card" className="card" src={GetCards("CardBlank")} />
+              <div>
+                <img alt="card" className="card" src={GetCards("CardBlank")} />
+                
+                {foun4?.map((card) => {
+                  let CardImage = GetCards(card.name);
+                  if (ValidMoveFoundation){
+                  return <Card key={card.name} card={card} src={CardImage} />;
+                  }
+                })}
+
+                {isDragging && (
+                  <DropTarget
+                    updateColInTableau={updateColInTableau}
+                    toColData={foun4}
+                    toColName="foun4"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
