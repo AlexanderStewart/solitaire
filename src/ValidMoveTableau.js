@@ -25,12 +25,6 @@ const ValidMoveTableau = (fromColData, toColData, movedCard) => {
   // check if recieving card is a rank higher and diff color than moving card
   if (recievingCard.rank - 1 === movedCard.rank && recievingCard.isRed !== movedCard.isRed) {return true;}
 
-
-
-  // ...
-
-  // if the move is legal, return true
-  // if not, return false
   return false;
 };
 

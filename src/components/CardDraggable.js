@@ -10,6 +10,7 @@ const CardDraggable = (props) => {
   const fromColData = props.fromColData;
   const fromColName = props.fromColName;
 
+
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
     item: { card, fromColData, fromColName },
