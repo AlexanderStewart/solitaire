@@ -281,7 +281,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colA.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
@@ -314,7 +314,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colB.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
@@ -347,7 +347,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colC.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
@@ -380,7 +380,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colD.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
@@ -413,7 +413,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colE.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
@@ -446,7 +446,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colF.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
@@ -479,7 +479,7 @@ const App = () => {
               if (card.faceUp) CardImage = GetCards(card.name);
               else CardImage = GetCards("CardReverse");
 
-              return colG.length - 1 === index ? (
+              return card.faceUp ? (
                 <CardDraggable
                   draggable
                   key={card.name}
