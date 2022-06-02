@@ -507,9 +507,12 @@ const App = () => {
             <div style={{ display: "flex", flexDirection: "col" }}>
               <div>
                 <img alt="card" className="card" src={GetCards("CardBlank")} />
+                
                 {foun1?.map((card) => {
                   let CardImage = GetCards(card.name);
+                  if (ValidMoveFoundation){
                   return <Card key={card.name} card={card} src={CardImage} />;
+                  }
                 })}
 
                 {isDragging && (

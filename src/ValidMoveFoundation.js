@@ -2,19 +2,25 @@
 const ValidMoveFoundation = (foun1, card) => {
 
   // Console logging all the data needed to determine if a move was valid
-  console.log(' ');
-  console.log('found1:');
+  // console.log(' ');
+  //console.log('found1:');
+  //console.log(foun1);
+  //console.log('card');
+  //console.log(card);
+  const len = foun1.length;
+  console.log("top card rank");
   console.log(foun1);
-  console.log('card');
-  console.log(card);
+  console.log(card.rank);
 
   // *********************** TODO: write rule logic here ***********************
-
-  if (card.rank != 1) return false;
+ if (foun1.length == 0 && card.rank == 1) return true;
+  if (card.rank == foun1.length + 1) return true;
+ // if (card.rank == foun1[foun1.length - 1].length) return true;
+  // if (foun1[foun1.length - 1].rank == card.rank + 1) return true;
 
   // if the move is legal, return true
   // if not, return false
-  return true;
+  return false;
 };
 
 export default ValidMoveFoundation;
