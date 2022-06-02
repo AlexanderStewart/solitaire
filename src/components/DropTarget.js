@@ -21,6 +21,8 @@ const DropTarget = (props) => {
     const toColName = props.toColName;
     const toColData = [...props.toColData];
     const movedCard = data.card;
+    const cardsToMove = [];
+    const index = fromColData.findIndex(val => val.name === movedCard.name); //index of moved CArd
 
     if (toColName === 'foun1' || toColName === 'foun2' || toColName === 'foun3' || toColName === 'foun4') {
       if (ValidMoveFoundation(toColData, movedCard)) {
@@ -39,17 +41,21 @@ const DropTarget = (props) => {
       }
     }
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
-      // first remove the card from the column it was taken from
-      const movedCard = fromColData.pop();
+      if (index + 1 <= fromColData.length) {
+
+        while (index < fromColData.length) {
+          cardsToMove.push(fromColData[index]);
+          fromColData.splice(index, 1);
+        }
+
+        cardsToMove.map(card => toColData.push(card));
+      }
 
       if (fromColData.length !== 0) {
         fromColData[fromColData.length - 1].faceUp = true;
       }
 
       props.updateColInTableau(fromColName, fromColData);
-
-      // then add card to new column
-      toColData.push(movedCard);
       props.updateColInTableau(toColName, toColData);
     }
 
