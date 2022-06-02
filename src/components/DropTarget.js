@@ -37,7 +37,13 @@ const DropTarget = (props) => {
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
       // first remove the card from the column it was taken from
       const movedCard = fromColData.pop();
-      fromColData[fromColData.length - 1].faceUp = true;
+
+      console.log(fromColData.length);
+
+      if (fromColData.length !== 0) {
+        fromColData[fromColData.length - 1].faceUp = true;
+      }
+
       props.updateColInTableau(fromColName, fromColData);
 
       // then add card to new column
