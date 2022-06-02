@@ -1,4 +1,4 @@
-const ValidMove = (fromColData, toColData, movedCard) => {
+const ValidMoveTableau = (fromColData, toColData, movedCard) => {
 
   // Console logging all the data needed to determine if a move was valid
   console.log(' ');
@@ -21,4 +21,4 @@ const ValidMove = (fromColData, toColData, movedCard) => {
   return true;
 };
 
-export default ValidMove;
+export default ValidMoveTableau;
