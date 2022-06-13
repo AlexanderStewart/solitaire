@@ -4,15 +4,18 @@ import './../styles/Game.css';
 const Card = (props) => {
 
   const src = props.src;
+  const index = props.index;
+  const isStockpile = props.isStockpile;
+  if (isStockpile === null) isStockpile = false;
 
   return (
     <div
-      className='card-container'
+      className={[isStockpile ? 'stockpile-card-container' : 'card-container']}
     >
       <img
         alt='card'
         draggable='false'
-        className='card'
+        className={isStockpile ? 'stockpile-card' : 'card'}
         src={src}
       />
     </div>
