@@ -10,6 +10,9 @@ const CardDraggable = (props) => {
   const fromColData = props.fromColData;
   const fromColName = props.fromColName;
 
+  const isStockpile = props.isStockpile;
+  if (isStockpile === null) isStockpile = false;
+
 
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
@@ -27,13 +30,13 @@ const CardDraggable = (props) => {
   return (
     <div ref={drag}>
       <div
-        className='card-container'
+        className={isStockpile ? 'stockpile-card-container' : 'card-container'}
         style={isDragging ? { opacity: 0 } : { opacity: 1 }}
       >
         <img
           alt='card'
           draggable='false'
-          className='card'
+          className={isStockpile ? 'stockpile-card' : 'card'}
           src={src}
         />
       </div>

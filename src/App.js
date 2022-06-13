@@ -84,6 +84,9 @@ const App = () => {
   const [foun2, setFoun2] = useState([]);
   const [foun3, setFoun3] = useState([]);
   const [foun4, setFoun4] = useState([]);
+  const [stockpile, setStockpile] = useState([]);
+  const [activeStockpile, setActiveStockpile] = useState([]);
+  const [wastePile, setWastePile] = useState([]);
 
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
@@ -156,6 +159,13 @@ const App = () => {
         let tempColA = colA;
         tempColA.push(card);
         setColA(tempColA);
+        continue;
+      }
+
+      if (i < 52) {
+        let tempStockpile = stockpile;
+        tempStockpile.push(card);
+        setStockpile(tempStockpile);
         continue;
       }
     }
@@ -508,85 +518,152 @@ const App = () => {
 
 
           {/* Foundation Divs */}
+          <div style={{ flex: 1, flexDirection: 'column' }}>
+            <div className="card-container">
+              <div style={{ display: "flex", flexDirection: "col" }}>
+                <div>
+                  <img alt="card" className="card" src={GetCards("CardBlank")} />
 
-          {/* TODO: make this work, just images right now */}
-          <div className="card-container">
-            <div style={{ display: "flex", flexDirection: "col" }}>
-              <div>
-                <img alt="card" className="card" src={GetCards("CardBlank")} />
+                  {foun1?.map((card) => {
+                    let CardImage = GetCards(card.name);
+                    return <Card key={card.name} card={card} src={CardImage} />;
+                  })}
 
-                {foun1?.map((card) => {
-                  let CardImage = GetCards(card.name);
-                  return <Card key={card.name} card={card} src={CardImage} />;
-                })}
+                  {isDragging && (
+                    <DropTarget
+                      changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={foun1}
+                      toColName="foun1"
+                    />
+                  )}
+                </div>
 
-                {isDragging && (
-                  <DropTarget
-                    changeIsDragging={changeIsDragging}
-                    updateColInTableau={updateColInTableau}
-                    toColData={foun1}
-                    toColName="foun1"
-                  />
-                )}
+                <div className="space" />
+                <div>
+                  <img alt="card" className="card" src={GetCards("CardBlank")} />
+
+                  {foun2?.map((card) => {
+                    let CardImage = GetCards(card.name);
+                    return <Card key={card.name} card={card} src={CardImage} />;
+                  })}
+
+                  {isDragging && (
+                    <DropTarget
+                      changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={foun2}
+                      toColName="foun2"
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="space" />
-              <div>
-                <img alt="card" className="card" src={GetCards("CardBlank")} />
 
-                {foun2?.map((card) => {
-                  let CardImage = GetCards(card.name);
-                  return <Card key={card.name} card={card} src={CardImage} />;
-                })}
+              <div style={{ display: "flex", flexDirection: "col" }}>
+                <div>
+                  <img alt="card" className="card" src={GetCards("CardBlank")} />
 
-                {isDragging && (
-                  <DropTarget
-                    changeIsDragging={changeIsDragging}
-                    updateColInTableau={updateColInTableau}
-                    toColData={foun2}
-                    toColName="foun2"
-                  />
-                )}
+                  {foun3?.map((card) => {
+                    let CardImage = GetCards(card.name);
+                    return <Card key={card.name} card={card} src={CardImage} />;
+                  })}
+
+                  {isDragging && (
+                    <DropTarget
+                      changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={foun3}
+                      toColName="foun3"
+                    />
+                  )}
+                </div>
+                <div className="space" />
+                <div>
+                  <img alt="card" className="card" src={GetCards("CardBlank")} />
+
+                  {foun4?.map((card) => {
+                    let CardImage = GetCards(card.name);
+                    return <Card key={card.name} card={card} src={CardImage} />;
+                  })}
+
+                  {isDragging && (
+                    <DropTarget
+                      changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={foun4}
+                      toColName="foun4"
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
             <div className="space" />
+            <div className="space" />
 
-            <div style={{ display: "flex", flexDirection: "col" }}>
-              <div>
-                <img alt="card" className="card" src={GetCards("CardBlank")} />
+            {/* Stockpile Divs */}
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div onClick={() => {
 
-                {foun3?.map((card) => {
-                  let CardImage = GetCards(card.name);
-                  return <Card key={card.name} card={card} src={CardImage} />;
-                })}
+                if (stockpile.length === 0) return;
 
-                {isDragging && (
-                  <DropTarget
-                    changeIsDragging={changeIsDragging}
-                    updateColInTableau={updateColInTableau}
-                    toColData={foun3}
-                    toColName="foun3"
+                const tempStockpile = [...stockpile];
+                const cardToMove = tempStockpile.pop();
+
+                const tempActiveStockpile = [...activeStockpile];
+                tempActiveStockpile.push(cardToMove);
+
+                setStockpile(tempStockpile);
+                setActiveStockpile(tempActiveStockpile);
+              }}>
+                <div>
+                  <img
+                    alt='card'
+                    draggable='false'
+                    style={{
+                      width: '120px'
+                    }}
+                    src={GetCards("CardBlank")}
                   />
-                )}
+                </div>
+                {stockpile?.map((card, index) => {
+                  let CardImage = GetCards("CardReverse");
+
+                  return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                })}
               </div>
+
               <div className="space" />
+
               <div>
-                <img alt="card" className="card" src={GetCards("CardBlank")} />
-
-                {foun4?.map((card) => {
-                  let CardImage = GetCards(card.name);
-                  return <Card key={card.name} card={card} src={CardImage} />;
-                })}
-
-                {isDragging && (
-                  <DropTarget
-                    changeIsDragging={changeIsDragging}
-                    updateColInTableau={updateColInTableau}
-                    toColData={foun4}
-                    toColName="foun4"
+                <div style={{ marginTop: '-4px' }}>
+                  <img
+                    alt='card'
+                    draggable='false'
+                    style={{
+                      width: '120px',
+                      borderStyle: 'solid',
+                      borderColor: '#000'
+                    }}
+                    src={GetCards("CardBlank")}
                   />
-                )}
+                </div>
+                {activeStockpile?.map((card, index) => {
+                  let CardImage = GetCards(card.name);
+
+                  return <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={activeStockpile}
+                    fromColName="stockpile"
+                    changeIsDragging={changeIsDragging}
+                    isStockpile={true}
+                  />;
+                })}
               </div>
             </div>
           </div>
