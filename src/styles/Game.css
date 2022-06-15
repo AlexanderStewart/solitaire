@@ -17,6 +17,12 @@
   z-index: 50;
 }
 
+.talon-card-container {
+  margin-top: -175px;
+  position: relative;
+  z-index: 50;
+}
+
 .card {
   background-color: #fff;
   border-style: solid;
@@ -25,6 +31,13 @@
 }
 
 .stockpile-card {
+  background-color: #fff;
+  border-style: solid;
+  border-color: #000;
+  width: 120px;
+}
+
+.talon-card {
   background-color: #fff;
   border-style: solid;
   border-color: #000;

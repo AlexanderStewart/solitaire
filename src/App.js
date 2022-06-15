@@ -85,7 +85,7 @@ const App = () => {
   const [foun3, setFoun3] = useState([]);
   const [foun4, setFoun4] = useState([]);
   const [stockpile, setStockpile] = useState([]);
-  const [activeStockpile, setActiveStockpile] = useState([]);
+  const [talonPile, setTalonPile] = useState([]);
   const [wastePile, setWastePile] = useState([]);
 
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
@@ -198,6 +198,10 @@ const App = () => {
     const tempColG = colG;
     tempColG[tempColG.length - 1].faceUp = true;
     setColG(tempColG);
+
+    const tempStockpile = stockpile;
+    tempStockpile[tempStockpile.length - 1].faceUp = true;
+    setStockpile(tempStockpile);
 
     setShuffledAndDealt(true);
   };
@@ -605,65 +609,84 @@ const App = () => {
 
             {/* Stockpile Divs */}
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <div onClick={() => {
-
-                if (stockpile.length === 0) return;
-
-                const tempStockpile = [...stockpile];
-                const cardToMove = tempStockpile.pop();
-
-                const tempActiveStockpile = [...activeStockpile];
-                tempActiveStockpile.push(cardToMove);
-
-                setStockpile(tempStockpile);
-                setActiveStockpile(tempActiveStockpile);
-              }}>
-                <div>
-                  <img
-                    alt='card'
-                    draggable='false'
-                    style={{
-                      width: '120px'
-                    }}
-                    src={GetCards("CardBlank")}
-                  />
+              <div>
+                <div style={{ marginBottom: 20 }}>
+                  <span>STOCKPILE</span>
                 </div>
-                {stockpile?.map((card, index) => {
-                  let CardImage = GetCards("CardReverse");
+                <div onClick={() => {
 
-                  return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                })}
+                  if (stockpile.length === 0) return;
+
+                  const tempStockpile = [...stockpile];
+                  const cardToMove = tempStockpile.pop();
+
+                  if (stockpile.length !== 1) tempStockpile[tempStockpile.length - 1].faceUp = true;
+
+                  const tempTalonPile = [...talonPile];
+                  tempTalonPile.push(cardToMove);
+
+                  setStockpile(tempStockpile);
+                  setTalonPile(tempTalonPile);
+                }}>
+                  <div>
+                    <img
+                      alt='card'
+                      draggable='false'
+                      style={{
+                        borderStyle: 'solid',
+                        borderColor: '#000',
+                        width: '120px'
+                      }}
+                      src={GetCards("CardBlank")}
+                    />
+                  </div>
+                  {stockpile?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
+
+                    return card.faceUp ? (
+                      <CardDraggable
+                        draggable
+                        key={card.name}
+                        card={card}
+                        src={CardImage}
+                        fromColData={stockpile}
+                        fromColName="stockpile"
+                        changeIsDragging={changeIsDragging}
+                        isStockpile={true}
+                      />
+                    ) : (
+                      <Card key={card.name} card={card} src={CardImage} isStockpile={true} />
+                    );
+                  })}
+                </div>
               </div>
 
               <div className="space" />
 
               <div>
-                <div style={{ marginTop: '-4px' }}>
-                  <img
-                    alt='card'
-                    draggable='false'
-                    style={{
-                      width: '120px',
-                      borderStyle: 'solid',
-                      borderColor: '#000'
-                    }}
-                    src={GetCards("CardBlank")}
-                  />
+                <div style={{ marginBottom: 20 }}>
+                  <span>TALON PILE</span>
                 </div>
-                {activeStockpile?.map((card, index) => {
-                  let CardImage = GetCards(card.name);
-
-                  return <CardDraggable
-                    draggable
-                    key={card.name}
-                    card={card}
-                    src={CardImage}
-                    fromColData={activeStockpile}
-                    fromColName="stockpile"
-                    changeIsDragging={changeIsDragging}
-                    isStockpile={true}
-                  />;
-                })}
+                <div>
+                  <div>
+                    <img
+                      alt='card'
+                      draggable='false'
+                      style={{
+                        borderStyle: 'solid',
+                        borderColor: '#000',
+                        width: '120px'
+                      }}
+                      src={GetCards("CardBlank")}
+                    />
+                  </div>
+                  {talonPile?.map((card, index) => {
+                    const CardImage = GetCards(card.name);
+                    return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                  })}
+                </div>
               </div>
             </div>
           </div>
