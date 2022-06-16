@@ -12,13 +12,13 @@
 }
 
 .stockpile-card-container {
-  margin-top: -175px;
+  margin-top: -183px;
   position: relative;
   z-index: 50;
 }
 
 .talon-card-container {
-  margin-top: -175px;
+  margin-top: -183px;
   position: relative;
   z-index: 50;
 }
@@ -28,6 +28,17 @@
   border-style: solid;
   border-color: #000;
   width: 120px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.foundation {
+  background-color: #f0fdf4;
+  border-style: solid;
+  border-color: #000;
+  width: 120px;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .stockpile-card {
@@ -35,6 +46,8 @@
   border-style: solid;
   border-color: #000;
   width: 120px;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .talon-card {
@@ -42,6 +55,8 @@
   border-style: solid;
   border-color: #000;
   width: 120px;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .no-top-margin {
@@ -56,6 +71,7 @@
   border-style: solid;
   border-color: rgb(101, 195, 84);
   width: 120px;
+  padding: 4px;
   position: relative;
   z-index: 100;
 }
@@ -75,6 +91,7 @@
 
 .place-holder {
   width: 120px;
+  padding: 4px;
   border-style: solid;
   border-color: #000;
   opacity: 0.5;

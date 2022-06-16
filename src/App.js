@@ -523,14 +523,30 @@ const App = () => {
 
           {/* Foundation Divs */}
           <div style={{ flex: 1, flexDirection: 'column' }}>
+            <div className="space" />
+            <div className="space" />
             <div className="card-container">
               <div style={{ display: "flex", flexDirection: "col" }}>
+
                 <div>
-                  <img alt="card" className="card" src={GetCards("CardBlank")} />
+                  <div>
+                    <img
+                      alt='card'
+                      draggable='false'
+                      style={{
+                        borderStyle: 'solid',
+                        borderColor: '#000',
+                        width: '120px',
+                        padding: '4px',
+                        backgroundColor: '#f0fdf4'
+                      }}
+                      src={GetCards("CardBlank")}
+                    />
+                  </div>
 
                   {foun1?.map((card) => {
                     let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} />;
+                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
                   })}
 
                   {isDragging && (
@@ -545,11 +561,24 @@ const App = () => {
 
                 <div className="space" />
                 <div>
-                  <img alt="card" className="card" src={GetCards("CardBlank")} />
+                  <div>
+                    <img
+                      alt='card'
+                      draggable='false'
+                      style={{
+                        borderStyle: 'solid',
+                        borderColor: '#000',
+                        width: '120px',
+                        padding: '4px',
+                        backgroundColor: '#f0fdf4'
+                      }}
+                      src={GetCards("CardBlank")}
+                    />
+                  </div>
 
                   {foun2?.map((card) => {
                     let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} />;
+                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
                   })}
 
                   {isDragging && (
@@ -564,14 +593,28 @@ const App = () => {
               </div>
 
               <div className="space" />
+              <div className="space" />
 
               <div style={{ display: "flex", flexDirection: "col" }}>
                 <div>
-                  <img alt="card" className="card" src={GetCards("CardBlank")} />
+                  <div>
+                    <img
+                      alt='card'
+                      draggable='false'
+                      style={{
+                        borderStyle: 'solid',
+                        borderColor: '#000',
+                        width: '120px',
+                        padding: '4px',
+                        backgroundColor: '#f0fdf4'
+                      }}
+                      src={GetCards("CardBlank")}
+                    />
+                  </div>
 
                   {foun3?.map((card) => {
                     let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} />;
+                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
                   })}
 
                   {isDragging && (
@@ -585,11 +628,24 @@ const App = () => {
                 </div>
                 <div className="space" />
                 <div>
-                  <img alt="card" className="card" src={GetCards("CardBlank")} />
+                  <div>
+                    <img
+                      alt='card'
+                      draggable='false'
+                      style={{
+                        borderStyle: 'solid',
+                        borderColor: '#000',
+                        width: '120px',
+                        padding: '4px',
+                        backgroundColor: '#f0fdf4'
+                      }}
+                      src={GetCards("CardBlank")}
+                    />
+                  </div>
 
                   {foun4?.map((card) => {
                     let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} />;
+                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
                   })}
 
                   {isDragging && (
@@ -635,7 +691,8 @@ const App = () => {
                       style={{
                         borderStyle: 'solid',
                         borderColor: '#000',
-                        width: '120px'
+                        width: '120px',
+                        padding: '4px'
                       }}
                       src={GetCards("CardBlank")}
                     />
@@ -677,7 +734,8 @@ const App = () => {
                       style={{
                         borderStyle: 'solid',
                         borderColor: '#000',
-                        width: '120px'
+                        width: '120px',
+                        padding: '4px'
                       }}
                       src={GetCards("CardBlank")}
                     />
