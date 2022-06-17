@@ -41,6 +41,9 @@ const DropTarget = (props) => {
       }
     }
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
+
+      console.log('hererere');
+
       if (index + 1 <= fromColData.length) {
 
         while (index < fromColData.length) {

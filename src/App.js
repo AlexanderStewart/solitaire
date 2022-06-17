@@ -235,6 +235,7 @@ const App = () => {
     else if (colName === "foun2") setFoun2(colData);
     else if (colName === "foun3") setFoun3(colData);
     else if (colName === "foun4") setFoun4(colData);
+    else if (colName === "stockpile") setStockpile(colData);
   };
 
   const changeIsDragging = (e) => {
