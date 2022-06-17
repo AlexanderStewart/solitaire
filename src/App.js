@@ -538,6 +538,7 @@ const App = () => {
                         borderColor: '#000',
                         width: '120px',
                         padding: '4px',
+                        borderRadius: '4px',
                         backgroundColor: '#f0fdf4'
                       }}
                       src={GetCards("CardBlank")}
@@ -570,6 +571,7 @@ const App = () => {
                         borderColor: '#000',
                         width: '120px',
                         padding: '4px',
+                        borderRadius: '4px',
                         backgroundColor: '#f0fdf4'
                       }}
                       src={GetCards("CardBlank")}
@@ -606,6 +608,7 @@ const App = () => {
                         borderColor: '#000',
                         width: '120px',
                         padding: '4px',
+                        borderRadius: '4px',
                         backgroundColor: '#f0fdf4'
                       }}
                       src={GetCards("CardBlank")}
@@ -637,6 +640,7 @@ const App = () => {
                         borderColor: '#000',
                         width: '120px',
                         padding: '4px',
+                        borderRadius: '4px',
                         backgroundColor: '#f0fdf4'
                       }}
                       src={GetCards("CardBlank")}
@@ -692,6 +696,7 @@ const App = () => {
                         borderStyle: 'solid',
                         borderColor: '#000',
                         width: '120px',
+                        borderRadius: '4px',
                         padding: '4px'
                       }}
                       src={GetCards("CardBlank")}
@@ -735,6 +740,7 @@ const App = () => {
                         borderStyle: 'solid',
                         borderColor: '#000',
                         width: '120px',
+                        borderRadius: '4px',
                         padding: '4px'
                       }}
                       src={GetCards("CardBlank")}
