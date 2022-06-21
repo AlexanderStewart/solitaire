@@ -288,7 +288,9 @@ const App = () => {
   }
 
   return (
-    <div style={{ overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb' }}>
+    <div style={{
+      overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb'
+    }}>
       <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
 
         <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
