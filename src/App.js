@@ -541,7 +541,7 @@ const App = () => {
 
 
             {/* Foundation Divs */}
-            <div style={{ flex: 1, flexDirection: 'column', marginTop: '8px' }}>
+            <div style={{ flex: 1, flexDirection: 'column', marginTop: '28px' }}>
               <div className="card-container">
                 <div style={{ display: "flex", flexDirection: "row" }}>
 
