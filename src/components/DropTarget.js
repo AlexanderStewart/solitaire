@@ -68,7 +68,7 @@ const DropTarget = (props) => {
   return (
     <div ref={drop}>
       <div
-        style={{ marginTop: -168 }}
+        style={{ marginTop: '-168px' }}
       >
         <img
           alt='card'

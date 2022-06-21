@@ -11,6 +11,10 @@ import ValidMoveFoundation from "./ValidMoveFoundation";
 
 import "./styles/Game.css";
 
+
+// Assets
+import { ReactComponent as Restart } from './assets/icons/restart.svg';
+
 const App = () => {
   // STATE
 
@@ -99,108 +103,92 @@ const App = () => {
   // FUNCTIONS
 
   const shuffleAndDeal = () => {
+
+    console.log('shuffleAndDeal');
+
+    // Flip all cards facedown
+    turnDeckFacedown();
+
     // Randomize the order of the deck array
     const shuffledDeck = randomizeArray(deck);
-    setDeck(shuffledDeck);
 
-    for (let i = 0; i < deck.length; i++) {
-      const card = deck[i];
+    const tempColA = [];
+    const tempColB = [];
+    const tempColC = [];
+    const tempColD = [];
+    const tempColE = [];
+    const tempColF = [];
+    const tempColG = [];
+    const tempStockpile = [];
+
+    for (let i = 0; i < shuffledDeck.length; i++) {
+      const card = shuffledDeck[i];
 
       // fill colG
       if (i < 7) {
-        let tempColG = colG;
         tempColG.push(card);
-        setColG(tempColG);
         continue;
       }
 
       // fill colF
       if (i < 13) {
-        let tempColF = colF;
         tempColF.push(card);
-        setColF(tempColF);
         continue;
       }
 
       // fill colE
       if (i < 18) {
-        let tempColE = colE;
         tempColE.push(card);
-        setColE(tempColE);
         continue;
       }
 
       // fill colD
       if (i < 22) {
-        let tempColD = colD;
         tempColD.push(card);
-        setColD(tempColD);
         continue;
       }
 
       // fill colC
       if (i < 25) {
-        let tempColC = colC;
         tempColC.push(card);
-        setColC(tempColC);
         continue;
       }
 
       // fill colB
       if (i < 27) {
-        let tempColB = colB;
         tempColB.push(card);
-        setColB(tempColB);
         continue;
       }
 
       // fill colA
       if (i < 28) {
-        let tempColA = colA;
         tempColA.push(card);
-        setColA(tempColA);
         continue;
       }
 
       if (i < 52) {
-        let tempStockpile = stockpile;
         tempStockpile.push(card);
-        setStockpile(tempStockpile);
         continue;
       }
     }
 
     // Flip the bottom card of each column up
-    const tempColA = colA;
     tempColA[tempColA.length - 1].faceUp = true;
-    setColA(tempColA);
-
-    const tempColB = colB;
     tempColB[tempColB.length - 1].faceUp = true;
-    setColB(tempColB);
-
-    const tempColC = colC;
     tempColC[tempColC.length - 1].faceUp = true;
-    setColC(tempColC);
-
-    const tempColD = colD;
     tempColD[tempColD.length - 1].faceUp = true;
-    setColD(tempColD);
-
-    const tempColE = colE;
     tempColE[tempColE.length - 1].faceUp = true;
-    setColE(tempColE);
-
-    const tempColF = colF;
     tempColF[tempColF.length - 1].faceUp = true;
-    setColF(tempColF);
-
-    const tempColG = colG;
     tempColG[tempColG.length - 1].faceUp = true;
-    setColG(tempColG);
-
-    const tempStockpile = stockpile;
     tempStockpile[tempStockpile.length - 1].faceUp = true;
+
+    setColA(tempColA);
+    setColB(tempColB);
+    setColC(tempColC);
+    setColD(tempColD);
+    setColE(tempColE);
+    setColF(tempColF);
+    setColG(tempColG);
     setStockpile(tempStockpile);
 
     setShuffledAndDealt(true);
@@ -222,6 +210,14 @@ const App = () => {
 
     return array;
   }
+
+  const turnDeckFacedown = () => {
+    const tempDeck = [...deck];
+    for (let i = 0; i < deck.length; i++) {
+      tempDeck[i].faceUp = false;
+    }
+    setDeck(tempDeck);
+  };
 
   const updateColInTableau = (colName, colData) => {
     if (colName === "colA") setColA(colData);
@@ -286,477 +282,495 @@ const App = () => {
   }
 
   return (
-    <div className="container">
-      <DndProvider backend={HTML5Backend}>
-        <div style={{ display: "flex", flexDirection: "col" }}>
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colA?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
+    <div style={{ overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb' }}>
+      <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
 
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colA}
-                  fromColName="colA"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colA}
-                toColName="colA"
-              />
-            )}
-          </div>
+        <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
 
-          <div className="space" />
-
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colB?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
-
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colB}
-                  fromColName="colB"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colB}
-                toColName="colB"
-              />
-            )}
-          </div>
-
-          <div className="space" />
-
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colC?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
-
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colC}
-                  fromColName="colC"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colC}
-                toColName="colC"
-              />
-            )}
-          </div>
-
-          <div className="space" />
-
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colD?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
-
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colD}
-                  fromColName="colD"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colD}
-                toColName="colD"
-              />
-            )}
-          </div>
-
-          <div className="space" />
-
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colE?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
-
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colE}
-                  fromColName="colE"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colE}
-                toColName="colE"
-              />
-            )}
-          </div>
-
-          <div className="space" />
-
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colF?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
-
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colF}
-                  fromColName="colF"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colF}
-                toColName="colF"
-              />
-            )}
-          </div>
-
-          <div className="space" />
-
-          <div>
-            <PlaceHolder src={GetCards("CardBlank")} />
-            {colG?.map((card, index) => {
-              let CardImage;
-              if (card.faceUp) CardImage = GetCards(card.name);
-              else CardImage = GetCards("CardReverse");
-
-              return card.faceUp ? (
-                <CardDraggable
-                  draggable
-                  key={card.name}
-                  card={card}
-                  src={CardImage}
-                  fromColData={colG}
-                  fromColName="colG"
-                  changeIsDragging={changeIsDragging}
-                />
-              ) : (
-                <Card key={card.name} card={card} src={CardImage} />
-              );
-            })}
-            {isDragging && (
-              <DropTarget
-                changeIsDragging={changeIsDragging}
-                updateColInTableau={updateColInTableau}
-                toColData={colG}
-                toColName="colG"
-              />
-            )}
-          </div>
-
-          <div className="space" />
-          <div className="space" />
-
-
-          {/* Foundation Divs */}
-          <div style={{ flex: 1, flexDirection: 'column' }}>
-            <div className="space" />
-            <div className="space" />
-            <div className="card-container">
-              <div style={{ display: "flex", flexDirection: "col" }}>
-
-                <div>
-                  <div>
-                    <img
-                      alt='card'
-                      draggable='false'
-                      style={{
-                        borderStyle: 'solid',
-                        borderColor: '#000',
-                        width: '120px',
-                        padding: '4px',
-                        borderRadius: '4px',
-                        backgroundColor: '#f0fdf4'
-                      }}
-                      src={GetCards("CardBlank")}
-                    />
-                  </div>
-
-                  {foun1?.map((card) => {
-                    let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                  })}
-
-                  {isDragging && (
-                    <DropTarget
-                      changeIsDragging={changeIsDragging}
-                      updateColInTableau={updateColInTableau}
-                      toColData={foun1}
-                      toColName="foun1"
-                    />
-                  )}
-                </div>
-
-                <div className="space" />
-                <div>
-                  <div>
-                    <img
-                      alt='card'
-                      draggable='false'
-                      style={{
-                        borderStyle: 'solid',
-                        borderColor: '#000',
-                        width: '120px',
-                        padding: '4px',
-                        borderRadius: '4px',
-                        backgroundColor: '#f0fdf4'
-                      }}
-                      src={GetCards("CardBlank")}
-                    />
-                  </div>
-
-                  {foun2?.map((card) => {
-                    let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                  })}
-
-                  {isDragging && (
-                    <DropTarget
-                      changeIsDragging={changeIsDragging}
-                      updateColInTableau={updateColInTableau}
-                      toColData={foun2}
-                      toColName="foun2"
-                    />
-                  )}
-                </div>
-              </div>
-
-              <div className="space" />
-              <div className="space" />
-
-              <div style={{ display: "flex", flexDirection: "col" }}>
-                <div>
-                  <div>
-                    <img
-                      alt='card'
-                      draggable='false'
-                      style={{
-                        borderStyle: 'solid',
-                        borderColor: '#000',
-                        width: '120px',
-                        padding: '4px',
-                        borderRadius: '4px',
-                        backgroundColor: '#f0fdf4'
-                      }}
-                      src={GetCards("CardBlank")}
-                    />
-                  </div>
-
-                  {foun3?.map((card) => {
-                    let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                  })}
-
-                  {isDragging && (
-                    <DropTarget
-                      changeIsDragging={changeIsDragging}
-                      updateColInTableau={updateColInTableau}
-                      toColData={foun3}
-                      toColName="foun3"
-                    />
-                  )}
-                </div>
-                <div className="space" />
-                <div>
-                  <div>
-                    <img
-                      alt='card'
-                      draggable='false'
-                      style={{
-                        borderStyle: 'solid',
-                        borderColor: '#000',
-                        width: '120px',
-                        padding: '4px',
-                        borderRadius: '4px',
-                        backgroundColor: '#f0fdf4'
-                      }}
-                      src={GetCards("CardBlank")}
-                    />
-                  </div>
-
-                  {foun4?.map((card) => {
-                    let CardImage = GetCards(card.name);
-                    return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                  })}
-
-                  {isDragging && (
-                    <DropTarget
-                      changeIsDragging={changeIsDragging}
-                      updateColInTableau={updateColInTableau}
-                      toColData={foun4}
-                      toColName="foun4"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="space" />
-            <div className="space" />
-
-            {/* Stockpile Divs */}
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <div>
-                <div style={{ marginBottom: 20 }}>
-                  <span>STOCKPILE</span>
-                </div>
-                <div onClick={() => {
-
-                  if (stockpile.length === 0) return;
-
-                  const tempStockpile = [...stockpile];
-                  const cardToMove = tempStockpile.pop();
-
-                  if (stockpile.length !== 1) tempStockpile[tempStockpile.length - 1].faceUp = true;
-
-                  const tempTalonPile = [...talonPile];
-                  tempTalonPile.push(cardToMove);
-
-                  setStockpile(tempStockpile);
-                  setTalonPile(tempTalonPile);
-                }}>
-                  <div>
-                    <img
-                      alt='card'
-                      draggable='false'
-                      style={{
-                        borderStyle: 'solid',
-                        borderColor: '#000',
-                        width: '120px',
-                        borderRadius: '4px',
-                        padding: '4px'
-                      }}
-                      src={GetCards("CardBlank")}
-                    />
-                  </div>
-                  {stockpile?.map((card, index) => {
-                    let CardImage;
-                    if (card.faceUp) CardImage = GetCards(card.name);
-                    else CardImage = GetCards("CardReverse");
-
-                    return card.faceUp ? (
-                      <CardDraggable
-                        draggable
-                        key={card.name}
-                        card={card}
-                        src={CardImage}
-                        fromColData={stockpile}
-                        fromColName="stockpile"
-                        changeIsDragging={changeIsDragging}
-                        isStockpile={true}
-                      />
-                    ) : (
-                      <Card key={card.name} card={card} src={CardImage} isStockpile={true} />
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="space" />
-
-              <div>
-                <div style={{ marginBottom: 20 }}>
-                  <span>TALON PILE</span>
-                </div>
-                <div>
-                  <div>
-                    <img
-                      alt='card'
-                      draggable='false'
-                      style={{
-                        borderStyle: 'solid',
-                        borderColor: '#000',
-                        width: '120px',
-                        borderRadius: '4px',
-                        padding: '4px'
-                      }}
-                      src={GetCards("CardBlank")}
-                    />
-                  </div>
-                  {talonPile?.map((card, index) => {
-                    const CardImage = GetCards(card.name);
-                    return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
+        <div style={{
+          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        }}
+          onClick={() => shuffleAndDeal()}
+        >
+          <span style={{ paddingRight: '4px' }}>RESTART</span>
+          <Restart width={20} height={20} />
         </div>
-      </DndProvider>
+      </div>
+
+      <div className="container">
+        <DndProvider backend={HTML5Backend}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colA?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colA}
+                    fromColName="colA"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colA}
+                  toColName="colA"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colB?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colB}
+                    fromColName="colB"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colB}
+                  toColName="colB"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colC?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colC}
+                    fromColName="colC"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colC}
+                  toColName="colC"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colD?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colD}
+                    fromColName="colD"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colD}
+                  toColName="colD"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colE?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colE}
+                    fromColName="colE"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colE}
+                  toColName="colE"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colF?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colF}
+                    fromColName="colF"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colF}
+                  toColName="colF"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+
+            <div>
+              <PlaceHolder src={GetCards("CardBlank")} />
+              {colG?.map((card, index) => {
+                let CardImage;
+                if (card.faceUp) CardImage = GetCards(card.name);
+                else CardImage = GetCards("CardReverse");
+
+                return card.faceUp ? (
+                  <CardDraggable
+                    draggable
+                    key={card.name}
+                    card={card}
+                    src={CardImage}
+                    fromColData={colG}
+                    fromColName="colG"
+                    changeIsDragging={changeIsDragging}
+                  />
+                ) : (
+                  <Card key={card.name} card={card} src={CardImage} />
+                );
+              })}
+              {isDragging && (
+                <DropTarget
+                  changeIsDragging={changeIsDragging}
+                  updateColInTableau={updateColInTableau}
+                  toColData={colG}
+                  toColName="colG"
+                />
+              )}
+            </div>
+
+            <div className="space" />
+            <div className="space" />
+
+
+            {/* Foundation Divs */}
+            <div style={{ flex: 1, flexDirection: 'column' }}>
+
+              <div className="space" />
+              <div className="space" />
+              <div className="card-container">
+                <div style={{ display: "flex", flexDirection: "row" }}>
+
+                  <div>
+                    <div>
+                      <img
+                        alt='card'
+                        draggable='false'
+                        style={{
+                          borderStyle: 'solid',
+                          borderColor: '#000',
+                          width: '120px',
+                          padding: '4px',
+                          borderRadius: '4px',
+                          backgroundColor: '#f0fdf4'
+                        }}
+                        src={GetCards("CardBlank")}
+                      />
+                    </div>
+
+                    {foun1?.map((card) => {
+                      let CardImage = GetCards(card.name);
+                      return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                    })}
+
+                    {isDragging && (
+                      <DropTarget
+                        changeIsDragging={changeIsDragging}
+                        updateColInTableau={updateColInTableau}
+                        toColData={foun1}
+                        toColName="foun1"
+                      />
+                    )}
+                  </div>
+
+                  <div className="space" />
+                  <div>
+                    <div>
+                      <img
+                        alt='card'
+                        draggable='false'
+                        style={{
+                          borderStyle: 'solid',
+                          borderColor: '#000',
+                          width: '120px',
+                          padding: '4px',
+                          borderRadius: '4px',
+                          backgroundColor: '#f0fdf4'
+                        }}
+                        src={GetCards("CardBlank")}
+                      />
+                    </div>
+
+                    {foun2?.map((card) => {
+                      let CardImage = GetCards(card.name);
+                      return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                    })}
+
+                    {isDragging && (
+                      <DropTarget
+                        changeIsDragging={changeIsDragging}
+                        updateColInTableau={updateColInTableau}
+                        toColData={foun2}
+                        toColName="foun2"
+                      />
+                    )}
+                  </div>
+                </div>
+
+                <div className="space" />
+                <div className="space" />
+
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div>
+                    <div>
+                      <img
+                        alt='card'
+                        draggable='false'
+                        style={{
+                          borderStyle: 'solid',
+                          borderColor: '#000',
+                          width: '120px',
+                          padding: '4px',
+                          borderRadius: '4px',
+                          backgroundColor: '#f0fdf4'
+                        }}
+                        src={GetCards("CardBlank")}
+                      />
+                    </div>
+
+                    {foun3?.map((card) => {
+                      let CardImage = GetCards(card.name);
+                      return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                    })}
+
+                    {isDragging && (
+                      <DropTarget
+                        changeIsDragging={changeIsDragging}
+                        updateColInTableau={updateColInTableau}
+                        toColData={foun3}
+                        toColName="foun3"
+                      />
+                    )}
+                  </div>
+                  <div className="space" />
+                  <div>
+                    <div>
+                      <img
+                        alt='card'
+                        draggable='false'
+                        style={{
+                          borderStyle: 'solid',
+                          borderColor: '#000',
+                          width: '120px',
+                          padding: '4px',
+                          borderRadius: '4px',
+                          backgroundColor: '#f0fdf4'
+                        }}
+                        src={GetCards("CardBlank")}
+                      />
+                    </div>
+
+                    {foun4?.map((card) => {
+                      let CardImage = GetCards(card.name);
+                      return <Card key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                    })}
+
+                    {isDragging && (
+                      <DropTarget
+                        changeIsDragging={changeIsDragging}
+                        updateColInTableau={updateColInTableau}
+                        toColData={foun4}
+                        toColName="foun4"
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space" />
+              <div className="space" />
+
+              {/* Stockpile Divs */}
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div>
+                  <div style={{ marginBottom: 20 }}>
+                    <span>STOCKPILE</span>
+                  </div>
+                  <div onClick={() => {
+
+                    if (stockpile.length === 0) return;
+
+                    const tempStockpile = [...stockpile];
+                    const cardToMove = tempStockpile.pop();
+
+                    if (stockpile.length !== 1) tempStockpile[tempStockpile.length - 1].faceUp = true;
+
+                    const tempTalonPile = [...talonPile];
+                    tempTalonPile.push(cardToMove);
+
+                    setStockpile(tempStockpile);
+                    setTalonPile(tempTalonPile);
+                  }}>
+                    <div>
+                      <img
+                        alt='card'
+                        draggable='false'
+                        style={{
+                          borderStyle: 'solid',
+                          borderColor: '#000',
+                          width: '120px',
+                          borderRadius: '4px',
+                          padding: '4px'
+                        }}
+                        src={GetCards("CardBlank")}
+                      />
+                    </div>
+                    {stockpile?.map((card, index) => {
+                      let CardImage;
+                      if (card.faceUp) CardImage = GetCards(card.name);
+                      else CardImage = GetCards("CardReverse");
+
+                      return card.faceUp ? (
+                        <CardDraggable
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={stockpile}
+                          fromColName="stockpile"
+                          changeIsDragging={changeIsDragging}
+                          isStockpile={true}
+                        />
+                      ) : (
+                        <Card key={card.name} card={card} src={CardImage} isStockpile={true} />
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="space" />
+
+                <div>
+                  <div style={{ marginBottom: 20 }}>
+                    <span>TALON PILE</span>
+                  </div>
+                  <div>
+                    <div>
+                      <img
+                        alt='card'
+                        draggable='false'
+                        style={{
+                          borderStyle: 'solid',
+                          borderColor: '#000',
+                          width: '120px',
+                          borderRadius: '4px',
+                          padding: '4px'
+                        }}
+                        src={GetCards("CardBlank")}
+                      />
+                    </div>
+                    {talonPile?.map((card, index) => {
+                      const CardImage = GetCards(card.name);
+                      return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </DndProvider>
+      </div>
     </div>
   );
 };
