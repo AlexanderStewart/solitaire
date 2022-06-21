@@ -90,7 +90,6 @@ const App = () => {
   const [foun4, setFoun4] = useState([]);
   const [stockpile, setStockpile] = useState([]);
   const [talonPile, setTalonPile] = useState([]);
-  const [wastePile, setWastePile] = useState([]);
 
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
@@ -210,6 +209,13 @@ const App = () => {
 
     return array;
   }
+
+  const reStock = () => {
+    const tempStockpile = [...talonPile];
+    tempStockpile.reverse();
+    setStockpile(tempStockpile);
+    setTalonPile([]);
+  };
 
   const turnDeckFacedown = () => {
     const tempDeck = [...deck];
@@ -535,10 +541,7 @@ const App = () => {
 
 
             {/* Foundation Divs */}
-            <div style={{ flex: 1, flexDirection: 'column' }}>
-
-              <div className="space" />
-              <div className="space" />
+            <div style={{ flex: 1, flexDirection: 'column', marginTop: '8px' }}>
               <div className="card-container">
                 <div style={{ display: "flex", flexDirection: "row" }}>
 
@@ -742,6 +745,16 @@ const App = () => {
                 <div className="space" />
 
                 <div>
+
+
+                  {stockpile.length === 0 && <div style={{
+                    cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
+                  }}
+                    onClick={() => reStock()}
+                  >
+                    <span style={{ paddingRight: '4px' }}>RE-STOCK</span>
+                    <Restart width={20} height={20} />
+                  </div>}
                   <div style={{ marginBottom: 20 }}>
                     <span>TALON PILE</span>
                   </div>
