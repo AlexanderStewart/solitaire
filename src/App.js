@@ -103,108 +103,92 @@ const App = () => {
   // FUNCTIONS
 
   const shuffleAndDeal = () => {
+
+    console.log('shuffleAndDeal');
+
+    // Flip all cards facedown
+    turnDeckFacedown();
+
     // Randomize the order of the deck array
     const shuffledDeck = randomizeArray(deck);
-    setDeck(shuffledDeck);
 
-    for (let i = 0; i < deck.length; i++) {
-      const card = deck[i];
+    const tempColA = [];
+    const tempColB = [];
+    const tempColC = [];
+    const tempColD = [];
+    const tempColE = [];
+    const tempColF = [];
+    const tempColG = [];
+    const tempStockpile = [];
+
+    for (let i = 0; i < shuffledDeck.length; i++) {
+      const card = shuffledDeck[i];
 
       // fill colG
       if (i < 7) {
-        let tempColG = colG;
         tempColG.push(card);
-        setColG(tempColG);
         continue;
       }
 
       // fill colF
       if (i < 13) {
-        let tempColF = colF;
         tempColF.push(card);
-        setColF(tempColF);
         continue;
       }
 
       // fill colE
       if (i < 18) {
-        let tempColE = colE;
         tempColE.push(card);
-        setColE(tempColE);
         continue;
       }
 
       // fill colD
       if (i < 22) {
-        let tempColD = colD;
         tempColD.push(card);
-        setColD(tempColD);
         continue;
       }
 
       // fill colC
       if (i < 25) {
-        let tempColC = colC;
         tempColC.push(card);
-        setColC(tempColC);
         continue;
       }
 
       // fill colB
       if (i < 27) {
-        let tempColB = colB;
         tempColB.push(card);
-        setColB(tempColB);
         continue;
       }
 
       // fill colA
       if (i < 28) {
-        let tempColA = colA;
         tempColA.push(card);
-        setColA(tempColA);
         continue;
       }
 
       if (i < 52) {
-        let tempStockpile = stockpile;
         tempStockpile.push(card);
-        setStockpile(tempStockpile);
         continue;
       }
     }
 
     // Flip the bottom card of each column up
-    const tempColA = colA;
     tempColA[tempColA.length - 1].faceUp = true;
-    setColA(tempColA);
-
-    const tempColB = colB;
     tempColB[tempColB.length - 1].faceUp = true;
-    setColB(tempColB);
-
-    const tempColC = colC;
     tempColC[tempColC.length - 1].faceUp = true;
-    setColC(tempColC);
-
-    const tempColD = colD;
     tempColD[tempColD.length - 1].faceUp = true;
-    setColD(tempColD);
-
-    const tempColE = colE;
     tempColE[tempColE.length - 1].faceUp = true;
-    setColE(tempColE);
-
-    const tempColF = colF;
     tempColF[tempColF.length - 1].faceUp = true;
-    setColF(tempColF);
-
-    const tempColG = colG;
     tempColG[tempColG.length - 1].faceUp = true;
-    setColG(tempColG);
-
-    const tempStockpile = stockpile;
     tempStockpile[tempStockpile.length - 1].faceUp = true;
+
+    setColA(tempColA);
+    setColB(tempColB);
+    setColC(tempColC);
+    setColD(tempColD);
+    setColE(tempColE);
+    setColF(tempColF);
+    setColG(tempColG);
     setStockpile(tempStockpile);
 
     setShuffledAndDealt(true);
@@ -226,6 +210,14 @@ const App = () => {
 
     return array;
   }
+
+  const turnDeckFacedown = () => {
+    const tempDeck = [...deck];
+    for (let i = 0; i < deck.length; i++) {
+      tempDeck[i].faceUp = false;
+    }
+    setDeck(tempDeck);
+  };
 
   const updateColInTableau = (colName, colData) => {
     if (colName === "colA") setColA(colData);
@@ -296,8 +288,10 @@ const App = () => {
         <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
 
         <div style={{
-          padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
-        }}>
+          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        }}
+          onClick={() => shuffleAndDeal()}
+        >
           <span style={{ paddingRight: '4px' }}>RESTART</span>
           <Restart width={20} height={20} />
         </div>
