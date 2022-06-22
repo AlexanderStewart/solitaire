@@ -539,14 +539,17 @@ const App = () => {
             </div>
 
             <div className="space" />
-            <div className="space" />
 
 
             {/* Foundation Divs */}
-            <div style={{ flex: 1, flexDirection: 'column', marginTop: '28px' }}>
-              <div className="card-container">
-                <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ flex: 1, flexDirection: 'column' }}>
+              <div style={{ padding: '20px', borderColor: '#000', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
 
+                <div style={{ marginBottom: 20 }}>
+                  <span>FOUNDATIONS</span>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "row" }}>
                   <div>
                     <div>
                       <img
@@ -558,7 +561,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
-                          backgroundColor: '#f0fdf4'
+                          backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -591,7 +594,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
-                          backgroundColor: '#f0fdf4'
+                          backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -614,7 +617,6 @@ const App = () => {
                 </div>
 
                 <div className="space" />
-                <div className="space" />
 
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <div>
@@ -628,7 +630,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
-                          backgroundColor: '#f0fdf4'
+                          backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -660,7 +662,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
-                          backgroundColor: '#f0fdf4'
+                          backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -684,10 +686,9 @@ const App = () => {
               </div>
 
               <div className="space" />
-              <div className="space" />
 
               {/* Stockpile Divs */}
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '20px' }}>
                 <div>
                   <div style={{ marginBottom: 20 }}>
                     <span>STOCKPILE</span>
