@@ -189,6 +189,11 @@ const App = () => {
     setColF(tempColF);
     setColG(tempColG);
     setStockpile(tempStockpile);
+    setTalonPile([]);
+    setFoun1([]);
+    setFoun2([]);
+    setFoun3([]);
+    setFoun4([]);
 
     setShuffledAndDealt(true);
   };
