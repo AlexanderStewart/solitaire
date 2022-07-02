@@ -2,7 +2,6 @@ import { useDrop } from 'react-dnd';
 import GetCards from '../GetCards';
 import ValidMoveFoundation from '../ValidMoveFoundation';
 import ValidMoveTableau from '../ValidMoveTableau';
-import Card from './PlaceHolder';
 
 const DropTarget = (props) => {
 
