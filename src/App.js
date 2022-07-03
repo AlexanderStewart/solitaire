@@ -9,7 +9,7 @@ import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
 import ValidMoveFoundation from "./ValidMoveFoundation";
 
-import "./styles/Game.css";
+import "./styles/Game.scss";
 
 
 // Assets
@@ -249,34 +249,6 @@ const App = () => {
     setIsDragging(e);
   };
 
-  const numSelected = () => {
-    let count = 0;
-
-    for (let i = 0; i < colA.length; i++) {
-      if (colA[i].selected) count++;
-    }
-    for (let i = 0; i < colB.length; i++) {
-      if (colB[i].selected) count++;
-    }
-    for (let i = 0; i < colC.length; i++) {
-      if (colC[i].selected) count++;
-    }
-    for (let i = 0; i < colD.length; i++) {
-      if (colD[i].selected) count++;
-    }
-    for (let i = 0; i < colE.length; i++) {
-      if (colE[i].selected) count++;
-    }
-    for (let i = 0; i < colF.length; i++) {
-      if (colF[i].selected) count++;
-    }
-    for (let i = 0; i < colG.length; i++) {
-      if (colG[i].selected) count++;
-    }
-
-    return count;
-  };
-
   // USE EFFECT
 
   // Shuffle deck only when the page refreshes
@@ -294,7 +266,7 @@ const App = () => {
 
   return (
     <div style={{
-      overflow: 'hidden', height: '800px', backgroundColor: '#fffbeb'
+      overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb'
     }}>
       <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 

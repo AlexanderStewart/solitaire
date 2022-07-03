@@ -1,3 +1,5 @@
+$offset: -184.2px;
+
 .container {
   padding: 30px;
   padding-top: 120px;
@@ -9,12 +11,12 @@
 }
 
 .stockpile-card-container {
-  margin-top: calc(800px * -0.2295);
+  margin-top: $offset;
   z-index: 50;
 }
 
 .talon-card-container {
-  margin-top: -183px;
+  margin-top: $offset;
   z-index: 50;
 }
 
@@ -96,4 +98,18 @@
   border-color: #000;
   border-width: 2px;
   opacity: 0.5;
+}
+
+@media (min-width: 1600px) {
+  $secondOffset: -183.7px;
+
+  .stockpile-card-container {
+      margin-top: $secondOffset;
+      z-index: 50;
+    }
+  
+    .talon-card-container {
+      margin-top: $secondOffset;
+      z-index: 50;
+    }
 }
