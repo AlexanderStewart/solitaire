@@ -9,7 +9,7 @@ import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
 import ValidMoveFoundation from "./ValidMoveFoundation";
 
-import "./styles/Game.css";
+import "./styles/Game.scss";
 
 
 // Assets
@@ -249,34 +249,6 @@ const App = () => {
     setIsDragging(e);
   };
 
-  const numSelected = () => {
-    let count = 0;
-
-    for (let i = 0; i < colA.length; i++) {
-      if (colA[i].selected) count++;
-    }
-    for (let i = 0; i < colB.length; i++) {
-      if (colB[i].selected) count++;
-    }
-    for (let i = 0; i < colC.length; i++) {
-      if (colC[i].selected) count++;
-    }
-    for (let i = 0; i < colD.length; i++) {
-      if (colD[i].selected) count++;
-    }
-    for (let i = 0; i < colE.length; i++) {
-      if (colE[i].selected) count++;
-    }
-    for (let i = 0; i < colF.length; i++) {
-      if (colF[i].selected) count++;
-    }
-    for (let i = 0; i < colG.length; i++) {
-      if (colG[i].selected) count++;
-    }
-
-    return count;
-  };
-
   // USE EFFECT
 
   // Shuffle deck only when the page refreshes
@@ -296,12 +268,12 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb'
     }}>
-      <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
         <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
 
         <div style={{
-          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'flex', alignItems: 'center'
         }}
           onClick={() => shuffleAndDeal()}
         >
@@ -548,7 +520,7 @@ const App = () => {
 
             {/* Foundation Divs */}
             <div style={{ flex: 1, flexDirection: 'column' }}>
-              <div style={{ padding: '20px', borderColor: '#000', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
+              <div style={{ padding: '20px', borderColor: '#000', borderStyle: 'solid', borderRadius: '4px', borderWidth: '2px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
 
                 <div style={{ marginBottom: 20 }}>
                   <span>FOUNDATIONS</span>
@@ -566,6 +538,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -599,6 +572,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -635,6 +609,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -667,6 +642,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -720,8 +696,10 @@ const App = () => {
                         style={{
                           borderStyle: 'solid',
                           borderColor: '#000',
+                          borderWidth: '3px',
                           width: '120px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           padding: '4px'
                         }}
                         src={GetCards("CardBlank")}
@@ -756,7 +734,7 @@ const App = () => {
 
 
                   {stockpile.length === 0 && <div style={{
-                    cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
+                    cursor: 'pointer', padding: '8px 16px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
                   }}
                     onClick={() => reStock()}
                   >
@@ -776,6 +754,7 @@ const App = () => {
                           borderColor: '#000',
                           width: '120px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           padding: '4px'
                         }}
                         src={GetCards("CardBlank")}
