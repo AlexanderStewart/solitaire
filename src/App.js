@@ -9,7 +9,7 @@ import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
 import ValidMoveFoundation from "./ValidMoveFoundation";
 
-import "./styles/Game.css";
+import "./styles/Game.scss";
 
 
 // Assets
@@ -296,7 +296,7 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb'
     }}>
-      <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
         <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
 
@@ -548,7 +548,7 @@ const App = () => {
 
             {/* Foundation Divs */}
             <div style={{ flex: 1, flexDirection: 'column' }}>
-              <div style={{ padding: '20px', borderColor: '#000', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
+              <div style={{ padding: '20px', borderColor: '#000', borderWidth: '2px', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
 
                 <div style={{ marginBottom: 20 }}>
                   <span>FOUNDATIONS</span>
@@ -566,6 +566,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -599,6 +600,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -635,6 +637,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -667,6 +670,7 @@ const App = () => {
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           backgroundColor: '#fde68a'
                         }}
                         src={GetCards("CardBlank")}
@@ -722,6 +726,7 @@ const App = () => {
                           borderColor: '#000',
                           width: '120px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           padding: '4px'
                         }}
                         src={GetCards("CardBlank")}
@@ -756,7 +761,7 @@ const App = () => {
 
 
                   {stockpile.length === 0 && <div style={{
-                    cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
+                    cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderWidth: '2px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
                   }}
                     onClick={() => reStock()}
                   >
@@ -776,6 +781,7 @@ const App = () => {
                           borderColor: '#000',
                           width: '120px',
                           borderRadius: '4px',
+                          borderWidth: '2px',
                           padding: '4px'
                         }}
                         src={GetCards("CardBlank")}
