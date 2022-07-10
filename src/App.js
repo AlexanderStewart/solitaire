@@ -229,7 +229,6 @@ const App = () => {
       for (let i = 0; i < 4; i++) {
 
         if (validMoveFoundation(foundsData[i], card)) {
-          let fromColData = stockpile;
           let toColData = foundsData[i];
           const movedCard = fromColData.pop();
 
@@ -277,15 +276,6 @@ const App = () => {
     }
     else {
       console.log('hit');
-
-      let fromColData;
-      if (fromColName === 'colA') fromColData = [...colA];
-      if (fromColName === 'colB') fromColData = [...colB];
-      if (fromColName === 'colC') fromColData = [...colC];
-      if (fromColName === 'colD') fromColData = [...colD];
-      if (fromColName === 'colE') fromColData = [...colE];
-      if (fromColName === 'colF') fromColData = [...colF];
-      if (fromColName === 'colG') fromColData = [...colG];
 
       for (let i = 0; i < 4; i++) {
 
