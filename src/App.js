@@ -216,7 +216,9 @@ const App = () => {
     return array;
   }
 
-  const autoStack = (fromColName, fromColData, card) => {
+  const autoStack = (fromColName, fromColDataPassed, card) => {
+
+    const fromColData = [...fromColDataPassed];
 
     const foundsData = [foun1, foun2, foun3, foun4];
     const foundsName = ['foun1', 'foun2', 'foun3', 'foun4'];
@@ -236,11 +238,10 @@ const App = () => {
             fromColData[fromColData.length - 1].faceUp = true;
           }
 
-          updateColInTableau(fromColName, fromColData);
-
           // then add card to new column
           toColData.push(movedCard);
           updateColInTableau(foundsName[i], toColData);
+          updateColInTableau('stockpile', fromColData);
 
           return true;
         }
@@ -252,21 +253,18 @@ const App = () => {
 
         if (validMoveTableau(stockpile, tableauData[i], movedCard)) {
           const tempStockpileData = [...stockpile];
-          const tempTableauData = [...tableauData[i]];
+          const tempTableauData = tableauData[i];
 
           const card = tempStockpileData.pop();
+
+          if (tempStockpileData.length !== 0) {
+            tempStockpileData[tempStockpileData.length - 1].faceUp = true;
+          }
+
           tempTableauData.push(card);
 
-          setStockpile(tempStockpileData);
-
-          const nameOfColumn = tableauName[i];
-          if (nameOfColumn === 'colA') setColA(tempTableauData);
-          if (nameOfColumn === 'colB') setColB(tempTableauData);
-          if (nameOfColumn === 'colC') setColC(tempTableauData);
-          if (nameOfColumn === 'colD') setColD(tempTableauData);
-          if (nameOfColumn === 'colE') setColE(tempTableauData);
-          if (nameOfColumn === 'colF') setColF(tempTableauData);
-          if (nameOfColumn === 'colG') setColG(tempTableauData);
+          updateColInTableau(tableauName[i], tempTableauData);
+          updateColInTableau('stockpile', tempStockpileData);
 
           return true;
         }
@@ -811,21 +809,7 @@ const App = () => {
                   <div style={{ marginBottom: 20 }}>
                     <span>STOCKPILE</span>
                   </div>
-                  <div onClick={() => {
-
-                    if (stockpile.length === 0) return;
-
-                    const tempStockpile = [...stockpile];
-                    const cardToMove = tempStockpile.pop();
-
-                    if (stockpile.length !== 1) tempStockpile[tempStockpile.length - 1].faceUp = true;
-
-                    const tempTalonPile = [...talonPile];
-                    tempTalonPile.push(cardToMove);
-
-                    setStockpile(tempStockpile);
-                    setTalonPile(tempTalonPile);
-                  }}>
+                  <div>
                     <div>
                       <img
                         alt='card'
@@ -849,18 +833,18 @@ const App = () => {
                       return card.faceUp ? (
                         <div key={card.name} onClick={() => {
 
-                          const tempStockpile = [...stockpile];
-                          const cardToMove = tempStockpile.pop();
-                          if (stockpile.length === 0) return;
-
-                          if (stockpile.length !== 1) tempStockpile[tempStockpile.length - 1].faceUp = true;
-
-                          const tempTalonPile = [...talonPile];
-                          tempTalonPile.push(cardToMove);
-
                           const auto = autoStack('stockpile', stockpile, card);
 
                           if (!auto) {
+                            const tempStockpile = [...stockpile];
+                            const cardToMove = tempStockpile.pop();
+                            if (stockpile.length === 0) return;
+
+                            if (stockpile.length !== 1) tempStockpile[tempStockpile.length - 1].faceUp = true;
+
+                            const tempTalonPile = [...talonPile];
+                            tempTalonPile.push(cardToMove);
+
                             setStockpile(tempStockpile);
                             setTalonPile(tempTalonPile);
                           }
