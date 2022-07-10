@@ -216,7 +216,7 @@ const App = () => {
     return array;
   }
 
-  const autoStack = (fromColName, card) => {
+  const autoStack = (fromColName, fromColData, card) => {
 
     const foundsData = [foun1, foun2, foun3, foun4];
     const foundsName = ['foun1', 'foun2', 'foun3', 'foun4'];
@@ -305,8 +305,45 @@ const App = () => {
 
           return true;
         }
-        // Add functionality to move to different columns
       }
+
+      for (let i = 0; i < tableauData.length; i++) {
+
+        const movedCard = fromColData[fromColData.length - 1];
+
+        if (validMoveTableau(fromColData, tableauData[i], movedCard)) {
+          const tempTableauDataFrom = [...fromColData];
+          const tempTableauDataTo = [...tableauData[i]];
+
+          const card = tempTableauDataFrom.pop();
+          if (tempTableauDataFrom.length !== 0) {
+            tempTableauDataFrom[tempTableauDataFrom.length - 1].faceUp = true;
+          }
+
+
+          tempTableauDataTo.push(card);
+
+          if (fromColName === 'colA') setColA(tempTableauDataFrom);
+          if (fromColName === 'colB') setColB(tempTableauDataFrom);
+          if (fromColName === 'colC') setColC(tempTableauDataFrom);
+          if (fromColName === 'colD') setColD(tempTableauDataFrom);
+          if (fromColName === 'colE') setColE(tempTableauDataFrom);
+          if (fromColName === 'colF') setColF(tempTableauDataFrom);
+          if (fromColName === 'colG') setColG(tempTableauDataFrom);
+
+          const nameOfColumn = tableauName[i];
+          if (nameOfColumn === 'colA') setColA(tempTableauDataTo);
+          if (nameOfColumn === 'colB') setColB(tempTableauDataTo);
+          if (nameOfColumn === 'colC') setColC(tempTableauDataTo);
+          if (nameOfColumn === 'colD') setColD(tempTableauDataTo);
+          if (nameOfColumn === 'colE') setColE(tempTableauDataTo);
+          if (nameOfColumn === 'colF') setColF(tempTableauDataTo);
+          if (nameOfColumn === 'colG') setColG(tempTableauDataTo);
+
+          return true;
+        }
+      }
+
       return false;
     }
   };
@@ -390,7 +427,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colA', card)}>
+                  <div key={card.name} onClick={() => autoStack('colA', colA, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -425,7 +462,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colB', card)}>
+                  <div key={card.name} onClick={() => autoStack('colB', colB, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -460,7 +497,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colC', card)}>
+                  <div key={card.name} onClick={() => autoStack('colC', colC, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -495,7 +532,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colD', card)}>
+                  <div key={card.name} onClick={() => autoStack('colD', colD, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -530,7 +567,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colE', card)}>
+                  <div key={card.name} onClick={() => autoStack('colE', colE, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -565,7 +602,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colF', card)}>
+                  <div key={card.name} onClick={() => autoStack('colF', colF, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -600,7 +637,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onClick={() => autoStack('colG', card)}>
+                  <div key={card.name} onClick={() => autoStack('colG', colG, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -831,7 +868,7 @@ const App = () => {
                           const tempTalonPile = [...talonPile];
                           tempTalonPile.push(cardToMove);
 
-                          const auto = autoStack('stockpile', card);
+                          const auto = autoStack('stockpile', stockpile, card);
 
                           if (!auto) {
                             setStockpile(tempStockpile);
