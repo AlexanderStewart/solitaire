@@ -76,6 +76,8 @@ const App = () => {
     { name: "KSpade", faceUp: false, rank: 13, isRed: false, suit: 'spade' },
   ]);
 
+  const [score, setScore] = useState(0);
+
   // Each column in the Tableau is an array of card objects.
   // Right now they're empty but when shuffleAndDeal() is called they will be filled according to the start game rules
   const [colA, setColA] = useState([]);
@@ -363,6 +365,7 @@ const App = () => {
     else if (colName === "foun3") setFoun3(colData);
     else if (colName === "foun4") setFoun4(colData);
     else if (colName === "stockpile") setStockpile(colData);
+    else if (colName === "talon") setTalonPile(colData);
   };
 
   const changeIsDragging = (e) => {
@@ -391,6 +394,10 @@ const App = () => {
       <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
         <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
+
+        <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#4ade80', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
+          <span style={{ fontSize: '18px' }}>SCORE: {score} POINTS</span>
+        </div>
 
         <div style={{
           cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
@@ -898,10 +905,21 @@ const App = () => {
                         src={GetCards("CardBlank")}
                       />
                     </div>
-                    {talonPile?.map((card, index) => {
-                      const CardImage = GetCards(card.name);
-                      return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
-                    })}
+                    <div>
+                      {talonPile?.map((card, index) => {
+                        const CardImage = GetCards(card.name);
+                        return <Card index={index} key={card.name} card={card} src={CardImage} isStockpile={true} />;
+
+                      })}
+                      {isDragging && (
+                        <DropTarget
+                          changeIsDragging={changeIsDragging}
+                          updateColInTableau={updateColInTableau}
+                          toColData={talonPile}
+                          toColName="talon"
+                        />
+                      )}
+                    </div>;
                   </div>
                 </div>
               </div>
