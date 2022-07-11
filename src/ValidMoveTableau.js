@@ -8,11 +8,8 @@ const ValidMoveTableau = (fromColData, toColData, movedCard) => {
   // console.log(toColData);
   // console.log('movedCard');
   // console.log(movedCard);
-  
-  const recievingCard = toColData[toColData.length - 1];
-  console.log(recievingCard);
 
-  console.log(toColData.length);
+  const recievingCard = toColData[toColData.length - 1];
 
   // *********************** TODO: write rule logic here ***********************
 
@@ -23,7 +20,7 @@ const ValidMoveTableau = (fromColData, toColData, movedCard) => {
   if (toColData.length === 0 && movedCard.rank === 13) { return true; }
 
   // check if recieving card is a rank higher and diff color than moving card
-  if (recievingCard.rank - 1 === movedCard.rank && recievingCard.isRed !== movedCard.isRed) {return true;}
+  if (recievingCard.rank - 1 === movedCard.rank && recievingCard.isRed !== movedCard.isRed) { return true; }
 
   return false;
 };

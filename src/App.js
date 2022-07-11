@@ -273,22 +273,26 @@ const App = () => {
       return false;
     }
     else {
-      console.log('hit');
+
+      const index = fromColData.findIndex(val => val.name === card.name);
+      console.log(index);
+      console.log(card);
 
       for (let i = 0; i < 4; i++) {
 
         if (validMoveFoundation(foundsData[i], card)) {
+
+          console.log('index: ' + index);
           let toColData = [...foundsData[i]];
-          const movedCard = fromColData.pop();
+
+          const myCard = fromColData.pop();
+          toColData.push(myCard);
 
           if (fromColData.length !== 0) {
             fromColData[fromColData.length - 1].faceUp = true;
           }
 
           updateColInTableau(fromColName, fromColData);
-
-          // then add card to new column
-          toColData.push(movedCard);
           updateColInTableau(foundsName[i], toColData);
 
           return true;
@@ -297,36 +301,31 @@ const App = () => {
 
       for (let i = 0; i < tableauData.length; i++) {
 
-        const movedCard = fromColData[fromColData.length - 1];
+        if (validMoveTableau(fromColData, tableauData[i], card)) {
 
-        if (validMoveTableau(fromColData, tableauData[i], movedCard)) {
-          const tempTableauDataFrom = [...fromColData];
-          const tempTableauDataTo = [...tableauData[i]];
+          console.log('valid move');
 
-          const card = tempTableauDataFrom.pop();
-          if (tempTableauDataFrom.length !== 0) {
-            tempTableauDataFrom[tempTableauDataFrom.length - 1].faceUp = true;
+          const tempTableauDataTo = tableauData[i];
+
+          const cardsToMove = [];
+          const index = fromColData.findIndex(val => val.name === card.name);
+
+          if (index + 1 <= fromColData.length) {
+
+            while (index < fromColData.length) {
+              cardsToMove.push(fromColData[index]);
+              fromColData.splice(index, 1);
+            }
+
+            cardsToMove.map(card => tempTableauDataTo.push(card));
           }
 
+          if (fromColData.length !== 0) {
+            fromColData[fromColData.length - 1].faceUp = true;
+          }
 
-          tempTableauDataTo.push(card);
-
-          if (fromColName === 'colA') setColA(tempTableauDataFrom);
-          if (fromColName === 'colB') setColB(tempTableauDataFrom);
-          if (fromColName === 'colC') setColC(tempTableauDataFrom);
-          if (fromColName === 'colD') setColD(tempTableauDataFrom);
-          if (fromColName === 'colE') setColE(tempTableauDataFrom);
-          if (fromColName === 'colF') setColF(tempTableauDataFrom);
-          if (fromColName === 'colG') setColG(tempTableauDataFrom);
-
-          const nameOfColumn = tableauName[i];
-          if (nameOfColumn === 'colA') setColA(tempTableauDataTo);
-          if (nameOfColumn === 'colB') setColB(tempTableauDataTo);
-          if (nameOfColumn === 'colC') setColC(tempTableauDataTo);
-          if (nameOfColumn === 'colD') setColD(tempTableauDataTo);
-          if (nameOfColumn === 'colE') setColE(tempTableauDataTo);
-          if (nameOfColumn === 'colF') setColF(tempTableauDataTo);
-          if (nameOfColumn === 'colG') setColG(tempTableauDataTo);
+          updateColInTableau(fromColName, fromColData);
+          updateColInTableau(tableauName[i], tempTableauDataTo);
 
           return true;
         }
