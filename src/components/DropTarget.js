@@ -24,7 +24,18 @@ const DropTarget = (props) => {
     const cardsToMove = [];
     const index = fromColData.findIndex(val => val.name === movedCard.name); //index of moved CArd
 
-    if (toColName === 'foun1' || toColName === 'foun2' || toColName === 'foun3' || toColName === 'foun4') {
+    if (toColName === 'talon') {
+      const cardToMove = fromColData.pop();
+      if (fromColData.length === 0) return;
+
+      if (fromColData.length !== 1) fromColData[fromColData.length - 1].faceUp = true;
+
+      toColData.push(cardToMove);
+
+      props.updateColInTableau(fromColName, fromColData);
+      props.updateColInTableau(toColName, toColData);
+    }
+    else if (toColName === 'foun1' || toColName === 'foun2' || toColName === 'foun3' || toColName === 'foun4') {
       if (ValidMoveFoundation(toColData, movedCard)) {
         // first remove the card from the column it was taken from
         const movedCard = fromColData.pop();
@@ -41,8 +52,6 @@ const DropTarget = (props) => {
       }
     }
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
-
-      console.log('hererere');
 
       if (index + 1 <= fromColData.length) {
 
