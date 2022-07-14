@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -77,7 +77,7 @@ const App = () => {
     { name: "KSpade", faceUp: false, rank: 13, isRed: false, suit: 'spade' },
   ]);
 
-  const [score, setScore] = useState(0);
+  const score = 0;
 
   // Each column in the Tableau is an array of card objects.
   // Right now they're empty but when shuffleAndDeal() is called they will be filled according to the start game rules
@@ -101,8 +101,6 @@ const App = () => {
   const [isDragging, setIsDragging] = useState(false);
 
   // REF
-
-  const passedFirstRender = useRef(false);
 
   // FUNCTIONS
 
@@ -295,8 +293,6 @@ const App = () => {
       return false;
     }
     else {
-
-      const index = fromColData.findIndex(val => val.name === card.name);
 
       for (let i = 0; i < 4; i++) {
 
@@ -500,11 +496,8 @@ const App = () => {
 
   // Shuffle deck only when the page refreshes
   useEffect(() => {
-    if (passedFirstRender.current) return;
-    else {
-      shuffleAndDeal();
-      passedFirstRender.current = true;
-    }
+    shuffleAndDeal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

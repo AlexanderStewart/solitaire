@@ -4,8 +4,7 @@ import './../styles/Game.css';
 const Card = (props) => {
 
   const src = props.src;
-  const index = props.index;
-  const isStockpile = props.isStockpile;
+  let isStockpile = props.isStockpile;
   if (isStockpile === null) isStockpile = false;
 
   return (

@@ -10,7 +10,7 @@ const CardDraggable = (props) => {
   const fromColData = props.fromColData;
   const fromColName = props.fromColName;
 
-  const isStockpile = props.isStockpile;
+  let isStockpile = props.isStockpile;
   if (isStockpile === null) isStockpile = false;
 
 
@@ -24,6 +24,8 @@ const CardDraggable = (props) => {
 
   useEffect(() => {
     props.changeIsDragging(isDragging);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDragging]);
 
 
