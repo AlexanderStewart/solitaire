@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useDrag } from 'react-dnd';
-import './../styles/Game.scss';
+import './../styles/Game.css';
 
 const CardDraggable = (props) => {
 
