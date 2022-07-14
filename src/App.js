@@ -357,13 +357,6 @@ const App = () => {
     }
   };
 
-  const reStock = () => {
-    const tempStockpile = [...talonPile];
-    tempStockpile.reverse();
-    setStockpile(tempStockpile);
-    setTalonPile([]);
-  };
-
   const turnDeckFacedown = () => {
     const tempDeck = [...deck];
     for (let i = 0; i < deck.length; i++) {
@@ -392,8 +385,16 @@ const App = () => {
     setIsDragging(e);
   };
 
-  const addAMove = (card, fromName, toName) => {
+  const reStock = () => {
+    const tempStockpile = [...talonPile];
+    tempStockpile.reverse();
+    setStockpile(tempStockpile);
+    setTalonPile([]);
 
+    addAMove(tempStockpile, 'talon', 'stockpile');
+  };
+
+  const addAMove = (card, fromName, toName) => {
     const curMove = { card: card, fromName: fromName, toName: toName };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
@@ -408,6 +409,19 @@ const App = () => {
     const cardsToMove = [];
     const fromName = moves[moves.length - 1].fromName;
     const toName = moves[moves.length - 1].toName;
+
+    if (fromName === 'talon' && toName === 'stockpile') {
+      const tempTalonPile = [...stockpile];
+      tempTalonPile.reverse();
+      setTalonPile(tempTalonPile);
+      setStockpile([]);
+
+      const tempMoves = moves;
+      tempMoves.pop();
+      setMoves(tempMoves);
+
+      return;
+    }
 
     let tempFromData = [];
     let tempToData = [];
