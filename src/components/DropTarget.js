@@ -25,15 +25,15 @@ const DropTarget = (props) => {
     const index = fromColData.findIndex(val => val.name === movedCard.name); //index of moved CArd
 
     if (toColName === 'talon') {
-      const cardToMove = fromColData.pop();
-      if (fromColData.length === 0) return;
+      const movedCard = fromColData.pop();
+      if (fromColData.length !== 0) fromColData[fromColData.length - 1].faceUp = true;
 
-      if (fromColData.length !== 1) fromColData[fromColData.length - 1].faceUp = true;
-
-      toColData.push(cardToMove);
+      toColData.push(movedCard);
 
       props.updateColInTableau(fromColName, fromColData);
       props.updateColInTableau(toColName, toColData);
+
+      props.addAMove(movedCard, fromColName, toColName);
     }
     else if (toColName === 'foun1' || toColName === 'foun2' || toColName === 'foun3' || toColName === 'foun4') {
       if (ValidMoveFoundation(toColData, movedCard)) {
@@ -49,6 +49,8 @@ const DropTarget = (props) => {
         // then add card to new column
         toColData.push(movedCard);
         props.updateColInTableau(toColName, toColData);
+
+        props.addAMove(movedCard, fromColName, toColName);
       }
     }
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
@@ -69,6 +71,8 @@ const DropTarget = (props) => {
 
       props.updateColInTableau(fromColName, fromColData);
       props.updateColInTableau(toColName, toColData);
+
+      props.addAMove(cardsToMove, fromColName, toColName);
     }
 
     props.changeIsDragging(false);

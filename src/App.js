@@ -15,6 +15,7 @@ import "./styles/Game.scss";
 
 // Assets
 import { ReactComponent as Restart } from './assets/icons/restart.svg';
+import { ReactComponent as BackArrow } from './assets/icons/backArrow.svg';
 
 const App = () => {
   // STATE
@@ -93,6 +94,7 @@ const App = () => {
   const [foun4, setFoun4] = useState([]);
   const [stockpile, setStockpile] = useState([]);
   const [talonPile, setTalonPile] = useState([]);
+  const [moves, setMoves] = useState([]);
 
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
@@ -197,6 +199,7 @@ const App = () => {
     setFoun2([]);
     setFoun3([]);
     setFoun4([]);
+    setMoves([]);
 
     setShuffledAndDealt(true);
   };
@@ -245,6 +248,8 @@ const App = () => {
           updateColInTableau(foundsName[i], toColData);
           updateColInTableau('stockpile', fromColData);
 
+          addAMove(card, fromColName, foundsName[i]);
+
           return true;
         }
       }
@@ -254,19 +259,34 @@ const App = () => {
         const movedCard = stockpile[stockpile.length - 1];
 
         if (validMoveTableau(stockpile, tableauData[i], movedCard)) {
+
           const tempStockpileData = [...stockpile];
           const tempTableauData = tableauData[i];
-
-          const card = tempStockpileData.pop();
+          const cardsToMove = [];
+          const index = tempStockpileData.findIndex(val => val.name === movedCard.name);
 
           if (tempStockpileData.length !== 0) {
             tempStockpileData[tempStockpileData.length - 1].faceUp = true;
           }
 
-          tempTableauData.push(card);
+          if (index + 1 <= tempStockpileData.length) {
 
+            while (index < tempStockpileData.length) {
+              cardsToMove.push(tempStockpileData[index]);
+              tempStockpileData.splice(index, 1);
+            }
+
+            cardsToMove.map(card => tempTableauData.push(card));
+          }
+
+          if (tempStockpileData.length !== 0) {
+            tempStockpileData[tempStockpileData.length - 1].faceUp = true;
+          }
+
+          updateColInTableau(fromColName, tempStockpileData);
           updateColInTableau(tableauName[i], tempTableauData);
-          updateColInTableau('stockpile', tempStockpileData);
+
+          addAMove(cardsToMove, fromColName, tableauName[i]);
 
           return true;
         }
@@ -277,14 +297,12 @@ const App = () => {
     else {
 
       const index = fromColData.findIndex(val => val.name === card.name);
-      console.log(index);
-      console.log(card);
 
       for (let i = 0; i < 4; i++) {
 
+        // FROM: Column, TO: Foundation
         if (validMoveFoundation(foundsData[i], card)) {
 
-          console.log('index: ' + index);
           let toColData = [...foundsData[i]];
 
           const myCard = fromColData.pop();
@@ -297,6 +315,8 @@ const App = () => {
           updateColInTableau(fromColName, fromColData);
           updateColInTableau(foundsName[i], toColData);
 
+          addAMove(card, fromColName, foundsName[i]);
+
           return true;
         }
       }
@@ -304,8 +324,6 @@ const App = () => {
       for (let i = 0; i < tableauData.length; i++) {
 
         if (validMoveTableau(fromColData, tableauData[i], card)) {
-
-          console.log('valid move');
 
           const tempTableauDataTo = tableauData[i];
 
@@ -329,19 +347,14 @@ const App = () => {
           updateColInTableau(fromColName, fromColData);
           updateColInTableau(tableauName[i], tempTableauDataTo);
 
+          addAMove(cardsToMove, fromColName, tableauName[i]);
+
           return true;
         }
       }
 
       return false;
     }
-  };
-
-  const reStock = () => {
-    const tempStockpile = [...talonPile];
-    tempStockpile.reverse();
-    setStockpile(tempStockpile);
-    setTalonPile([]);
   };
 
   const turnDeckFacedown = () => {
@@ -372,6 +385,117 @@ const App = () => {
     setIsDragging(e);
   };
 
+  const reStock = () => {
+    const tempStockpile = [...talonPile];
+    tempStockpile.reverse();
+    setStockpile(tempStockpile);
+    setTalonPile([]);
+
+    addAMove(tempStockpile, 'talon', 'stockpile');
+  };
+
+  const addAMove = (card, fromName, toName) => {
+    const curMove = { card: card, fromName: fromName, toName: toName };
+    const tempMoves = [...moves];
+    tempMoves.push(curMove);
+    setMoves(tempMoves);
+  };
+
+  const backAMove = () => {
+    if (moves.length === 0) return;
+
+    const card = moves[moves.length - 1].card;
+
+    const cardsToMove = [];
+    const fromName = moves[moves.length - 1].fromName;
+    const toName = moves[moves.length - 1].toName;
+
+    if (fromName === 'talon' && toName === 'stockpile') {
+      const tempTalonPile = [...stockpile];
+      tempTalonPile.reverse();
+      setTalonPile(tempTalonPile);
+      setStockpile([]);
+
+      const tempMoves = moves;
+      tempMoves.pop();
+      setMoves(tempMoves);
+
+      return;
+    }
+
+    let tempFromData = [];
+    let tempToData = [];
+
+    if (fromName === "colA") tempFromData = [...colA];
+    else if (fromName === "colB") tempFromData = [...colB];
+    else if (fromName === "colC") tempFromData = [...colC];
+    else if (fromName === "colD") tempFromData = [...colD];
+    else if (fromName === "colE") tempFromData = [...colE];
+    else if (fromName === "colF") tempFromData = [...colF];
+    else if (fromName === "colG") tempFromData = [...colG];
+    else if (fromName === "foun1") tempFromData = [...foun1];
+    else if (fromName === "foun2") tempFromData = [...foun2];
+    else if (fromName === "foun3") tempFromData = [...foun3];
+    else if (fromName === "foun4") tempFromData = [...foun4];
+    else if (fromName === "stockpile") tempFromData = [...stockpile];
+    else if (fromName === "talon") tempFromData = [...talonPile];
+
+    if (toName === "colA") tempToData = [...colA];
+    else if (toName === "colB") tempToData = [...colB];
+    else if (toName === "colC") tempToData = [...colC];
+    else if (toName === "colD") tempToData = [...colD];
+    else if (toName === "colE") tempToData = [...colE];
+    else if (toName === "colF") tempToData = [...colF];
+    else if (toName === "colG") tempToData = [...colG];
+    else if (toName === "foun1") tempToData = [...foun1];
+    else if (toName === "foun2") tempToData = [...foun2];
+    else if (toName === "foun3") tempToData = [...foun3];
+    else if (toName === "foun4") tempToData = [...foun4];
+    else if (toName === "stockpile") tempToData = [...stockpile];
+    else if (toName === "talon") tempToData = [...talonPile];
+
+    let index;
+    let numberMoved;
+
+    if (card instanceof Array) {
+      index = tempToData.findIndex(val => val.name === card[0].name);
+      console.log('array index: ');
+      numberMoved = tempToData.length - 1 - index;
+    }
+    else {
+      index = tempToData.findIndex(val => val.name === card.name);
+      numberMoved = tempToData.length - 1 - index;
+    }
+
+    if (index + 1 <= tempToData.length) {
+
+      while (index < tempToData.length) {
+        cardsToMove.push(tempToData[index]);
+        tempToData.splice(index, 1);
+      }
+
+      cardsToMove.map(card => tempFromData.push(card));
+    }
+
+    console.log(tempFromData);
+
+    const flipCardIndex = tempFromData.length - 1 - numberMoved - 1;
+    console.log(flipCardIndex);
+
+
+    if (flipCardIndex > 0) {
+      if (tempFromData[flipCardIndex].faceUp) tempFromData[flipCardIndex].faceUp = false;
+      else tempFromData[flipCardIndex].faceUp = true;
+    }
+
+    updateColInTableau(fromName, tempFromData);
+    updateColInTableau(toName, tempToData);
+
+    const tempMoves = moves;
+    tempMoves.pop();
+    setMoves(tempMoves);
+  };
+
   // USE EFFECT
 
   // Shuffle deck only when the page refreshes
@@ -382,6 +506,10 @@ const App = () => {
       passedFirstRender.current = true;
     }
   }, []);
+
+  useEffect(() => {
+    console.log(moves);
+  }, [moves]);
 
   if (!shuffledAndDealt) {
     return null;
@@ -406,6 +534,17 @@ const App = () => {
         >
           <span style={{ paddingRight: '4px' }}>RESTART</span>
           <Restart width={20} height={20} />
+        </div>
+
+        <div style={{ paddingLeft: '16px' }} />
+
+        <div style={{
+          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#fed7aa', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        }}
+          onClick={() => backAMove()}
+        >
+          <span style={{ paddingRight: '4px' }}>BACK A MOVE</span>
+          <BackArrow width={20} height={20} />
         </div>
       </div>
 
@@ -442,6 +581,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colA}
                   toColName="colA"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -477,6 +617,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colB}
                   toColName="colB"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -512,6 +653,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colC}
                   toColName="colC"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -547,6 +689,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colD}
                   toColName="colD"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -582,6 +725,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colE}
                   toColName="colE"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -617,6 +761,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colF}
                   toColName="colF"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -652,6 +797,7 @@ const App = () => {
                   updateColInTableau={updateColInTableau}
                   toColData={colG}
                   toColName="colG"
+                  addAMove={addAMove}
                 />
               )}
             </div>
@@ -697,6 +843,7 @@ const App = () => {
                         updateColInTableau={updateColInTableau}
                         toColData={foun1}
                         toColName="foun1"
+                        addAMove={addAMove}
                       />
                     )}
                   </div>
@@ -731,6 +878,7 @@ const App = () => {
                         updateColInTableau={updateColInTableau}
                         toColData={foun2}
                         toColName="foun2"
+                        addAMove={addAMove}
                       />
                     )}
                   </div>
@@ -768,6 +916,7 @@ const App = () => {
                         updateColInTableau={updateColInTableau}
                         toColData={foun3}
                         toColName="foun3"
+                        addAMove={addAMove}
                       />
                     )}
                   </div>
@@ -801,6 +950,7 @@ const App = () => {
                         updateColInTableau={updateColInTableau}
                         toColData={foun4}
                         toColName="foun4"
+                        addAMove={addAMove}
                       />
                     )}
                   </div>
@@ -900,9 +1050,10 @@ const App = () => {
                           updateColInTableau={updateColInTableau}
                           toColData={talonPile}
                           toColName="talon"
+                          addAMove={addAMove}
                         />
                       )}
-                    </div>;
+                    </div>
                   </div>
                 </div>
               </div>
