@@ -1,5 +1,3 @@
-$cardPadding: -183.5px;
-
 .container {
   padding: 30px;
   padding-top: 120px;
@@ -12,13 +10,13 @@ $cardPadding: -183.5px;
 }
 
 .stockpile-card-container {
-  margin-top: $cardPadding;
+  margin-top: -183.5px;
   position: relative;
   z-index: 50;
 }
 
 .talon-card-container {
-  margin-top: $cardPadding;
+  margin-top: -183.5px;
   position: relative;
   z-index: 50;
 }

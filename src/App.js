@@ -10,7 +10,7 @@ import DropTarget from "./components/DropTarget";
 import validMoveFoundation from "./ValidMoveFoundation";
 import validMoveTableau from "./ValidMoveTableau";
 
-import "./styles/Game.scss";
+import "./styles/Game.css";
 
 
 // Assets
