@@ -558,7 +558,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colA', colA, card)}>
+                  <div key={card.name} id="colA" data-testid="colA" onDoubleClick={() => autoStack('colA', colA, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -570,7 +570,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <Card key={card.name} id="colA" data-testid="colA" card={card} src={CardImage} />
                 );
               })}
               {isDragging && (
