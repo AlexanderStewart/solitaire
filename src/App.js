@@ -234,6 +234,7 @@ const App = () => {
       for (let i = 0; i < 4; i++) {
 
         if (validMoveFoundation(foundsData[i], card)) {
+
           let toColData = foundsData[i];
           const movedCard = fromColData.pop();
 
@@ -246,7 +247,7 @@ const App = () => {
           updateColInTableau(foundsName[i], toColData);
           updateColInTableau('stockpile', fromColData);
 
-          addAMove(card, fromColName, foundsName[i]);
+          addAMove(card, fromColName, foundsName[i], false, 1);
 
           return true;
         }
@@ -284,7 +285,7 @@ const App = () => {
           updateColInTableau(fromColName, tempStockpileData);
           updateColInTableau(tableauName[i], tempTableauData);
 
-          addAMove(cardsToMove, fromColName, tableauName[i]);
+          addAMove(cardsToMove, fromColName, tableauName[i], false, 1);
 
           return true;
         }
@@ -299,6 +300,13 @@ const App = () => {
         // FROM: Column, TO: Foundation
         if (validMoveFoundation(foundsData[i], card)) {
 
+          let numOfCardsMoved;
+          if (card instanceof Array) numOfCardsMoved = card.length;
+          else numOfCardsMoved = 1;
+
+          let previousCardFlipped;
+          if (fromColData.length - numOfCardsMoved - 1 >= 0) previousCardFlipped = fromColData[fromColData.length - numOfCardsMoved - 1].faceUp;
+
           let toColData = [...foundsData[i]];
 
           const myCard = fromColData.pop();
@@ -311,7 +319,7 @@ const App = () => {
           updateColInTableau(fromColName, fromColData);
           updateColInTableau(foundsName[i], toColData);
 
-          addAMove(card, fromColName, foundsName[i]);
+          addAMove(card, fromColName, foundsName[i], previousCardFlipped, 1);
 
           return true;
         }
@@ -319,12 +327,17 @@ const App = () => {
 
       for (let i = 0; i < tableauData.length; i++) {
 
+        // FROM: Column, TO: Column
         if (validMoveTableau(fromColData, tableauData[i], card)) {
+          let previousCardFlipped;
 
           const tempTableauDataTo = tableauData[i];
 
           const cardsToMove = [];
           const index = fromColData.findIndex(val => val.name === card.name);
+          const numOfCardsMoved = fromColData.length - index;
+
+          if (fromColData.length - numOfCardsMoved - 1 >= 0) previousCardFlipped = fromColData[fromColData.length - numOfCardsMoved - 1].faceUp;
 
           if (index + 1 <= fromColData.length) {
 
@@ -343,7 +356,7 @@ const App = () => {
           updateColInTableau(fromColName, fromColData);
           updateColInTableau(tableauName[i], tempTableauDataTo);
 
-          addAMove(cardsToMove, fromColName, tableauName[i]);
+          addAMove(cardsToMove, fromColName, tableauName[i], previousCardFlipped, numOfCardsMoved);
 
           return true;
         }
@@ -387,11 +400,12 @@ const App = () => {
     setStockpile(tempStockpile);
     setTalonPile([]);
 
-    addAMove(tempStockpile, 'talon', 'stockpile');
+    addAMove(tempStockpile, 'talon', 'stockpile', false, null);
   };
 
-  const addAMove = (card, fromName, toName) => {
-    const curMove = { card: card, fromName: fromName, toName: toName };
+  const addAMove = (card, fromName, toName, previousCardFlipped, numOfCardsMoved) => {
+
+    const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
     setMoves(tempMoves);
@@ -400,11 +414,13 @@ const App = () => {
   const backAMove = () => {
     if (moves.length === 0) return;
 
-    const card = moves[moves.length - 1].card;
-
     const cardsToMove = [];
+
+    const card = moves[moves.length - 1].card;
     const fromName = moves[moves.length - 1].fromName;
     const toName = moves[moves.length - 1].toName;
+    const previousCardFlipped = moves[moves.length - 1].previousCardFlipped;
+    const numOfCardsMoved = moves[moves.length - 1].numOfCardsMoved;
 
     if (fromName === 'talon' && toName === 'stockpile') {
       const tempTalonPile = [...stockpile];
@@ -451,16 +467,12 @@ const App = () => {
     else if (toName === "talon") tempToData = [...talonPile];
 
     let index;
-    let numberMoved;
 
     if (card instanceof Array) {
       index = tempToData.findIndex(val => val.name === card[0].name);
-      console.log('array index: ');
-      numberMoved = tempToData.length - 1 - index;
     }
     else {
       index = tempToData.findIndex(val => val.name === card.name);
-      numberMoved = tempToData.length - 1 - index;
     }
 
     if (index + 1 <= tempToData.length) {
@@ -473,16 +485,9 @@ const App = () => {
       cardsToMove.map(card => tempFromData.push(card));
     }
 
-    console.log(tempFromData);
+    const flipCardIndex = tempFromData.length - 1 - numOfCardsMoved;
 
-    const flipCardIndex = tempFromData.length - 1 - numberMoved - 1;
-    console.log(flipCardIndex);
-
-
-    if (flipCardIndex > 0) {
-      if (tempFromData[flipCardIndex].faceUp) tempFromData[flipCardIndex].faceUp = false;
-      else tempFromData[flipCardIndex].faceUp = true;
-    }
+    if (flipCardIndex >= 0 && !previousCardFlipped && previousCardFlipped !== null) tempFromData[flipCardIndex].faceUp = false;
 
     updateColInTableau(fromName, tempFromData);
     updateColInTableau(toName, tempToData);
