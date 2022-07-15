@@ -5,16 +5,12 @@ import ValidMoveTableau from '../ValidMoveTableau';
 
 const DropTarget = (props) => {
 
-
-
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'card',
     drop: (data) => {
       onDrop(data);
     }
   }));
-
-  console.log(isOver);
 
   const onDrop = (data) => {
     const fromColName = data.fromColName;
@@ -34,10 +30,13 @@ const DropTarget = (props) => {
       props.updateColInTableau(fromColName, fromColData);
       props.updateColInTableau(toColName, toColData);
 
-      props.addAMove(movedCard, fromColName, toColName);
+      props.addAMove(movedCard, fromColName, toColName, false, 1);
     }
     else if (toColName === 'foun1' || toColName === 'foun2' || toColName === 'foun3' || toColName === 'foun4') {
       if (ValidMoveFoundation(toColData, movedCard)) {
+        let previousCardFlipped;
+        if (fromColData.length - 1 !== 0) previousCardFlipped = fromColData[fromColData.length - 2].faceUp;
+
         // first remove the card from the column it was taken from
         const movedCard = fromColData.pop();
 
@@ -51,10 +50,14 @@ const DropTarget = (props) => {
         toColData.push(movedCard);
         props.updateColInTableau(toColName, toColData);
 
-        props.addAMove(movedCard, fromColName, toColName);
+        props.addAMove(movedCard, fromColName, toColName, previousCardFlipped, 1);
       }
     }
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
+      const numOfCardsMoved = fromColData.length - index;
+
+      let previousCardFlipped;
+      if (fromColData.length - numOfCardsMoved - 1 >= 0) previousCardFlipped = fromColData[fromColData.length - numOfCardsMoved - 1].faceUp;
 
       if (index + 1 <= fromColData.length) {
 
@@ -73,7 +76,7 @@ const DropTarget = (props) => {
       props.updateColInTableau(fromColName, fromColData);
       props.updateColInTableau(toColName, toColData);
 
-      props.addAMove(cardsToMove, fromColName, toColName);
+      props.addAMove(cardsToMove, fromColName, toColName, previousCardFlipped, numOfCardsMoved);
     }
 
     props.changeIsDragging(false);
