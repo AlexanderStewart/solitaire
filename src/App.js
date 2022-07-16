@@ -581,7 +581,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colA"><Card key={card.name} card={card} src={CardImage} /></div>
+                  <div><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -617,7 +617,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colB"><Card key={card.name} card={card} src={CardImage} /></div>
+                  <div><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -653,7 +653,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colC">
+                  <div>
                     <Card key={card.name} card={card} src={CardImage} />
                   </div>
 
@@ -692,7 +692,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colD">
+                  <div>
                     <Card key={card.name} card={card} src={CardImage} />
                   </div>
                 );
@@ -730,7 +730,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colE">
+                  <div>
                     <Card key={card.name} card={card} src={CardImage} />
                   </div>
                 );
@@ -768,7 +768,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colF"><Card key={card.name} card={card} src={CardImage} /></div>
+                  <div><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -804,7 +804,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className="colG"><Card key={card.name} card={card} src={CardImage} /></div>
+                  <div><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -1004,7 +1004,7 @@ const App = () => {
                       else CardImage = GetCards("CardReverse");
 
                       return card.faceUp ? (
-                        <div key={card.name} onDoubleClick={() => autoStack('stockpile', stockpile, card)}>
+                        <div key={card.name} className="stockpile" onDoubleClick={() => autoStack('stockpile', stockpile, card)}>
                           <CardDraggable
                             draggable
                             key={card.name}
@@ -1028,7 +1028,7 @@ const App = () => {
                 <div>
 
 
-                  {stockpile.length === 0 && <div style={{
+                  {stockpile.length === 0 && <div className="reStock" style={{
                     cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderWidth: '2px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
                   }}
                     onClick={() => reStock()}
