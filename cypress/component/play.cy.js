@@ -7,7 +7,7 @@ describe('Maintains Proper Functioning', () => {
     cy.mount(<App />);
   });
 
-  it('Test Cards', () => {
+  it('Always 52 Cards', () => {
     cy.viewport('macbook-16');
     cy.mount(<App />);
 
@@ -110,5 +110,19 @@ describe('Maintains Proper Functioning', () => {
         }
       });
     }
+  });
+
+  it("Foundations Same Suit", () => {
+    cy.viewport('macbook-16');
+    cy.mount(<App />);
+
+    cy.get('body').then($body => {
+      if ($body.find('.colBFaceUp').length > 0) {
+        cy.get('.colBFaceUp').each(($row, index) => {
+          cy.log(index);
+          cy.log($row.children());
+        });
+      }
+    });
   });
 });

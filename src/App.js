@@ -10,8 +10,12 @@ import DropTarget from "./components/DropTarget";
 import validMoveFoundation from "./ValidMoveFoundation";
 import validMoveTableau from "./ValidMoveTableau";
 
+// Styles.
 import "./styles/Game.css";
 
+// Functions
+import ShuffleAndDeal from "./functions/ShuffleAndDeal";
+import AutoStack from "./functions/AutoStack";
 
 // Assets
 import { ReactComponent as Restart } from './assets/icons/restart.svg';
@@ -103,288 +107,6 @@ const App = () => {
   // REF
 
   // FUNCTIONS
-
-  const shuffleAndDeal = () => {
-
-    console.log('shuffleAndDeal');
-
-    // Flip all cards facedown
-    turnDeckFacedown();
-
-    // Randomize the order of the deck array
-    const shuffledDeck = randomizeArray(deck);
-
-    const tempColA = [];
-    const tempColB = [];
-    const tempColC = [];
-    const tempColD = [];
-    const tempColE = [];
-    const tempColF = [];
-    const tempColG = [];
-    const tempStockpile = [];
-
-    for (let i = 0; i < shuffledDeck.length; i++) {
-      const card = shuffledDeck[i];
-
-      // fill colG
-      if (i < 7) {
-        tempColG.push(card);
-        continue;
-      }
-
-      // fill colF
-      if (i < 13) {
-        tempColF.push(card);
-        continue;
-      }
-
-      // fill colE
-      if (i < 18) {
-        tempColE.push(card);
-        continue;
-      }
-
-      // fill colD
-      if (i < 22) {
-        tempColD.push(card);
-        continue;
-      }
-
-      // fill colC
-      if (i < 25) {
-        tempColC.push(card);
-        continue;
-      }
-
-      // fill colB
-      if (i < 27) {
-        tempColB.push(card);
-        continue;
-      }
-
-      // fill colA
-      if (i < 28) {
-        tempColA.push(card);
-        continue;
-      }
-
-      if (i < 52) {
-        tempStockpile.push(card);
-        continue;
-      }
-    }
-
-    // Flip the bottom card of each column up
-    tempColA[tempColA.length - 1].faceUp = true;
-    tempColB[tempColB.length - 1].faceUp = true;
-    tempColC[tempColC.length - 1].faceUp = true;
-    tempColD[tempColD.length - 1].faceUp = true;
-    tempColE[tempColE.length - 1].faceUp = true;
-    tempColF[tempColF.length - 1].faceUp = true;
-    tempColG[tempColG.length - 1].faceUp = true;
-    tempStockpile[tempStockpile.length - 1].faceUp = true;
-
-    setColA(tempColA);
-    setColB(tempColB);
-    setColC(tempColC);
-    setColD(tempColD);
-    setColE(tempColE);
-    setColF(tempColF);
-    setColG(tempColG);
-    setStockpile(tempStockpile);
-    setTalonPile([]);
-    setFoun1([]);
-    setFoun2([]);
-    setFoun3([]);
-    setFoun4([]);
-    setMoves([]);
-
-    setShuffledAndDealt(true);
-  };
-
-  // I got this function from Stack Overflow. Imagine I had these skills...
-  function randomizeArray(array) {
-    let currentIndex = array.length,
-      randomIndex;
-
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-
-    return array;
-  }
-
-  const autoStack = (fromColName, fromColDataPassed, card) => {
-
-    const fromColData = [...fromColDataPassed];
-
-    const foundsData = [foun1, foun2, foun3, foun4];
-    const foundsName = ['foun1', 'foun2', 'foun3', 'foun4'];
-
-    const tableauData = [colA, colB, colC, colD, colE, colF, colG];
-    const tableauName = ['colA', 'colB', 'colC', 'colD', 'colE', 'colF', 'colG'];
-
-    if (fromColName === 'stockpile') {
-
-      for (let i = 0; i < 4; i++) {
-
-        if (validMoveFoundation(foundsData[i], card)) {
-
-          let toColData = foundsData[i];
-          const movedCard = fromColData.pop();
-
-          if (fromColData.length !== 0) {
-            fromColData[fromColData.length - 1].faceUp = true;
-          }
-
-          // then add card to new column
-          toColData.push(movedCard);
-          updateColInTableau(foundsName[i], toColData);
-          updateColInTableau('stockpile', fromColData);
-
-          addAMove(card, fromColName, foundsName[i], false, 1);
-
-          return true;
-        }
-      }
-
-      for (let i = 0; i < tableauData.length; i++) {
-
-        const movedCard = stockpile[stockpile.length - 1];
-
-        if (validMoveTableau(stockpile, tableauData[i], movedCard)) {
-
-          const tempStockpileData = [...stockpile];
-          const tempTableauData = tableauData[i];
-          const cardsToMove = [];
-          const index = tempStockpileData.findIndex(val => val.name === movedCard.name);
-
-          if (tempStockpileData.length !== 0) {
-            tempStockpileData[tempStockpileData.length - 1].faceUp = true;
-          }
-
-          if (index + 1 <= tempStockpileData.length) {
-
-            while (index < tempStockpileData.length) {
-              cardsToMove.push(tempStockpileData[index]);
-              tempStockpileData.splice(index, 1);
-            }
-
-            cardsToMove.map(card => tempTableauData.push(card));
-          }
-
-          if (tempStockpileData.length !== 0) {
-            tempStockpileData[tempStockpileData.length - 1].faceUp = true;
-          }
-
-          updateColInTableau(fromColName, tempStockpileData);
-          updateColInTableau(tableauName[i], tempTableauData);
-
-          addAMove(cardsToMove, fromColName, tableauName[i], false, 1);
-
-          return true;
-        }
-      }
-
-      // If the stockpile card does not fit anywhere, pass it to the talon pile
-      const movedCard = fromColData.pop();
-      if (fromColData.length !== 0) fromColData[fromColData.length - 1].faceUp = true;
-
-      talonPile.push(movedCard);
-
-      updateColInTableau(fromColName, fromColData);
-      updateColInTableau('talon', talonPile);
-
-      addAMove(movedCard, fromColName, 'talon', false, 1);
-
-      return true;
-    }
-    else {
-
-      for (let i = 0; i < 4; i++) {
-
-        // FROM: Column, TO: Foundation
-        if (validMoveFoundation(foundsData[i], card)) {
-
-          let numOfCardsMoved;
-          if (card instanceof Array) numOfCardsMoved = card.length;
-          else numOfCardsMoved = 1;
-
-          let previousCardFlipped;
-          if (fromColData.length - numOfCardsMoved - 1 >= 0) previousCardFlipped = fromColData[fromColData.length - numOfCardsMoved - 1].faceUp;
-
-          let toColData = [...foundsData[i]];
-
-          const myCard = fromColData.pop();
-          toColData.push(myCard);
-
-          if (fromColData.length !== 0) {
-            fromColData[fromColData.length - 1].faceUp = true;
-          }
-
-          updateColInTableau(fromColName, fromColData);
-          updateColInTableau(foundsName[i], toColData);
-
-          addAMove(card, fromColName, foundsName[i], previousCardFlipped, 1);
-
-          return true;
-        }
-      }
-
-      for (let i = 0; i < tableauData.length; i++) {
-
-        // FROM: Column, TO: Column
-        if (validMoveTableau(fromColData, tableauData[i], card)) {
-          let previousCardFlipped;
-
-          const tempTableauDataTo = tableauData[i];
-
-          const cardsToMove = [];
-          const index = fromColData.findIndex(val => val.name === card.name);
-          const numOfCardsMoved = fromColData.length - index;
-
-          if (fromColData.length - numOfCardsMoved - 1 >= 0) previousCardFlipped = fromColData[fromColData.length - numOfCardsMoved - 1].faceUp;
-
-          if (index + 1 <= fromColData.length) {
-
-            while (index < fromColData.length) {
-              cardsToMove.push(fromColData[index]);
-              fromColData.splice(index, 1);
-            }
-
-            cardsToMove.map(card => tempTableauDataTo.push(card));
-          }
-
-          if (fromColData.length !== 0) {
-            fromColData[fromColData.length - 1].faceUp = true;
-          }
-
-          updateColInTableau(fromColName, fromColData);
-          updateColInTableau(tableauName[i], tempTableauDataTo);
-
-          addAMove(cardsToMove, fromColName, tableauName[i], previousCardFlipped, numOfCardsMoved);
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-  };
-
-  const turnDeckFacedown = () => {
-    const tempDeck = [...deck];
-    for (let i = 0; i < deck.length; i++) {
-      tempDeck[i].faceUp = false;
-    }
-    setDeck(tempDeck);
-  };
-
   const updateColInTableau = (colName, colData) => {
     if (colName === "colA") setColA(colData);
     else if (colName === "colB") setColB(colData);
@@ -415,7 +137,6 @@ const App = () => {
   };
 
   const addAMove = (card, fromName, toName, previousCardFlipped, numOfCardsMoved) => {
-
     const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
@@ -508,11 +229,17 @@ const App = () => {
     setMoves(tempMoves);
   };
 
+  const changeState = (variable, value) => {
+    if (variable === 'deck') setDeck(value);
+    if (variable === 'moves') setMoves(value);
+    if (variable === 'shuffledAndDealt') setShuffledAndDealt(value);
+  };
+
   // USE EFFECT
 
   // Shuffle deck only when the page refreshes
   useEffect(() => {
-    shuffleAndDeal();
+    ShuffleAndDeal(updateColInTableau, deck, changeState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -539,7 +266,7 @@ const App = () => {
         <div style={{
           cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
         }}
-          onClick={() => shuffleAndDeal()}
+          onClick={() => ShuffleAndDeal(updateColInTableau, deck, changeState)}
         >
           <span style={{ paddingRight: '4px' }}>RESTART</span>
           <Restart width={20} height={20} />
@@ -569,7 +296,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={"colAFaceUp colA"} onDoubleClick={() => autoStack('colA', colA, card)}>
+                  <div key={card.name} className={"colAFaceUp colA"} onDoubleClick={() => AutoStack('colA', colA, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -605,7 +332,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={"colBFaceUp colB"} onDoubleClick={() => autoStack('colB', colB, card)}>
+                  <div key={card.name} className={"colBFaceUp colB"} onDoubleClick={() => AutoStack('colB', colB, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -641,7 +368,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={"colCFaceUp colC"} onDoubleClick={() => autoStack('colC', colC, card)}>
+                  <div key={card.name} className={"colCFaceUp colC"} onDoubleClick={() => AutoStack('colC', colC, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -680,7 +407,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={"colDFaceUp colD"} onDoubleClick={() => autoStack('colD', colD, card)}>
+                  <div key={card.name} className={"colDFaceUp colD"} onDoubleClick={() => AutoStack('colD', colD, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)} >
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -718,7 +445,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={'colEFaceUp colE'} onDoubleClick={() => autoStack('colE', colE, card)}>
+                  <div key={card.name} className={'colEFaceUp colE'} onDoubleClick={() => AutoStack('colE', colE, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -756,7 +483,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={"colFFaceUp colF"} onDoubleClick={() => autoStack('colF', colF, card)}>
+                  <div key={card.name} className={"colFFaceUp colF"} onDoubleClick={() => AutoStack('colF', colF, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -792,7 +519,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} className={'colGFaceUp colG'} onDoubleClick={() => autoStack('colG', colG, card)}>
+                  <div key={card.name} className={'colGFaceUp colG'} onDoubleClick={() => AutoStack('colG', colG, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -1004,7 +731,7 @@ const App = () => {
                       else CardImage = GetCards("CardReverse");
 
                       return card.faceUp ? (
-                        <div key={card.name} className={'stockpileFaceUp stockpile'} onDoubleClick={() => autoStack('stockpile', stockpile, card)}>
+                        <div key={card.name} className={'stockpileFaceUp stockpile'} onDoubleClick={() => AutoStack('stockpile', stockpile, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                           <CardDraggable
                             draggable
                             key={card.name}
@@ -1077,8 +804,8 @@ const App = () => {
             </div>
           </div>
         </DndProvider>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

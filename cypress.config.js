@@ -12,5 +12,11 @@ module.exports = defineConfig({
       framework: "create-react-app",
       bundler: "webpack",
     },
+    supportFile: "./cypress/support/index.js",
+    specPattern: "./cypress/component",
+    setupNodeEvents(on, config) {
+      "./cypress/plugins/index.js";
+    }
   },
+  // integrationFolder: "./cypress/integration",
 });
