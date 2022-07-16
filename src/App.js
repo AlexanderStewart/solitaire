@@ -291,7 +291,18 @@ const App = () => {
         }
       }
 
-      return false;
+      // If the stockpile card does not fit anywhere, pass it to the talon pile
+      const movedCard = fromColData.pop();
+      if (fromColData.length !== 0) fromColData[fromColData.length - 1].faceUp = true;
+
+      talonPile.push(movedCard);
+
+      updateColInTableau(fromColName, fromColData);
+      updateColInTableau('talon', talonPile);
+
+      addAMove(movedCard, fromColName, 'talon', false, 1);
+
+      return true;
     }
     else {
 
@@ -558,7 +569,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} id="colA" data-testid="colA" onDoubleClick={() => autoStack('colA', colA, card)}>
+                  <div key={card.name} className="colA" onDoubleClick={() => autoStack('colA', colA, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -570,7 +581,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} id="colA" data-testid="colA" card={card} src={CardImage} />
+                  <div className="colA"><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -594,7 +605,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colB', colB, card)}>
+                  <div key={card.name} className="colB" onDoubleClick={() => autoStack('colB', colB, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -606,7 +617,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <div className="colB"><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -630,7 +641,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colC', colC, card)}>
+                  <div key={card.name} className="colC" onDoubleClick={() => autoStack('colC', colC, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -642,7 +653,10 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <div className="colC">
+                    <Card key={card.name} card={card} src={CardImage} />
+                  </div>
+
                 );
               })}
               {isDragging && (
@@ -666,7 +680,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colD', colD, card)}>
+                  <div key={card.name} className="colD" onDoubleClick={() => autoStack('colD', colD, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -678,7 +692,9 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <div className="colD">
+                    <Card key={card.name} card={card} src={CardImage} />
+                  </div>
                 );
               })}
               {isDragging && (
@@ -702,7 +718,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colE', colE, card)}>
+                  <div key={card.name} className="colE" onDoubleClick={() => autoStack('colE', colE, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -714,7 +730,9 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <div className="colE">
+                    <Card key={card.name} card={card} src={CardImage} />
+                  </div>
                 );
               })}
               {isDragging && (
@@ -738,7 +756,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colF', colF, card)}>
+                  <div key={card.name} className="colF" onDoubleClick={() => autoStack('colF', colF, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -750,7 +768,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <div className="colF"><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -774,7 +792,7 @@ const App = () => {
                 else CardImage = GetCards("CardReverse");
 
                 return card.faceUp ? (
-                  <div key={card.name} onDoubleClick={() => autoStack('colG', colG, card)}>
+                  <div key={card.name} className="colG" onDoubleClick={() => autoStack('colG', colG, card)}>
                     <CardDraggable
                       draggable
                       key={card.name}
@@ -786,11 +804,12 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <Card key={card.name} card={card} src={CardImage} />
+                  <div className="colG"><Card key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
                 <DropTarget
+                  id="colG"
                   changeIsDragging={changeIsDragging}
                   updateColInTableau={updateColInTableau}
                   toColData={colG}
