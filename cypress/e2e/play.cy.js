@@ -5,12 +5,12 @@ describe('Maintains Proper Functioning', () => {
 
   it('Site Available', () => {
     cy.viewport('macbook-16');
-    mount(<App />);
+    cy.visit('http://localhost:3000/');
   });
 
   it('Always 52 Cards', () => {
     cy.viewport('macbook-16');
-    mount(<App />);
+    cy.visit('http://localhost:3000/');
 
     const cardCount = () => {
       cy.get('body').then($body => {
@@ -115,7 +115,7 @@ describe('Maintains Proper Functioning', () => {
 
   it("Foundations Same Suit", () => {
     cy.viewport('macbook-16');
-    mount(<App />);
+    cy.visit('http://localhost:3000/');
 
     cy.get('body').then($body => {
       if ($body.find('.colBFaceUp').length > 0) {

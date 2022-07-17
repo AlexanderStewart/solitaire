@@ -20,6 +20,8 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
 
       // Here we are checking if the card can be moved to the current foundation pile array
       // in the loop. We will check this 4 times, one for each foundation.
+
+      // FROM: Stockpile, TO: Foundation - check
       if (validMoveFoundation(foundsData[i], card)) {
 
         // If there is a valid move, we assign the the foundation pile to a variable.
@@ -61,27 +63,17 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
       const movedCard = stockpile[stockpile.length - 1];
 
       // Now we check if the card coming from the stockpile is a valid move into the 
-      //current tableau column in the loop.
+      // current tableau column in the loop.
+
+      // FROM: Stockpile, TO: Tableau - check
       if (validMoveTableau(stockpile, tableauData[i], movedCard)) {
 
         // If it is a valid move, we go about transferring the card
         const tempStockpileData = [...stockpile];
         const tempTableauData = tableauData[i];
-        const cardsToMove = [];
-        const index = tempStockpileData.findIndex(val => val.name === movedCard.name);
 
-        // This code is for if we are moving multiple cards, but it works for one card.
-        // (I don't want to bother changing it because I'm tired and lazy and don't want to
-        // break anything)
-        if (index + 1 <= tempStockpileData.length) {
-
-          while (index < tempStockpileData.length) {
-            cardsToMove.push(tempStockpileData[index]);
-            tempStockpileData.splice(index, 1);
-          }
-
-          cardsToMove.map(card => tempTableauData.push(card));
-        }
+        const myCard = tempStockpileData.pop();
+        tempTableauData.push(myCard);
 
         // Checking to see if the stockpile is empty
         if (tempStockpileData.length !== 0) {
@@ -95,7 +87,7 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
         updateColInTableau(tableauName[i], tempTableauData);
 
         // Finally, we record this move for the purpose of using the "back a move" button later.
-        addAMove(cardsToMove, fromColName, tableauName[i], false, 1);
+        addAMove(myCard, fromColName, tableauName[i], false, 1);
 
         // Make sure to return so that we don't continue down the page to other logic having 
         // already moved the card
@@ -127,6 +119,8 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
     // We will always check the foundations pile first. Here we will loop through the 
     // 'foundsData' array to check for possible valid moves.
     for (let i = 0; i < 4; i++) {
+
+      if (card !== fromColData[fromColData.length - 1]) continue;
 
       // FROM: Column, TO: Foundation - check
       if (validMoveFoundation(foundsData[i], card)) {
@@ -168,9 +162,11 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
       }
     }
 
+    // If there isn't a valid move available in the foundations, we check the tableau. We will
+    // loop though 7 times, one for each column in the tableau.
     for (let i = 0; i < tableauData.length; i++) {
 
-      // FROM: Column, TO: Column
+      // FROM: Column, TO: Column - Check
       if (validMoveTableau(fromColData, tableauData[i], card)) {
         let previousCardFlipped;
 

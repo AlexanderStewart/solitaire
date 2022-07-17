@@ -130,6 +130,15 @@ const App = () => {
   const reStock = () => {
     const tempStockpile = [...talonPile];
     tempStockpile.reverse();
+
+    for (let i = 0; i < tempStockpile.length; i++) {
+      tempStockpile[i].faceUp = false;
+    }
+
+    if (tempStockpile.length - 1 > 0) {
+      tempStockpile[tempStockpile.length - 1].faceUp = true;
+    }
+
     setStockpile(tempStockpile);
     setTalonPile([]);
 
