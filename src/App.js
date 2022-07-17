@@ -3,10 +3,13 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import GetCards from "./GetCards";
+
+// Components.
 import CardDraggable from "./components/CardDraggable";
 import Card from "./components/Card";
 import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
+import Header from "./components/Header";
 
 // Styles.
 import "./styles/Game.css";
@@ -18,7 +21,6 @@ import BackAMove from "./functions/BackAMove";
 
 // Assets.
 import { ReactComponent as Restart } from './assets/icons/restart.svg';
-import { ReactComponent as BackArrow } from './assets/icons/backArrow.svg';
 
 const App = () => {
   // *** State. ***
@@ -128,6 +130,15 @@ const App = () => {
   const reStock = () => {
     const tempStockpile = [...talonPile];
     tempStockpile.reverse();
+
+    for (let i = 0; i < tempStockpile.length; i++) {
+      tempStockpile[i].faceUp = false;
+    }
+
+    if (tempStockpile.length - 1 > 0) {
+      tempStockpile[tempStockpile.length - 1].faceUp = true;
+    }
+
     setStockpile(tempStockpile);
     setTalonPile([]);
 
@@ -147,6 +158,14 @@ const App = () => {
     if (variable === 'shuffledAndDealt') setShuffledAndDealt(value);
   };
 
+  const startShuffleAndDeal = () => {
+    ShuffleAndDeal(updateColInTableau, deck, changeState);
+  };
+
+  const startBackAMove = () => {
+    BackAMove(updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile);
+  };
+
   // *** UseEffect. ***
 
   // Shuffle deck only when the page refreshes
@@ -154,10 +173,6 @@ const App = () => {
     ShuffleAndDeal(updateColInTableau, deck, changeState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    console.log(moves);
-  }, [moves]);
 
   if (!shuffledAndDealt) {
     return null;
@@ -167,39 +182,13 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: '#fffbeb'
     }}>
-      <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-
-        <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
-
-        <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#4ade80', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
-          <span style={{ fontSize: '18px' }}>SCORE: {score} POINTS</span>
-        </div>
-
-        <div style={{
-          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
-        }}
-          onClick={() => ShuffleAndDeal(updateColInTableau, deck, changeState)}
-        >
-          <span style={{ paddingRight: '4px' }}>RESTART</span>
-          <Restart width={20} height={20} />
-        </div>
-
-        <div style={{ paddingLeft: '16px' }} />
-
-        <div style={{
-          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#fed7aa', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
-        }}
-          onClick={() => BackAMove(updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}
-        >
-          <span style={{ paddingRight: '4px' }}>BACK A MOVE</span>
-          <BackArrow width={20} height={20} />
-        </div>
-      </div>
+      <Header startShuffleAndDeal={startShuffleAndDeal} startBackAMove={startBackAMove} score={score} />
 
       <div className="container">
         <DndProvider backend={HTML5Backend}>
           <div style={{ display: "flex", flexDirection: "row" }}>
 
+            {/*** COLUMN A RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colA?.map((card, index) => {
@@ -236,6 +225,7 @@ const App = () => {
 
             <div className="space" />
 
+            {/*** COLUMN B RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colB?.map((card, index) => {
@@ -272,6 +262,7 @@ const App = () => {
 
             <div className="space" />
 
+            {/*** COLUMN C RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colC?.map((card, index) => {
@@ -311,6 +302,7 @@ const App = () => {
 
             <div className="space" />
 
+            {/*** COLUMN D RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colD?.map((card, index) => {
@@ -349,6 +341,7 @@ const App = () => {
 
             <div className="space" />
 
+            {/*** COLUMN E RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colE?.map((card, index) => {
@@ -387,6 +380,7 @@ const App = () => {
 
             <div className="space" />
 
+            {/*** COLUMN F RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colF?.map((card, index) => {
@@ -423,6 +417,7 @@ const App = () => {
 
             <div className="space" />
 
+            {/*** COLUMN G RENDERING ***/}
             <div>
               <PlaceHolder src={GetCards("CardBlank")} />
               {colG?.map((card, index) => {
@@ -461,7 +456,7 @@ const App = () => {
             <div className="space" />
 
 
-            {/* Foundation Divs */}
+            {/*** FOUNDATIONS RENDERING ***/}
             <div style={{ flex: 1, flexDirection: 'column' }}>
               <div style={{ padding: '20px', borderColor: '#000', borderWidth: '2px', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
 
@@ -470,6 +465,8 @@ const App = () => {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row" }}>
+
+                  {/*** FOUNDATION 1 RENDERING ***/}
                   <div>
                     <div>
                       <img
@@ -505,6 +502,8 @@ const App = () => {
                   </div>
 
                   <div className="space" />
+
+                  {/*** FOUNDATION 2 RENDERING ***/}
                   <div>
                     <div>
                       <img
@@ -543,6 +542,8 @@ const App = () => {
                 <div className="space" />
 
                 <div style={{ display: "flex", flexDirection: "row" }}>
+
+                  {/*** FOUNDATION 3 RENDERING ***/}
                   <div>
                     <div>
                       <img
@@ -576,7 +577,10 @@ const App = () => {
                       />
                     )}
                   </div>
+
                   <div className="space" />
+
+                  {/*** FOUNDATION 4 RENDERING ***/}
                   <div>
                     <div>
                       <img
@@ -621,6 +625,8 @@ const App = () => {
                   <div style={{ marginBottom: 20 }}>
                     <span>STOCKPILE</span>
                   </div>
+
+                  {/*** STOCKPILE RENDERING ***/}
                   <div>
                     <div>
                       <img
@@ -666,7 +672,7 @@ const App = () => {
 
                 <div>
 
-
+                  {/* only if stockpile is empty do we display the reStock button */}
                   {stockpile.length === 0 && <div className="reStock" style={{
                     cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderWidth: '2px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
                   }}
@@ -678,6 +684,8 @@ const App = () => {
                   <div style={{ marginBottom: 20 }}>
                     <span>TALON PILE</span>
                   </div>
+
+                  {/*** TALONPILE RENDERING ***/}
                   <div>
                     <div>
                       <img

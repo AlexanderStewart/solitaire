@@ -34,6 +34,9 @@ const DropTarget = (props) => {
     }
     else if (toColName === 'foun1' || toColName === 'foun2' || toColName === 'foun3' || toColName === 'foun4') {
       if (ValidMoveFoundation(toColData, movedCard)) {
+
+        if (movedCard !== fromColData[fromColData.length - 1]) return;
+
         let previousCardFlipped;
         if (fromColData.length - 1 !== 0) previousCardFlipped = fromColData[fromColData.length - 2].faceUp;
 
