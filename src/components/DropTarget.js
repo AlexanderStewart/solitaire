@@ -12,6 +12,8 @@ const DropTarget = (props) => {
     }
   }));
 
+  console.log(isOver);
+
   const onDrop = (data) => {
     const fromColName = data.fromColName;
     const fromColData = [...data.fromColData];
@@ -22,7 +24,6 @@ const DropTarget = (props) => {
     const index = fromColData.findIndex(val => val.name === movedCard.name); //index of moved CArd
 
     if (toColName === 'talon') {
-      const movedCard = fromColData.pop();
       if (fromColData.length !== 0) fromColData[fromColData.length - 1].faceUp = true;
 
       toColData.push(movedCard);
@@ -41,7 +42,7 @@ const DropTarget = (props) => {
         if (fromColData.length - 1 !== 0) previousCardFlipped = fromColData[fromColData.length - 2].faceUp;
 
         // first remove the card from the column it was taken from
-        const movedCard = fromColData.pop();
+        const myCard = fromColData.pop();
 
         if (fromColData.length !== 0) {
           fromColData[fromColData.length - 1].faceUp = true;
@@ -50,10 +51,10 @@ const DropTarget = (props) => {
         props.updateColInTableau(fromColName, fromColData);
 
         // then add card to new column
-        toColData.push(movedCard);
+        toColData.push(myCard);
         props.updateColInTableau(toColName, toColData);
 
-        props.addAMove(movedCard, fromColName, toColName, previousCardFlipped, 1);
+        props.addAMove(myCard, fromColName, toColName, previousCardFlipped, 1);
       }
     }
     else if (ValidMoveTableau(fromColData, toColData, movedCard)) {
