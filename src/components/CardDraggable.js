@@ -9,6 +9,7 @@ const CardDraggable = (props) => {
   const src = props.src;
   const fromColData = props.fromColData;
   const fromColName = props.fromColName;
+  const cardColor = props.cardColor;
 
   let isStockpile = props.isStockpile;
   if (isStockpile === null) isStockpile = false;
@@ -39,6 +40,7 @@ const CardDraggable = (props) => {
           alt='card'
           draggable='false'
           className={isStockpile ? 'stockpile-card' : 'card'}
+          style={{ backgroundColor: cardColor }}
           src={src}
         />
       </div>
