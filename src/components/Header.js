@@ -1,17 +1,27 @@
+import React, { useState, useEffect } from 'react';
+import Switch from "react-switch";
+
 import { ReactComponent as Restart } from './../assets/icons/restart.svg';
 import { ReactComponent as BackArrow } from './../assets/icons/backArrow.svg';
 
 const Header = (props) => {
 
-  const { startShuffleAndDeal, startBackAMove, score } = props;
+  // State
+  const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor } = props;
+  const [toggle, setToggle] = useState(true);
+
+  // UseEffect
+  useEffect(() => {
+    toggleDarkMode(!toggle);
+  }, [toggle]);
 
   return (
     <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
-      <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold' }}>GROUP 6 - SOLITAIRE</span>
+      <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold', color: textColor }}>GROUP 6 - SOLITAIRE</span>
 
       <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#4ade80', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
-        <span style={{ fontSize: '18px' }}>SCORE: {score} POINTS</span>
+        <span style={{ fontSize: '18px', color: textColor }}>SCORE: {score} POINTS</span>
       </div>
 
       <div style={{
@@ -32,6 +42,12 @@ const Header = (props) => {
       >
         <span style={{ paddingRight: '4px' }}>BACK A MOVE</span>
         <BackArrow width={20} height={20} />
+      </div>
+
+      <div style={{ paddingLeft: '16px' }} />
+
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Switch onChange={(e) => setToggle(e)} checked={toggle} uncheckedIcon={false} checkedIcon={false} />
       </div>
     </div>
   );

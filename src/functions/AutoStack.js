@@ -168,10 +168,15 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
 
       // FROM: Column, TO: Column - Check
       if (validMoveTableau(fromColData, tableauData[i], card)) {
+
+        // We will store if the card behind the card(s) being moved is flipped up or flipped down.
+        // This will be used when the user clicks the "back a move" button
         let previousCardFlipped;
 
+        // Storing the column that the card(s) are being move to 
         const tempTableauDataTo = tableauData[i];
 
+        // transferring the card(s)
         const cardsToMove = [];
         const index = fromColData.findIndex(val => val.name === card.name);
         const numOfCardsMoved = fromColData.length - index;
@@ -192,9 +197,11 @@ const AutoStack = (fromColName, fromColDataPassed, card, updateColInTableau, add
           fromColData[fromColData.length - 1].faceUp = true;
         }
 
+        // Updating the state variables so that the new data is rendered
         updateColInTableau(fromColName, fromColData);
         updateColInTableau(tableauName[i], tempTableauDataTo);
 
+        // Finally, we record this move for the purpose of using the "back a move" button later.
         addAMove(cardsToMove, fromColName, tableauName[i], previousCardFlipped, numOfCardsMoved);
 
         return true;
