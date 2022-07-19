@@ -1,15 +1,21 @@
 const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile) => {
+
+  // If there are no stored moves left, do not continue with this function
   if (moves.length === 0) return;
 
   const cardsToMove = [];
 
+  // Getting the last move that was added to the moves array
   const card = moves[moves.length - 1].card;
   const fromName = moves[moves.length - 1].fromName;
   const toName = moves[moves.length - 1].toName;
   const previousCardFlipped = moves[moves.length - 1].previousCardFlipped;
   const numOfCardsMoved = moves[moves.length - 1].numOfCardsMoved;
 
+  // From: Talon, To: Stockpile - Check
   if (fromName === 'talon' && toName === 'stockpile') {
+
+    // Reverse the restock
     const tempTalonPile = [...stockpile];
     tempTalonPile.reverse();
     updateColInTableau('talon', tempTalonPile);
@@ -22,6 +28,7 @@ const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, 
     return;
   }
 
+  // Getting the table data based on the name of the column
   let tempFromData = [];
   let tempToData = [];
 
@@ -53,8 +60,11 @@ const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, 
   else if (toName === "stockpile") tempToData = [...stockpile];
   else if (toName === "talon") tempToData = [...talonPile];
 
+
   let index;
 
+  // Getting the index of the moved card. If it is multiple cards we have to treat
+  // it as an array, if it's one card we just treat it as a variable.
   if (card instanceof Array) {
     index = tempToData.findIndex(val => val.name === card[0].name);
   }
@@ -62,6 +72,7 @@ const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, 
     index = tempToData.findIndex(val => val.name === card.name);
   }
 
+  // Reversing the move
   if (index + 1 <= tempToData.length) {
 
     while (index < tempToData.length) {
@@ -76,9 +87,11 @@ const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, 
 
   if (flipCardIndex >= 0 && !previousCardFlipped && previousCardFlipped !== null) tempFromData[flipCardIndex].faceUp = false;
 
+  // Updating the state so that the data is rendered to the screen.
   updateColInTableau(fromName, tempFromData);
   updateColInTableau(toName, tempToData);
 
+  // Removing the last move from the moves state variable.
   const tempMoves = moves;
   tempMoves.pop();
   changeState('moves', tempMoves);
