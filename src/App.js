@@ -269,7 +269,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={"colB"}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} /></div>
+                  <div key={card.name} className={"colB"}><Card cardColor={cardColor} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -307,8 +307,8 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={"colC"}>
-                    <Card key={card.name} cardColor={cardColor} card={card} src={CardImage} />
+                  <div key={card.name} className={"colC"}>
+                    <Card cardColor={cardColor} card={card} src={CardImage} />
                   </div>
 
                 );
@@ -348,8 +348,8 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={"colD"}>
-                    <Card key={card.name} cardColor={cardColor} card={card} src={CardImage} />
+                  <div key={card.name} className={"colD"}>
+                    <Card cardColor={cardColor} card={card} src={CardImage} />
                   </div>
                 );
               })}
@@ -388,8 +388,8 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={'colE'}>
-                    <Card key={card.name} cardColor={cardColor} card={card} src={CardImage} />
+                  <div key={card.name} className={'colE'}>
+                    <Card cardColor={cardColor} card={card} src={CardImage} />
                   </div>
                 );
               })}
@@ -428,7 +428,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={'colF'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} /></div>
+                  <div className={'colF'} key={card.name} ><Card cardColor={cardColor} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -466,7 +466,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={'colG'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} /></div>
+                  <div className={'colG'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -515,7 +515,7 @@ const App = () => {
 
                     {foun1?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun1'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun1'} key={card.name} ><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -552,7 +552,7 @@ const App = () => {
 
                     {foun2?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun2'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun2'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -592,7 +592,7 @@ const App = () => {
 
                     {foun3?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun3'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun3'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -629,7 +629,7 @@ const App = () => {
 
                     {foun4?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun4'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun4'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -691,7 +691,7 @@ const App = () => {
                           />
                         </div>
                       ) : (
-                        <div className={'stockpile'}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} isStockpile={true} /></div>
+                        <div className={'stockpile'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>
                       );
                     })}
                   </div>
@@ -734,7 +734,7 @@ const App = () => {
                     <div>
                       {talonPile?.map((card, index) => {
                         const CardImage = GetCards(card.name);
-                        return <div className={'talonPile'}><Card cardColor={cardColor} index={index} key={card.name} card={card} src={CardImage} isStockpile={true} /></div>;
+                        return <div className={'talonPile'} key={card.name}><Card cardColor={cardColor} index={index} card={card} src={CardImage} isStockpile={true} /></div>;
 
                       })}
                       {isDragging && (
