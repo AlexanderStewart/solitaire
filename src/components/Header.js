@@ -3,12 +3,15 @@ import Switch from "react-switch";
 
 import { ReactComponent as Restart } from './../assets/icons/restart.svg';
 import { ReactComponent as BackArrow } from './../assets/icons/backArrow.svg';
+import "../styles/Header.css";
+import Timer from './Timer';
 
 const Header = (props) => {
 
   // State
   const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor } = props;
   const [toggle, setToggle] = useState(true);
+  
 
   // UseEffect
   useEffect(() => {
@@ -20,8 +23,11 @@ const Header = (props) => {
 
       <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold', color: textColor }}>GROUP 6 - SOLITAIRE</span>
 
-      <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#4ade80', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
-        <span style={{ fontSize: '18px', color: textColor }}>SCORE: {score} POINTS</span>
+      <div className='score-container'>
+        <span id='score'>SCORE: {score} POINTS</span>
+      </div>
+      <div>
+        <Timer />
       </div>
 
       <div style={{
