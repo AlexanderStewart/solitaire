@@ -10,6 +10,7 @@ const CardDraggable = (props) => {
   const fromColData = props.fromColData;
   const fromColName = props.fromColName;
   const cardColor = props.cardColor;
+  const cardBorderColor = props.cardBorderColor;
 
   let isStockpile = props.isStockpile;
   if (isStockpile === null) isStockpile = false;
@@ -40,7 +41,7 @@ const CardDraggable = (props) => {
           alt='card'
           draggable='false'
           className={isStockpile ? 'stockpile-card' : 'card'}
-          style={{ backgroundColor: cardColor }}
+          style={{ backgroundColor: cardColor, borderColor: cardBorderColor }}
           src={src}
         />
       </div>

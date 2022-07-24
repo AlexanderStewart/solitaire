@@ -7,7 +7,7 @@ import { ReactComponent as BackArrow } from './../assets/icons/backArrow.svg';
 const Header = (props) => {
 
   // State
-  const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor } = props;
+  const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor, foundationBackgroundColor, cardBorderColor } = props;
   const [toggle, setToggle] = useState(true);
 
   // UseEffect
@@ -20,12 +20,12 @@ const Header = (props) => {
 
       <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold', color: textColor }}>GROUP 6 - SOLITAIRE</span>
 
-      <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#4ade80', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
+      <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#10b981', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
         <span style={{ fontSize: '18px', color: textColor }}>SCORE: {score} POINTS</span>
       </div>
 
       <div style={{
-        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
       }}
         onClick={() => startShuffleAndDeal()}
       >
@@ -36,7 +36,7 @@ const Header = (props) => {
       <div style={{ paddingLeft: '16px' }} />
 
       <div style={{
-        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#fed7aa', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
       }}
         onClick={() => startBackAMove()}
       >

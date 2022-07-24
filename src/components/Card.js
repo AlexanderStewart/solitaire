@@ -15,7 +15,7 @@ const Card = (props) => {
         alt='card'
         draggable='false'
         className={isStockpile ? 'stockpile-card' : 'card'}
-        style={{ backgroundColor: props.cardColor }}
+        style={{ backgroundColor: props.cardColor, borderColor: props.cardBorderColor }}
         src={src}
       />
     </div>
