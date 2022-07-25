@@ -187,7 +187,7 @@ const App = () => {
 
     setScore(score + scoredPoints);
 
-    const curMove = { card: card, fromName: fromName, toName: toName, scoredPoints: scoredPoints, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved, scoredPoints: scoredPoints };
+    const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved, scoredPoints: scoredPoints };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
     setMoves(tempMoves);
@@ -245,7 +245,7 @@ const App = () => {
       setCardBorderColor('#000');
       setFoundationBackgroundColor('#fde68a');
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDarkMode]);
 
   useEffect(() => {
@@ -255,10 +255,12 @@ const App = () => {
       }, 1000);
       setMyInterval(interval);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clockRunning]);
 
   useEffect(() => {
     if (time % 10 === 0 && time !== 0) setScore(score - 2);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
   if (!shuffledAndDealt) {
@@ -269,7 +271,7 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: backgroundColor
     }}>
-      <Header time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} />
+      <Header time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} />
 
       <div className="container">
         <DndProvider backend={HTML5Backend}>
