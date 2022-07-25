@@ -117,6 +117,8 @@ const App = () => {
   const [time, setTime] = useState(0);
   const [myInterval, setMyInterval] = useState(null);
 
+  const [won, setWon] = useState(false);
+
   // *** Functions. ***
   const updateColInTableau = (colName, colData) => {
     if (colName === "colA") setColA(colData);
@@ -161,8 +163,15 @@ const App = () => {
 
     let scoredPoints = 0;
 
-    console.log(toName);
-    console.log(fromName);
+    if (foun1.length === 13 && foun2.length === 13 && foun3.length === 13 && foun4.length === 13 && !won) {
+      setWon(true);
+      scoredPoints = scoredPoints + 700000 / time;
+    }
+
+    if (fromName === 'talon' && toName === 'stockpile') {
+      scoredPoints = scoredPoints - 100;
+    }
+
     if (toName === 'colA' || toName === 'colB' || toName === 'colC' || toName === 'colD' || toName === 'colE' || toName === 'colF' || toName === 'colG') {
       if (fromName === 'stockpile') {
         // "5 points for each card moved from the deck to a row stack."
@@ -265,6 +274,14 @@ const App = () => {
 
   if (!shuffledAndDealt) {
     return null;
+  }
+
+  if (won) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+        <span style={{ fontWeight: 'bolder', fontSize: '40px' }}>You won! Your score is {score}</span>
+      </div>
+    );
   }
 
   return (

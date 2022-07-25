@@ -26,6 +26,8 @@ const BackAMove = (updateScore, updateColInTableau, changeState, moves, foun1, f
     tempMoves.pop();
     changeState('moves', tempMoves);
 
+    updateScore((scoredPoints * -1) - 2);
+
     return;
   }
 
