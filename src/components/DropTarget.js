@@ -22,6 +22,7 @@ const DropTarget = (props) => {
     const toColName = props.toColName;
     const toColData = [...props.toColData];
     const movedCard = data.card;
+    const score = props.score;
     const cardsToMove = [];
     const index = fromColData.findIndex(val => val.name === movedCard.name); //index of moved CArd
 
@@ -41,6 +42,7 @@ const DropTarget = (props) => {
 
       // Finally, we record this move for the purpose of using the "back a move" button later.
       props.addAMove(movedCard, fromColName, toColName, false, 1);
+      props.addToScore(score);
     }
 
     // If the card is being transferred to a foundation pile

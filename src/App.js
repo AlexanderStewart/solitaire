@@ -82,7 +82,7 @@ const App = () => {
     { name: "KSpade", faceUp: false, rank: 13, isRed: false, suit: 'spade' },
   ]);
 
-  const score = 0;
+
 
   // Each column in the Tableau is an array of card objects.
   // Right now they're empty but when shuffleAndDeal() is called they will be filled according to the start game rules
@@ -108,6 +108,7 @@ const App = () => {
   const [backgroundColor, setBackgroundColor] = useState('#fffbeb');
   const [textColor, setTextColor] = useState('#000');
   const [cardColor, setCardColor] = useState('#fff');
+  const [running, setRunning] = useState(false);
 
   // *** Functions. ***
   const updateColInTableau = (colName, colData) => {
@@ -147,13 +148,15 @@ const App = () => {
 
     addAMove(tempStockpile, 'talon', 'stockpile', false, null);
   };
-
+  let score = 0;
   const addAMove = (card, fromName, toName, previousCardFlipped, numOfCardsMoved) => {
     const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
     setMoves(tempMoves);
+    setRunning(true);
   };
+
 
   const changeState = (variable, value) => {
     if (variable === 'deck') setDeck(value);
@@ -203,7 +206,7 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: backgroundColor
     }}>
-      <Header startShuffleAndDeal={startShuffleAndDeal} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} />
+      <Header startShuffleAndDeal={startShuffleAndDeal} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} running={running} />
 
       <div className="container">
         <DndProvider backend={HTML5Backend}>

@@ -27,7 +27,7 @@ const Header = (props) => {
         <span id='score'>SCORE: {score} POINTS</span>
       </div>
       <div>
-        <Timer />
+        <Timer running={props.running}/>
       </div>
 
       <div style={{

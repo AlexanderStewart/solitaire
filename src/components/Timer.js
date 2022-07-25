@@ -8,7 +8,7 @@ export default function Timer(props) {
 
     useEffect(() => {
       console.log("in Timer: ", props.running)
-        if (props.running === true){
+        if (props.running){
         interval = setInterval(() => {
           setTime((prevTime) => prevTime + 10);
         }, 10);}
