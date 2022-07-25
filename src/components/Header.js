@@ -16,6 +16,7 @@ const Header = (props) => {
   // UseEffect
   useEffect(() => {
     toggleDarkMode(!toggle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggle]);
 
   return (
