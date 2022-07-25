@@ -84,6 +84,7 @@ const App = () => {
 
   const score = 0;
 
+
   // Each column in the Tableau is an array of card objects.
   // Right now they're empty but when shuffleAndDeal() is called they will be filled according to the start game rules
   const [colA, setColA] = useState([]);
