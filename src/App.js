@@ -211,7 +211,7 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: backgroundColor
     }}>
-      <Header startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} />
+      <Header startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} cardBorderColor={cardBorderColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} />
 
       <div className="container">
         <DndProvider backend={HTML5Backend}>
