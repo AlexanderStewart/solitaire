@@ -82,8 +82,6 @@ const App = () => {
     { name: "KSpade", faceUp: false, rank: 13, isRed: false, suit: 'spade' },
   ]);
 
-  const score = 0;
-
 
   // Each column in the Tableau is an array of card objects.
   // Right now they're empty but when shuffleAndDeal() is called they will be filled according to the start game rules
@@ -113,6 +111,11 @@ const App = () => {
   const [cardColor, setCardColor] = useState('#fff');
   const [cardBorderColor, setCardBorderColor] = useState('#000');
   const [foundationBackgroundColor, setFoundationBackgroundColor] = useState('#fde68a');
+
+  const [score, setScore] = useState(0);
+  const [clockRunning, setClockRunning] = useState(false);
+  const [time, setTime] = useState(0);
+  const [myInterval, setMyInterval] = useState(null);
 
   // *** Functions. ***
   const updateColInTableau = (colName, colData) => {
@@ -154,16 +157,53 @@ const App = () => {
   };
 
   const addAMove = (card, fromName, toName, previousCardFlipped, numOfCardsMoved) => {
-    const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved };
+    if (clockRunning === false) setClockRunning(true);
+
+    let scoredPoints = 0;
+
+    console.log(toName);
+    console.log(fromName);
+    if (toName === 'colA' || toName === 'colB' || toName === 'colC' || toName === 'colD' || toName === 'colE' || toName === 'colF' || toName === 'colG') {
+      if (fromName === 'stockpile') {
+        // "5 points for each card moved from the deck to a row stack."
+        scoredPoints = scoredPoints + 5;
+      }
+      // if (fromName === 'colA' || fromName === 'colB' || fromName === 'colC' || fromName === 'colD' || fromName === 'colE' || fromName === 'colF' || fromName === 'colG') {
+      //   // "3 points for each card moved from one row stack to another."
+      //   scoredPoints = scoredPoints + 3;
+      // }
+    }
+
+    if (toName === 'foun1' || toName === 'foun2' || toName === 'foun3' || toName === 'foun4') {
+      // "10 points for each card moved to a suit stack."
+      scoredPoints = scoredPoints + 10;
+    }
+
+    if (previousCardFlipped === false && fromName !== 'stockpile') {
+      console.log('just flipped a card!');
+      // "5 points for each card turned face-up in a row stack."
+      scoredPoints = scoredPoints + 5;
+    }
+
+    setScore(score + scoredPoints);
+
+    const curMove = { card: card, fromName: fromName, toName: toName, scoredPoints: scoredPoints, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved, scoredPoints: scoredPoints };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
     setMoves(tempMoves);
   };
 
+
   const changeState = (variable, value) => {
     if (variable === 'deck') setDeck(value);
     if (variable === 'moves') setMoves(value);
+    if (variable === 'score') setScore(value);
     if (variable === 'shuffledAndDealt') setShuffledAndDealt(value);
+    if (variable === 'time') setTime(value);
+    if (variable === 'clockRunning') {
+      setClockRunning(value);
+      if (value === false) clearInterval(myInterval);
+    }
   };
 
   const startShuffleAndDeal = () => {
@@ -171,11 +211,15 @@ const App = () => {
   };
 
   const startBackAMove = () => {
-    BackAMove(updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile);
+    BackAMove(updateScore, updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile);
   };
 
   const toggleDarkMode = (e) => {
     setIsDarkMode(e);
+  };
+
+  const updateScore = (e) => {
+    setScore(score + e);
   };
 
   // *** UseEffect. ***
@@ -204,6 +248,19 @@ const App = () => {
 
   }, [isDarkMode]);
 
+  useEffect(() => {
+    if (clockRunning) {
+      let interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+      setMyInterval(interval);
+    }
+  }, [clockRunning]);
+
+  useEffect(() => {
+    if (time % 10 === 0 && time !== 0) setScore(score - 2);
+  }, [time]);
+
   if (!shuffledAndDealt) {
     return null;
   }
@@ -212,7 +269,7 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: backgroundColor
     }}>
-      <Header startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} />
+      <Header time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} />
 
       <div className="container">
         <DndProvider backend={HTML5Backend}>
