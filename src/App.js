@@ -188,7 +188,7 @@ const App = () => {
       scoredPoints = scoredPoints + 10;
     }
 
-    if (previousCardFlipped === false && fromName !== 'stockpile') {
+    if (previousCardFlipped === false && fromName !== 'stockpile' && fromName !== 'talon') {
       console.log('just flipped a card!');
       // "5 points for each card turned face-up in a row stack."
       scoredPoints = scoredPoints + 5;
