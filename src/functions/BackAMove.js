@@ -1,4 +1,4 @@
-const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile) => {
+const BackAMove = (updateScore, updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile) => {
 
   // If there are no stored moves left, do not continue with this function
   if (moves.length === 0) return;
@@ -11,6 +11,7 @@ const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, 
   const toName = moves[moves.length - 1].toName;
   const previousCardFlipped = moves[moves.length - 1].previousCardFlipped;
   const numOfCardsMoved = moves[moves.length - 1].numOfCardsMoved;
+  const scoredPoints = moves[moves.length - 1].scoredPoints;
 
   // From: Talon, To: Stockpile - Check
   if (fromName === 'talon' && toName === 'stockpile') {
@@ -95,6 +96,8 @@ const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, 
   const tempMoves = moves;
   tempMoves.pop();
   changeState('moves', tempMoves);
+
+  updateScore((scoredPoints * -1) - 2);
 };
 
 export default BackAMove;

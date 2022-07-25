@@ -4,6 +4,9 @@ import Switch from "react-switch";
 import { ReactComponent as Restart } from './../assets/icons/restart.svg';
 import { ReactComponent as BackArrow } from './../assets/icons/backArrow.svg';
 
+// Components.
+import Timer from './Timer';
+
 const Header = (props) => {
 
   // State
@@ -19,6 +22,8 @@ const Header = (props) => {
     <div style={{ padding: '10px', paddingLeft: '30px', paddingRight: '30px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
       <span style={{ fontSize: '24px', paddingRight: '16px', fontWeight: 'bold', color: textColor }}>GROUP 6 - SOLITAIRE</span>
+
+      <Timer time={props.time} textColor={props.textColor} />
 
       <div style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: '#10b981', marginRight: '16px', padding: '8px', borderRadius: '6px' }}>
         <span style={{ fontSize: '18px', color: textColor }}>SCORE: {score} POINTS</span>
