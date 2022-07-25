@@ -1,7 +1,12 @@
-const BackAMove = (updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile) => {
+const BackAMove = (updateScore, updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile) => {
 
   // If there are no stored moves left, do not continue with this function
   if (moves.length === 0) return;
+
+  console.log('lastMovePoints');
+  console.log(moves[moves.length - 1].scoredPoints);
+  const lostPoints = (moves[moves.length - 1].scoredPoints * -1) - 2;
+  updateScore(lostPoints);
 
   const cardsToMove = [];
 

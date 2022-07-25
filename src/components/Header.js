@@ -11,7 +11,7 @@ const Header = (props) => {
   // State
   const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor } = props;
   const [toggle, setToggle] = useState(true);
-  
+
 
   // UseEffect
   useEffect(() => {
@@ -27,7 +27,7 @@ const Header = (props) => {
         <span id='score'>SCORE: {score} POINTS</span>
       </div>
       <div>
-        <Timer running={props.running}/>
+        <Timer running={props.running} />
       </div>
 
       <div style={{

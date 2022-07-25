@@ -101,6 +101,8 @@ const App = () => {
   const [talonPile, setTalonPile] = useState([]);
   const [moves, setMoves] = useState([]);
 
+  const [score, setScore] = useState(0);
+
   // Boolean state variable that turns true at the end of shuffleAndDeal(). Everything on the board is not rendered until this is true.
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -148,9 +150,37 @@ const App = () => {
 
     addAMove(tempStockpile, 'talon', 'stockpile', false, null);
   };
-  let score = 0;
+
   const addAMove = (card, fromName, toName, previousCardFlipped, numOfCardsMoved) => {
-    const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved };
+    let scoredPoints = 0;
+
+    console.log(toName);
+    console.log(fromName);
+    if (toName === 'colA' || toName === 'colB' || toName === 'colC' || toName === 'colD' || toName === 'colE' || toName === 'colF' || toName === 'colG') {
+      if (fromName === 'stockpile') {
+        // "5 points for each card moved from the deck to a row stack."
+        scoredPoints = scoredPoints + 5;
+      }
+      if (fromName === 'colA' || fromName === 'colB' || fromName === 'colC' || fromName === 'colD' || fromName === 'colE' || fromName === 'colF' || fromName === 'colG') {
+        // "3 points for each card moved from one row stack to another."
+        scoredPoints = scoredPoints + 3;
+      }
+    }
+
+    if (toName === 'foun1' || toName === 'foun2' || toName === 'foun3' || toName === 'foun4') {
+      // "10 points for each card moved to a suit stack."
+      scoredPoints = scoredPoints + 10;
+    }
+
+    if (previousCardFlipped === false && fromName !== 'stockpile') {
+      console.log('just flipped a card!');
+      // "5 points for each card turned face-up in a row stack."
+      scoredPoints = scoredPoints + 5;
+    }
+
+    setScore(score + scoredPoints);
+
+    const curMove = { card: card, fromName: fromName, toName: toName, previousCardFlipped: previousCardFlipped, numOfCardsMoved: numOfCardsMoved, scoredPoints: scoredPoints };
     const tempMoves = [...moves];
     tempMoves.push(curMove);
     setMoves(tempMoves);
@@ -169,7 +199,11 @@ const App = () => {
   };
 
   const startBackAMove = () => {
-    BackAMove(updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile);
+    BackAMove(updateScore, updateColInTableau, changeState, moves, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile);
+  };
+
+  const updateScore = (e) => {
+    setScore(score + e);
   };
 
   const toggleDarkMode = (e) => {
