@@ -107,10 +107,14 @@ const App = () => {
   const [shuffledAndDealt, setShuffledAndDealt] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Colors
   const [backgroundColor, setBackgroundColor] = useState('#fffbeb');
   const [textColor, setTextColor] = useState('#000');
   const [cardColor, setCardColor] = useState('#fff');
   const [running, setRunning] = useState(false);
+  const [cardBorderColor, setCardBorderColor] = useState('#000');
+  const [foundationBackgroundColor, setFoundationBackgroundColor] = useState('#fde68a');
 
   // *** Functions. ***
   const updateColInTableau = (colName, colData) => {
@@ -220,14 +224,18 @@ const App = () => {
 
   useEffect(() => {
     if (isDarkMode) {
-      setBackgroundColor('#363e47');
+      setBackgroundColor('#4b5563');
       setCardColor('#ccd9e5');
       setTextColor('#ccd9e5');
+      setCardBorderColor('#1f2937');
+      setFoundationBackgroundColor('#ccd9e5');
     }
     else {
       setBackgroundColor('#fffbeb');
       setCardColor('#fff');
       setTextColor('#000');
+      setCardBorderColor('#000');
+      setFoundationBackgroundColor('#fde68a');
     }
 
   }, [isDarkMode]);
@@ -240,7 +248,7 @@ const App = () => {
     <div style={{
       overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: backgroundColor
     }}>
-      <Header startShuffleAndDeal={startShuffleAndDeal} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} running={running} />
+      <Header startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} cardBorderColor={cardBorderColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} textColor={textColor} running={running} />
 
       <div className="container">
         <DndProvider backend={HTML5Backend}>
@@ -258,6 +266,7 @@ const App = () => {
                   <div key={card.name} className={"colAFaceUp colA"} onDoubleClick={() => AutoStack('colA', colA, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
                       cardColor={cardColor}
+                      cardBorderColor={cardBorderColor}
                       draggable
                       key={card.name}
                       card={card}
@@ -268,7 +277,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={"colA"}><Card cardColor={cardColor} key={card.name} card={card} src={CardImage} /></div>
+                  <div className={"colA"}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} key={card.name} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -295,6 +304,7 @@ const App = () => {
                 return card.faceUp ? (
                   <div key={card.name} className={"colBFaceUp colB"} onDoubleClick={() => AutoStack('colB', colB, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
+                      cardBorderColor={cardBorderColor}
                       cardColor={cardColor}
                       draggable
                       key={card.name}
@@ -306,7 +316,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div key={card.name} className={"colB"}><Card cardColor={cardColor} card={card} src={CardImage} /></div>
+                  <div key={card.name} className={"colB"}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -333,6 +343,7 @@ const App = () => {
                 return card.faceUp ? (
                   <div key={card.name} className={"colCFaceUp colC"} onDoubleClick={() => AutoStack('colC', colC, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
+                      cardBorderColor={cardBorderColor}
                       cardColor={cardColor}
                       draggable
                       key={card.name}
@@ -345,7 +356,7 @@ const App = () => {
                   </div>
                 ) : (
                   <div key={card.name} className={"colC"}>
-                    <Card cardColor={cardColor} card={card} src={CardImage} />
+                    <Card cardColor={cardColor} card={card} src={CardImage} cardBorderColor={cardBorderColor} />
                   </div>
 
                 );
@@ -374,6 +385,7 @@ const App = () => {
                 return card.faceUp ? (
                   <div key={card.name} className={"colDFaceUp colD"} onDoubleClick={() => AutoStack('colD', colD, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)} >
                     <CardDraggable
+                      cardBorderColor={cardBorderColor}
                       cardColor={cardColor}
                       draggable
                       key={card.name}
@@ -386,7 +398,7 @@ const App = () => {
                   </div>
                 ) : (
                   <div key={card.name} className={"colD"}>
-                    <Card cardColor={cardColor} card={card} src={CardImage} />
+                    <Card cardColor={cardColor} card={card} cardBorderColor={cardBorderColor} src={CardImage} />
                   </div>
                 );
               })}
@@ -414,6 +426,7 @@ const App = () => {
                 return card.faceUp ? (
                   <div key={card.name} className={'colEFaceUp colE'} onDoubleClick={() => AutoStack('colE', colE, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
+                      cardBorderColor={cardBorderColor}
                       cardColor={cardColor}
                       draggable
                       key={card.name}
@@ -426,7 +439,7 @@ const App = () => {
                   </div>
                 ) : (
                   <div key={card.name} className={'colE'}>
-                    <Card cardColor={cardColor} card={card} src={CardImage} />
+                    <Card cardColor={cardColor} card={card} cardBorderColor={cardBorderColor} src={CardImage} />
                   </div>
                 );
               })}
@@ -454,6 +467,7 @@ const App = () => {
                 return card.faceUp ? (
                   <div key={card.name} className={"colFFaceUp colF"} onDoubleClick={() => AutoStack('colF', colF, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
+                      cardBorderColor={cardBorderColor}
                       cardColor={cardColor}
                       draggable
                       key={card.name}
@@ -465,7 +479,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={'colF'} key={card.name} ><Card cardColor={cardColor} card={card} src={CardImage} /></div>
+                  <div className={'colF'} key={card.name} ><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -492,6 +506,7 @@ const App = () => {
                 return card.faceUp ? (
                   <div key={card.name} className={'colGFaceUp colG'} onDoubleClick={() => AutoStack('colG', colG, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                     <CardDraggable
+                      cardBorderColor={cardBorderColor}
                       cardColor={cardColor}
                       draggable
                       key={card.name}
@@ -503,7 +518,7 @@ const App = () => {
                     />
                   </div>
                 ) : (
-                  <div className={'colG'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} /></div>
+                  <div className={'colG'} key={card.name}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
                 );
               })}
               {isDragging && (
@@ -523,10 +538,10 @@ const App = () => {
 
             {/*** FOUNDATIONS RENDERING ***/}
             <div style={{ flex: 1, flexDirection: 'column' }}>
-              <div style={{ padding: '20px', borderColor: '#000', borderWidth: '2px', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px' }}>
+              <div style={{ padding: '20px', borderWidth: '2px', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px', borderColor: textColor }}>
 
                 <div style={{ marginBottom: 20 }}>
-                  <span>FOUNDATIONS</span>
+                  <span style={{ color: textColor }}>FOUNDATIONS</span>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row" }}>
@@ -539,12 +554,12 @@ const App = () => {
                         draggable='false'
                         style={{
                           borderStyle: 'solid',
-                          borderColor: '#000',
+                          borderColor: textColor,
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
                           borderWidth: '2px',
-                          backgroundColor: '#fde68a'
+                          backgroundColor: foundationBackgroundColor
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -552,7 +567,7 @@ const App = () => {
 
                     {foun1?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun1'} key={card.name} ><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun1'} key={card.name} ><Card cardBorderColor={cardBorderColor} cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -576,12 +591,12 @@ const App = () => {
                         draggable='false'
                         style={{
                           borderStyle: 'solid',
-                          borderColor: '#000',
+                          borderColor: textColor,
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
                           borderWidth: '2px',
-                          backgroundColor: '#fde68a'
+                          backgroundColor: foundationBackgroundColor
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -589,7 +604,7 @@ const App = () => {
 
                     {foun2?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun2'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun2'} key={card.name}><Card cardBorderColor={cardBorderColor} cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -616,12 +631,12 @@ const App = () => {
                         draggable='false'
                         style={{
                           borderStyle: 'solid',
-                          borderColor: '#000',
+                          borderColor: textColor,
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
                           borderWidth: '2px',
-                          backgroundColor: '#fde68a'
+                          backgroundColor: foundationBackgroundColor
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -629,7 +644,7 @@ const App = () => {
 
                     {foun3?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun3'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun3'} key={card.name}><Card cardBorderColor={cardBorderColor} cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -653,12 +668,12 @@ const App = () => {
                         draggable='false'
                         style={{
                           borderStyle: 'solid',
-                          borderColor: '#000',
+                          borderColor: textColor,
                           width: '120px',
                           padding: '4px',
                           borderRadius: '4px',
                           borderWidth: '2px',
-                          backgroundColor: '#fde68a'
+                          backgroundColor: foundationBackgroundColor
                         }}
                         src={GetCards("CardBlank")}
                       />
@@ -666,7 +681,7 @@ const App = () => {
 
                     {foun4?.map((card) => {
                       let CardImage = GetCards(card.name);
-                      return <div className={'foun4'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>;
+                      return <div className={'foun4'} key={card.name}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} isStockpile={true} /></div>;
                     })}
 
                     {isDragging && (
@@ -688,7 +703,7 @@ const App = () => {
               <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '20px' }}>
                 <div>
                   <div style={{ marginBottom: 20 }}>
-                    <span>STOCKPILE</span>
+                    <span style={{ color: textColor }}>STOCKPILE</span>
                   </div>
 
                   {/*** STOCKPILE RENDERING ***/}
@@ -699,7 +714,7 @@ const App = () => {
                         draggable='false'
                         style={{
                           borderStyle: 'solid',
-                          borderColor: '#000',
+                          borderColor: textColor,
                           width: '120px',
                           borderRadius: '4px',
                           borderWidth: '2px',
@@ -716,6 +731,7 @@ const App = () => {
                       return card.faceUp ? (
                         <div key={card.name} className={'stockpileFaceUp stockpile'} onDoubleClick={() => AutoStack('stockpile', stockpile, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
                           <CardDraggable
+                            cardBorderColor={cardBorderColor}
                             cardColor={cardColor}
                             draggable
                             key={card.name}
@@ -728,7 +744,7 @@ const App = () => {
                           />
                         </div>
                       ) : (
-                        <div className={'stockpile'} key={card.name}><Card cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>
+                        <div className={'stockpile'} key={card.name}><Card cardBorderColor={cardBorderColor} cardColor={cardColor} card={card} src={CardImage} isStockpile={true} /></div>
                       );
                     })}
                   </div>
@@ -748,7 +764,7 @@ const App = () => {
                     <Restart width={20} height={20} />
                   </div>}
                   <div style={{ marginBottom: 20 }}>
-                    <span>TALON PILE</span>
+                    <span style={{ color: textColor }}>TALON PILE</span>
                   </div>
 
                   {/*** TALONPILE RENDERING ***/}
@@ -759,7 +775,7 @@ const App = () => {
                         draggable='false'
                         style={{
                           borderStyle: 'solid',
-                          borderColor: '#000',
+                          borderColor: textColor,
                           width: '120px',
                           borderRadius: '4px',
                           borderWidth: '2px',
@@ -771,7 +787,7 @@ const App = () => {
                     <div>
                       {talonPile?.map((card, index) => {
                         const CardImage = GetCards(card.name);
-                        return <div className={'talonPile'} key={card.name}><Card cardColor={cardColor} index={index} card={card} src={CardImage} isStockpile={true} /></div>;
+                        return <div className={'talonPile'} key={card.name}><Card cardBorderColor={cardBorderColor} cardColor={cardColor} index={index} card={card} src={CardImage} isStockpile={true} /></div>;
 
                       })}
                       {isDragging && (

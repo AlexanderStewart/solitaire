@@ -9,7 +9,7 @@ import Timer from './Timer';
 const Header = (props) => {
 
   // State
-  const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor } = props;
+  const { startShuffleAndDeal, startBackAMove, toggleDarkMode, score, textColor, foundationBackgroundColor, cardBorderColor } = props;
   const [toggle, setToggle] = useState(true);
 
 
@@ -31,7 +31,7 @@ const Header = (props) => {
       </div>
 
       <div style={{
-        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#99f6e4', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
       }}
         onClick={() => startShuffleAndDeal()}
       >
@@ -42,7 +42,7 @@ const Header = (props) => {
       <div style={{ paddingLeft: '16px' }} />
 
       <div style={{
-        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', backgroundColor: '#fed7aa', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
       }}
         onClick={() => startBackAMove()}
       >
