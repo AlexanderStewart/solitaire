@@ -10,6 +10,7 @@ import Card from "./components/Card";
 import PlaceHolder from "./components/PlaceHolder";
 import DropTarget from "./components/DropTarget";
 import Header from "./components/Header";
+import HowTo from "./components/HowTo";
 
 // Styles.
 import "./styles/Game.css";
@@ -286,299 +287,305 @@ const App = () => {
 
   return (
     <div style={{
-      overflow: 'hidden', height: '100vh', width: '100vw', backgroundColor: backgroundColor
+      height: '100vh', backgroundColor: backgroundColor
     }}>
-      <Header time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} />
-
-      <div className="container">
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         <DndProvider backend={HTML5Backend}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: 'inline-block', flexDirection: 'column' }}>
 
-            {/*** COLUMN A RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colA?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
+            <Header time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} />
 
-                return card.faceUp ? (
-                  <div key={card.name} className={"colAFaceUp colA"} onDoubleClick={() => AutoStack('colA', colA, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
-                    <CardDraggable
-                      cardColor={cardColor}
-                      cardBorderColor={cardBorderColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colA}
-                      fromColName="colA"
+            <div className="container">
+              <div style={{ display: "flex", flexDirection: "row" }}>
+
+                {/*** COLUMN A RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colA?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
+
+                    return card.faceUp ? (
+                      <div key={card.name} className={"colAFaceUp colA"} onDoubleClick={() => AutoStack('colA', colA, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
+                        <CardDraggable
+                          cardColor={cardColor}
+                          cardBorderColor={cardBorderColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colA}
+                          fromColName="colA"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div className={"colA"}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} key={card.name} card={card} src={CardImage} /></div>
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colA}
+                      toColName="colA"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div className={"colA"}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} key={card.name} card={card} src={CardImage} /></div>
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colA}
-                  toColName="colA"
-                  addAMove={addAMove}
-                />
-              )}
-            </div>
+                  )}
+                </div>
 
-            <div className="space" />
+                <div className="space" />
 
-            {/*** COLUMN B RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colB?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
+                {/*** COLUMN B RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colB?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
 
-                return card.faceUp ? (
-                  <div key={card.name} className={"colBFaceUp colB"} onDoubleClick={() => AutoStack('colB', colB, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
-                    <CardDraggable
-                      cardBorderColor={cardBorderColor}
-                      cardColor={cardColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colB}
-                      fromColName="colB"
+                    return card.faceUp ? (
+                      <div key={card.name} className={"colBFaceUp colB"} onDoubleClick={() => AutoStack('colB', colB, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
+                        <CardDraggable
+                          cardBorderColor={cardBorderColor}
+                          cardColor={cardColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colB}
+                          fromColName="colB"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div key={card.name} className={"colB"}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colB}
+                      toColName="colB"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div key={card.name} className={"colB"}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colB}
-                  toColName="colB"
-                  addAMove={addAMove}
-                />
-              )}
-            </div>
+                  )}
+                </div>
 
-            <div className="space" />
+                <div className="space" />
 
-            {/*** COLUMN C RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colC?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
+                {/*** COLUMN C RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colC?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
 
-                return card.faceUp ? (
-                  <div key={card.name} className={"colCFaceUp colC"} onDoubleClick={() => AutoStack('colC', colC, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
-                    <CardDraggable
-                      cardBorderColor={cardBorderColor}
-                      cardColor={cardColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colC}
-                      fromColName="colC"
+                    return card.faceUp ? (
+                      <div key={card.name} className={"colCFaceUp colC"} onDoubleClick={() => AutoStack('colC', colC, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
+                        <CardDraggable
+                          cardBorderColor={cardBorderColor}
+                          cardColor={cardColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colC}
+                          fromColName="colC"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div key={card.name} className={"colC"}>
+                        <Card cardColor={cardColor} card={card} src={CardImage} cardBorderColor={cardBorderColor} />
+                      </div>
+
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colC}
+                      toColName="colC"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div key={card.name} className={"colC"}>
-                    <Card cardColor={cardColor} card={card} src={CardImage} cardBorderColor={cardBorderColor} />
-                  </div>
+                  )}
+                </div>
 
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colC}
-                  toColName="colC"
-                  addAMove={addAMove}
-                />
-              )}
-            </div>
+                <div className="space" />
 
-            <div className="space" />
+                {/*** COLUMN D RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colD?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
 
-            {/*** COLUMN D RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colD?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
-
-                return card.faceUp ? (
-                  <div key={card.name} className={"colDFaceUp colD"} onDoubleClick={() => AutoStack('colD', colD, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)} >
-                    <CardDraggable
-                      cardBorderColor={cardBorderColor}
-                      cardColor={cardColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colD}
-                      fromColName="colD"
+                    return card.faceUp ? (
+                      <div key={card.name} className={"colDFaceUp colD"} onDoubleClick={() => AutoStack('colD', colD, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)} >
+                        <CardDraggable
+                          cardBorderColor={cardBorderColor}
+                          cardColor={cardColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colD}
+                          fromColName="colD"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div key={card.name} className={"colD"}>
+                        <Card cardColor={cardColor} card={card} cardBorderColor={cardBorderColor} src={CardImage} />
+                      </div>
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colD}
+                      toColName="colD"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div key={card.name} className={"colD"}>
-                    <Card cardColor={cardColor} card={card} cardBorderColor={cardBorderColor} src={CardImage} />
-                  </div>
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colD}
-                  toColName="colD"
-                  addAMove={addAMove}
-                />
-              )}
-            </div>
+                  )}
+                </div>
 
-            <div className="space" />
+                <div className="space" />
 
-            {/*** COLUMN E RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colE?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
+                {/*** COLUMN E RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colE?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
 
-                return card.faceUp ? (
-                  <div key={card.name} className={'colEFaceUp colE'} onDoubleClick={() => AutoStack('colE', colE, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
-                    <CardDraggable
-                      cardBorderColor={cardBorderColor}
-                      cardColor={cardColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colE}
-                      fromColName="colE"
+                    return card.faceUp ? (
+                      <div key={card.name} className={'colEFaceUp colE'} onDoubleClick={() => AutoStack('colE', colE, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
+                        <CardDraggable
+                          cardBorderColor={cardBorderColor}
+                          cardColor={cardColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colE}
+                          fromColName="colE"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div key={card.name} className={'colE'}>
+                        <Card cardColor={cardColor} card={card} cardBorderColor={cardBorderColor} src={CardImage} />
+                      </div>
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colE}
+                      toColName="colE"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div key={card.name} className={'colE'}>
-                    <Card cardColor={cardColor} card={card} cardBorderColor={cardBorderColor} src={CardImage} />
-                  </div>
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colE}
-                  toColName="colE"
-                  addAMove={addAMove}
-                />
-              )}
-            </div>
+                  )}
+                </div>
 
-            <div className="space" />
+                <div className="space" />
 
-            {/*** COLUMN F RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colF?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
+                {/*** COLUMN F RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colF?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
 
-                return card.faceUp ? (
-                  <div key={card.name} className={"colFFaceUp colF"} onDoubleClick={() => AutoStack('colF', colF, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
-                    <CardDraggable
-                      cardBorderColor={cardBorderColor}
-                      cardColor={cardColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colF}
-                      fromColName="colF"
+                    return card.faceUp ? (
+                      <div key={card.name} className={"colFFaceUp colF"} onDoubleClick={() => AutoStack('colF', colF, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
+                        <CardDraggable
+                          cardBorderColor={cardBorderColor}
+                          cardColor={cardColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colF}
+                          fromColName="colF"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div className={'colF'} key={card.name} ><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colF}
+                      toColName="colF"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div className={'colF'} key={card.name} ><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colF}
-                  toColName="colF"
-                  addAMove={addAMove}
-                />
-              )}
-            </div>
+                  )}
+                </div>
 
-            <div className="space" />
+                <div className="space" />
 
-            {/*** COLUMN G RENDERING ***/}
-            <div>
-              <PlaceHolder src={GetCards("CardBlank")} />
-              {colG?.map((card, index) => {
-                let CardImage;
-                if (card.faceUp) CardImage = GetCards(card.name);
-                else CardImage = GetCards("CardReverse");
+                {/*** COLUMN G RENDERING ***/}
+                <div>
+                  <PlaceHolder src={GetCards("CardBlank")} />
+                  {colG?.map((card, index) => {
+                    let CardImage;
+                    if (card.faceUp) CardImage = GetCards(card.name);
+                    else CardImage = GetCards("CardReverse");
 
-                return card.faceUp ? (
-                  <div key={card.name} className={'colGFaceUp colG'} onDoubleClick={() => AutoStack('colG', colG, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
-                    <CardDraggable
-                      cardBorderColor={cardBorderColor}
-                      cardColor={cardColor}
-                      draggable
-                      key={card.name}
-                      card={card}
-                      src={CardImage}
-                      fromColData={colG}
-                      fromColName="colG"
+                    return card.faceUp ? (
+                      <div key={card.name} className={'colGFaceUp colG'} onDoubleClick={() => AutoStack('colG', colG, card, updateColInTableau, addAMove, foun1, foun2, foun3, foun4, colA, colB, colC, colD, colE, colF, colG, stockpile, talonPile)}>
+                        <CardDraggable
+                          cardBorderColor={cardBorderColor}
+                          cardColor={cardColor}
+                          draggable
+                          key={card.name}
+                          card={card}
+                          src={CardImage}
+                          fromColData={colG}
+                          fromColName="colG"
+                          changeIsDragging={changeIsDragging}
+                        />
+                      </div>
+                    ) : (
+                      <div className={'colG'} key={card.name}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
+                    );
+                  })}
+                  {isDragging && (
+                    <DropTarget
+                      id="colG"
                       changeIsDragging={changeIsDragging}
+                      updateColInTableau={updateColInTableau}
+                      toColData={colG}
+                      toColName="colG"
+                      addAMove={addAMove}
                     />
-                  </div>
-                ) : (
-                  <div className={'colG'} key={card.name}><Card cardColor={cardColor} cardBorderColor={cardBorderColor} card={card} src={CardImage} /></div>
-                );
-              })}
-              {isDragging && (
-                <DropTarget
-                  id="colG"
-                  changeIsDragging={changeIsDragging}
-                  updateColInTableau={updateColInTableau}
-                  toColData={colG}
-                  toColName="colG"
-                  addAMove={addAMove}
-                />
-              )}
+                  )}
+                </div>
+
+                <div className="space" />
+
+              </div>
             </div>
-
-            <div className="space" />
-
-
+          </div>
+          <div>
             {/*** FOUNDATIONS RENDERING ***/}
-            <div style={{ flex: 1, flexDirection: 'column' }}>
-              <div style={{ padding: '20px', borderWidth: '2px', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', marginTop: '-150px', borderColor: textColor }}>
+            <div style={{ flex: 1, flexDirection: 'column', marginTop: '10px' }}>
+              <div style={{ padding: '20px', borderWidth: '2px', borderStyle: 'solid', borderRadius: '4px', overflow: 'hidden', display: 'inline-block', alignItems: 'flex-start', borderColor: textColor }}>
 
                 <div style={{ marginBottom: 20 }}>
                   <span style={{ color: textColor }}>FOUNDATIONS</span>
@@ -845,8 +852,11 @@ const App = () => {
               </div>
             </div>
           </div>
+          <div>
+            <HowTo />
+          </div>
         </DndProvider>
-      </div >
+      </div>
     </div >
   );
 };
