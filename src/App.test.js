@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import App from './pages/Game';
 
 
 test('render the title of an application', () => {
