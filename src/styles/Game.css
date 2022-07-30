@@ -1,5 +1,5 @@
 .container {
-  padding: 30px;
+  padding-left: 30px;
   padding-top: 120px;
 }
 
@@ -97,5 +97,7 @@
   border-style: solid;
   border-color: #000;
   opacity: 0.5;
+
+  
   border-width: 2px;
 }
