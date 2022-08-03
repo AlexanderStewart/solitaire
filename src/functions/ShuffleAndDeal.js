@@ -2,6 +2,9 @@ const shuffleAndDeal = (updateColInTableau, deck, changeState) => {
   // // updateColINTableau, deck, changeState 
   console.log('shuffleAndDeal');
 
+  changeState('lost', false);
+  changeState('won', false);
+
   // Functions
   // I got this function from Stack Overflow. Imagine I had these skills...
   function randomizeArray(array) {

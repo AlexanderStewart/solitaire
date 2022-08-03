@@ -22,12 +22,16 @@ const Header = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggle]);
 
+  useEffect(() => {
+    props.startSetCurrentOption(currentOption);
+  }, [currentOption]);
+
   const options = [
     'normal rules', 'vegas rules'
   ];
 
   return (
-    <div style={{ display: 'inline-block', borderRadius: '4px', flexShrink: 0, padding: '20px', margin: '10px', marginLeft: '30px', flexDirection: 'column', borderStyle: 'solid', borderWidth: '2px', borderColor: textColor }}>
+    <div style={{ display: 'inline-block', borderRadius: '4px', flexShrink: 0, padding: '20px', margin: '10px', marginLeft: '10px', flexDirection: 'column', borderStyle: 'solid', borderWidth: '2px', borderColor: textColor }}>
 
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
@@ -38,7 +42,7 @@ const Header = (props) => {
           <span style={{ fontSize: '18px', color: textColor }}>SCORE: {score} POINTS</span>
         </div>
 
-        <Dropdown options={options} onChange={(e) => setCurrentOption(e)} value={currentOption} placeholder="Select an option" />
+        <Dropdown options={options} onChange={(e) => setCurrentOption(e.value)} value={currentOption} placeholder="Select an option" />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '10px' }}>
