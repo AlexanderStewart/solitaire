@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -116,9 +116,14 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const [clockRunning, setClockRunning] = useState(false);
   const [time, setTime] = useState(0);
-  const [myInterval, setMyInterval] = useState(null);
 
   const [won, setWon] = useState(false);
+  const [lost, setLost] = useState(false);
+
+  const myInterval = useRef();
+
+
+  const [currentOption, setCurrentOption] = useState('normal rules');
 
   // *** Functions. ***
   const updateColInTableau = (colName, colData) => {
@@ -166,6 +171,7 @@ const Game = () => {
 
     if (fromName === 'talon' && toName === 'stockpile') {
       scoredPoints = scoredPoints - 100;
+      if (currentOption === 'vegas rules') setLost(true);
     }
 
     if (toName === 'colA' || toName === 'colB' || toName === 'colC' || toName === 'colD' || toName === 'colE' || toName === 'colF' || toName === 'colG') {
@@ -205,10 +211,9 @@ const Game = () => {
     if (variable === 'score') setScore(value);
     if (variable === 'shuffledAndDealt') setShuffledAndDealt(value);
     if (variable === 'time') setTime(value);
-    if (variable === 'clockRunning') {
-      setClockRunning(value);
-      if (value === false) clearInterval(myInterval);
-    }
+    if (variable === 'clockRunning') setClockRunning(value);
+    if (variable === 'won') setWon(value);
+    if (variable === 'lost') setLost(value);
   };
 
   const startShuffleAndDeal = () => {
@@ -227,6 +232,11 @@ const Game = () => {
     setScore(score + e);
   };
 
+  const startSetCurrentOption = (curOption) => {
+    ShuffleAndDeal(updateColInTableau, deck, changeState);
+    setCurrentOption(curOption);
+  };
+
   // *** UseEffect. ***
 
   // Shuffle deck only when the page refreshes
@@ -242,6 +252,7 @@ const Game = () => {
       setTextColor('#ccd9e5');
       setCardBorderColor('#1f2937');
       setFoundationBackgroundColor('#ccd9e5');
+      document.body.style = 'background: #4b5563;';
     }
     else {
       setBackgroundColor('#fffbeb');
@@ -249,19 +260,24 @@ const Game = () => {
       setTextColor('#000');
       setCardBorderColor('#000');
       setFoundationBackgroundColor('#fde68a');
+      document.body.style = 'background: #fffbeb;';
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDarkMode]);
 
   useEffect(() => {
     if (clockRunning) {
-      let interval = setInterval(() => {
+      myInterval.current = setInterval(() => {
         setTime((prevTime) => prevTime + 1);
       }, 1000);
-      setMyInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clockRunning]);
+
+  useEffect(() => {
+    if (lost || won) clearInterval(myInterval.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lost, won]);
 
   useEffect(() => {
     if (time % 10 === 0 && time !== 0) setScore(score - 2);
@@ -278,27 +294,57 @@ const Game = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [foun1, foun2, foun3, foun4]);
 
+  useEffect(() => {
+    console.log(currentOption);
+  }, [currentOption]);
+
   if (!shuffledAndDealt) {
     return null;
   }
 
+  if (lost) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+        <span style={{ fontWeight: 'bolder', fontSize: '40px' }}>Looks like you lost this round... You scored {score} points</span>
+        <div style={{ marginTop: '8px' }} />
+        <div style={{
+          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        }}
+          onClick={() => startShuffleAndDeal()}
+        >
+          <span style={{ paddingRight: '4px' }}>RESTART</span>
+          <Restart width={20} height={20} />
+        </div>
+      </div>
+    );
+  }
+
   if (won) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
-        <span style={{ fontWeight: 'bolder', fontSize: '40px' }}>You won! Your score is {score}</span>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+        <span style={{ fontWeight: 'bolder', fontSize: '40px' }}>You won! You scored {score} points</span>
+        <div style={{ marginTop: '8px' }} />
+        <div style={{
+          cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+        }}
+          onClick={() => startShuffleAndDeal()}
+        >
+          <span style={{ paddingRight: '4px' }}>RESTART</span>
+          <Restart width={20} height={20} />
+        </div>
       </div>
     );
   }
 
   return (
     <div style={{
-      height: '100vh', backgroundColor: backgroundColor
+      backgroundColor: backgroundColor
     }}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <DndProvider backend={HTML5Backend}>
           <div style={{ display: 'inline-block', flexDirection: 'column' }}>
 
-            <Header time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} />
+            <Header startSetCurrentOption={startSetCurrentOption} time={time} textColor={textColor} startShuffleAndDeal={startShuffleAndDeal} foundationBackgroundColor={foundationBackgroundColor} startBackAMove={startBackAMove} score={score} toggleDarkMode={toggleDarkMode} />
 
             <div className="container">
               <div style={{ display: "flex", flexDirection: "row" }}>
@@ -858,7 +904,7 @@ const Game = () => {
             </div>
           </div>
           <div>
-            <HowTo />
+            <HowTo isDarkMode={isDarkMode} />
           </div>
         </DndProvider>
       </div>
