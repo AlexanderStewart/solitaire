@@ -4,7 +4,7 @@
 
 ## How this project was made
 
-This project was made with React, JavaScript, and CSS. It was created with the terminal command create-react-app, which makes it a single page app. 
+This project was made with React, JavaScript, and CSS. It was created with the terminal command create-react-app, which means its a single page app. 
 
 ## How this project works
 
@@ -18,7 +18,7 @@ The logic that is fired when a card is auto-stacked or dropped successfully in a
 
 There is a useEffect that is fired every time one of the foundation pile state arrays is updated. It checks, at the current state of the game, if all four foundation piles are of length 13, meaning the game has been won. If they all are of length 13, it changes the ‘won’ state variable from false to true, and then the win screen is displayed.
 
-There is much more to the project, but hopefully, this gave you a feel for how everything is working under the hood. 
+There is much more to the project, but hopefully this gave you a feel for how everything is working under the hood. 
  
 ## Packages used
 
