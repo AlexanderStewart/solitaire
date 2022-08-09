@@ -1,4 +1,4 @@
-# Solitaire by group six
+# Solitaire by Group Six
 
 [https://groupsixsolitaire.netlify.app/](https://groupsixsolitaire.netlify.app/)
 
