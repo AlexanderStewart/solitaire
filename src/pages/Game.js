@@ -154,7 +154,7 @@ const Game = () => {
       tempStockpile[i].faceUp = false;
     }
 
-    if (tempStockpile.length - 1 > 0) {
+    if (tempStockpile.length - 1 >= 0) {
       tempStockpile[tempStockpile.length - 1].faceUp = true;
     }
 
