@@ -8,7 +8,7 @@ aksdfjaklsdf asdfklasdklf;jad asdkjlfasdjk f;asdf asf
 
 ## Packages used
 
-The following packages were used (not including the default React packages):
+The following packages were used (this list does not inlcude the packages that are default to React):
 
 - @formspree/react
 - react-dnd
