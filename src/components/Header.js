@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Switch from "react-switch";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import { Link } from "react-router-dom";
 
 import { ReactComponent as Restart } from './../assets/icons/restart.svg';
 import { ReactComponent as BackArrow } from './../assets/icons/backArrow.svg';
@@ -24,6 +25,7 @@ const Header = (props) => {
 
   useEffect(() => {
     props.startSetCurrentOption(currentOption);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOption]);
 
   const options = [
@@ -70,6 +72,16 @@ const Header = (props) => {
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Switch onChange={(e) => setToggle(e)} checked={toggle} uncheckedIcon={false} checkedIcon={false} />
+        </div>
+
+        <div style={{ paddingLeft: '16px' }} />
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Link to={'/contact'}>
+            <div style={{ color: textColor, textDecoration: 'underline' }}>
+              Submit Feedback
+            </div>
+          </Link>
         </div>
       </div>
     </div>
