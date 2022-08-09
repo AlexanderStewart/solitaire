@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 const HowTo = (props) => {
 
@@ -30,6 +31,11 @@ const HowTo = (props) => {
           • Maybe use...
           <br />
           • Bullet points
+          <br />
+          <br />
+          <Link to={{ pathname: "https://github.com/AlexanderStewart/solitaire" }} target="_blank">
+            GitHub repository
+          </Link>
         </span>
       </div>
     </div>
