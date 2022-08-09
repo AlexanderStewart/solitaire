@@ -29,3 +29,11 @@ The following packages were used (this list does not include the packages that a
 - react-dnd-html5-backend
 - react-dropdown
 - react-switch
+
+## Contributors
+
+- Hamza Belmokhtar - belm0017@algonquinlive.com
+- Kaitlyn Gatineau - gati0010@algonquinlive.com
+- Sami Haddad - hadd0117@algonquinlive.com
+- Alexander Stewart - stew0554@algonquinlive.com
+- Kevin Wangai - wang0459@algonquinlive.com
