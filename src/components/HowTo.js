@@ -34,7 +34,7 @@ const HowTo = (props) => {
           <br />
           <br />
           <Link to={{ pathname: "https://github.com/AlexanderStewart/solitaire" }} target="_blank">
-            GitHub repository
+            <span style={{ color: textColor, textDecoration: 'underline' }}> GitHub repository</span>
           </Link>
         </span>
       </div>
