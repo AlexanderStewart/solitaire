@@ -122,7 +122,9 @@ const shuffleAndDeal = (updateColInTableau, deck, changeState) => {
   updateColInTableau('foun4', []);
   changeState('moves', []);
   changeState('score', 0);
+  changeState('freezeScore', false);
   changeState('clockRunning', false);
+  changeState('clearInterval', false);
   changeState('time', 0);
   changeState('shuffledAndDealt', true);
 };

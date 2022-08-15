@@ -77,10 +77,8 @@ const Header = (props) => {
         <div style={{ paddingLeft: '16px' }} />
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Link to={'/contact'}>
-            <div style={{ color: textColor, textDecoration: 'underline' }}>
-              Submit Feedback
-            </div>
+          <Link to={'/rules'}>
+            <span style={{ color: textColor, textDecoration: 'underline' }}> Game Rules</span>
           </Link>
         </div>
       </div>

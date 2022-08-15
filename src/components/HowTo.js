@@ -25,17 +25,17 @@ const HowTo = (props) => {
         <span style={{ color: textColor }}><strong>ABOUT:</strong></span>
         <div style={{ marginBottom: 20 }} />
         <span style={{ color: textColor }}>
-        Group Six Solitaire is an <b>open-source solitaire game </b> created by Group Six of the 2022 Spring/Summer Software Development Project at Algonquin College. 
-        <br /><br />
-The game is currently in <b>beta testing mode</b> — a player may experience anomolies at any point of the game. <b>Please report bugs and/or submit general feedback</b> using the "submit feedback" below. 
-<br /><br />
-Thank you for playing Group Six Solitaire and please <b>check us out on GitHub</b> for more information regarding the source code of the project. 
+          Group Six Solitaire is an <b>open-source solitaire game </b> created by Group Six of the 2022 Spring/Summer Software Development Project at Algonquin College.
           <br /><br />
-          <Link to={{ pathname: "/contact" }} target="_blank">
+          The game is currently in <b>beta testing mode</b> — a player may experience anomolies at any point of the game. <b>Please report bugs and/or submit general feedback</b> using the "submit feedback" below.
+          <br /><br />
+          Thank you for playing Group Six Solitaire and please <b>check us out on GitHub</b> for more information regarding the source code of the project.
+          <br /><br />
+          <Link to={'/contact'}>
             <span style={{ color: textColor, textDecoration: 'underline' }}> Report a Bug/Submit Feedback</span>
           </Link>
           <br />
-          <Link to={{ pathname: "/rules" }} target="_blank">
+          <Link to={'/rules'}>
             <span style={{ color: textColor, textDecoration: 'underline' }}> Game Rules</span>
           </Link>
           <br />
