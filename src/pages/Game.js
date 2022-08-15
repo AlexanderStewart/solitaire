@@ -22,6 +22,7 @@ import BackAMove from "../functions/BackAMove";
 
 // Assets.
 import { ReactComponent as Restart } from '../assets/icons/restart.svg';
+import { ReactComponent as Exclamation } from '../assets/icons/exclamation.svg';
 
 const Game = () => {
   // *** State. ***
@@ -121,6 +122,7 @@ const Game = () => {
   const [lost, setLost] = useState(false);
 
   const myInterval = useRef();
+  const freezeScore = useRef(false);
 
 
   const [currentOption, setCurrentOption] = useState('normal rules');
@@ -170,8 +172,8 @@ const Game = () => {
     let scoredPoints = 0;
 
     if (fromName === 'talon' && toName === 'stockpile') {
-      scoredPoints = scoredPoints - 100;
       if (currentOption === 'vegas rules') setLost(true);
+      return;
     }
 
     if (toName === 'colA' || toName === 'colB' || toName === 'colC' || toName === 'colD' || toName === 'colE' || toName === 'colF' || toName === 'colG') {
@@ -204,7 +206,6 @@ const Game = () => {
     setMoves(tempMoves);
   };
 
-
   const changeState = (variable, value) => {
     if (variable === 'deck') setDeck(value);
     if (variable === 'moves') setMoves(value);
@@ -214,6 +215,8 @@ const Game = () => {
     if (variable === 'clockRunning') setClockRunning(value);
     if (variable === 'won') setWon(value);
     if (variable === 'lost') setLost(value);
+    if (variable === 'freezeScore') freezeScore.current = value;
+    if (variable === 'clearInterval') clearInterval(myInterval.current);
   };
 
   const startShuffleAndDeal = () => {
@@ -268,6 +271,7 @@ const Game = () => {
   useEffect(() => {
     if (clockRunning) {
       myInterval.current = setInterval(() => {
+        if (freezeScore.current === true) return;
         setTime((prevTime) => prevTime + 1);
       }, 1000);
     }
@@ -275,7 +279,14 @@ const Game = () => {
   }, [clockRunning]);
 
   useEffect(() => {
-    if (lost || won) clearInterval(myInterval.current);
+    if (lost) {
+      clearInterval(myInterval.current);
+      freezeScore.current = true;
+    }
+    else if (won) {
+      clearInterval(myInterval.current);
+      freezeScore.current = true;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lost, won]);
 
@@ -305,7 +316,7 @@ const Game = () => {
   if (lost) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
-        <span style={{ fontWeight: 'bolder', fontSize: '40px' }}>Looks like you lost this round... You scored {score} points</span>
+        <span style={{ fontWeight: 'bolder', fontSize: '40px' }}>You scored {score} points</span>
         <div style={{ marginTop: '8px' }} />
         <div style={{
           cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', borderColor: cardBorderColor, backgroundColor: foundationBackgroundColor, display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
@@ -853,14 +864,27 @@ const Game = () => {
                 <div>
 
                   {/* only if stockpile is empty do we display the reStock button */}
-                  {stockpile.length === 0 && <div className="reStock" style={{
-                    cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderWidth: '2px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
-                  }}
-                    onClick={() => reStock()}
-                  >
-                    <span style={{ paddingRight: '4px' }}>RE-STOCK</span>
-                    <Restart width={20} height={20} />
-                  </div>}
+                  {currentOption === 'normal rules' ?
+                    <>
+                      {stockpile.length === 0 && <div className="reStock" style={{
+                        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderWidth: '2px', backgroundColor: '#bbf7d0', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
+                      }}
+                        onClick={() => reStock()}
+                      >
+                        <span style={{ paddingRight: '4px' }}>RE-STOCK</span>
+                        <Restart width={20} height={20} />
+                      </div>}
+                    </> :
+                    <>
+                      {stockpile.length === 0 && <div className="reStock" style={{
+                        cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderWidth: '2px', backgroundColor: '#fecaca', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px'
+                      }}
+                        onClick={() => reStock()}
+                      >
+                        <span style={{ paddingRight: '4px' }}>FINISH</span>
+                        <Exclamation width={20} height={20} />
+                      </div>}
+                    </>}
                   <div style={{ marginBottom: 20 }}>
                     <span style={{ color: textColor }}>TALON PILE</span>
                   </div>
