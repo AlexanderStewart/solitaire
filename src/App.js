@@ -8,6 +8,7 @@ import {
 // Pages.
 import Game from './pages/Game';
 import Contact from './pages/Contact';
+import Rules from "./pages/Rules";
 
 const App = () => {
   return (
@@ -18,6 +19,9 @@ const App = () => {
         </Route>
         <Route exact path="/contact">
           <Contact />
+        </Route>
+        <Route exact path="/rules">
+          <Rules />
         </Route>
       </Switch>
     </Router>
