@@ -101,3 +101,32 @@
   
   border-width: 2px;
 }
+
+#rules-content, #rules-text {
+  position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+background-color: #fff;
+  width: 85%;
+  height: 85%;
+
+}
+#rules-text {
+  width: 90%;
+  height: 90%;
+  font-size: 18px;
+}
+#positive-pts{
+  width: 50%;
+  float: left;
+
+}
+#rules-title, #back-link {
+  font-size: 25px;
+  color: #000;
+  margin: auto;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 22px;
+}

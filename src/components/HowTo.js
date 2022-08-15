@@ -22,16 +22,14 @@ const HowTo = (props) => {
   return (
     <div style={{ borderRadius: '4px', padding: '20px', marginLeft: '20px', marginRight: '10px', marginTop: '10px', borderStyle: 'solid', borderWidth: '2px', borderColor: borderColor, width: '300px' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <span style={{ color: textColor }}>HOW TO PLAY:</span>
+        <span style={{ color: textColor }}>INFO:</span>
         <div style={{ marginBottom: 20 }} />
         <span style={{ color: textColor }}>
-          Could someone write something to put here explaining how to play the game?
           <br />
           <br />
-          • Maybe use...
-          <br />
-          • Bullet points
-          <br />
+          <Link to={{ pathname: "/rules" }} target="_blank">
+            <span style={{ color: textColor, textDecoration: 'underline' }}> Game Rules</span>
+          </Link>
           <br />
           <Link to={{ pathname: "https://github.com/AlexanderStewart/solitaire" }} target="_blank">
             <span style={{ color: textColor, textDecoration: 'underline' }}> GitHub repository</span>
