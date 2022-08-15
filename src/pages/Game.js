@@ -20,6 +20,9 @@ import ShuffleAndDeal from "../functions/ShuffleAndDeal";
 import AutoStack from "../functions/AutoStack";
 import BackAMove from "../functions/BackAMove";
 
+// Hooks.
+import useInterval from "../hooks/useInterval";
+
 // Assets.
 import { ReactComponent as Restart } from '../assets/icons/restart.svg';
 import { ReactComponent as Exclamation } from '../assets/icons/exclamation.svg';
@@ -269,16 +272,6 @@ const Game = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
-    if (clockRunning) {
-      myInterval.current = setInterval(() => {
-        if (freezeScore.current === true) return;
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clockRunning]);
-
-  useEffect(() => {
     if (lost) {
       clearInterval(myInterval.current);
       freezeScore.current = true;
@@ -308,6 +301,11 @@ const Game = () => {
   useEffect(() => {
     console.log(currentOption);
   }, [currentOption]);
+
+  useInterval(() => {
+    if (freezeScore.current === true) return;
+    setTime((prevTime) => prevTime + 1);
+  }, clockRunning ? 1000 : null);
 
   if (!shuffledAndDealt) {
     return null;
