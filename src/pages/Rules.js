@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Game.css';
 import { Link } from "react-router-dom";
+import { ReactComponent as BackArrow } from './../assets/icons/backArrow.svg';
 
 function Rules() {
   return (
@@ -40,10 +41,22 @@ function Rules() {
           <strong>VEGAS RULES:</strong><br />
           Vegas rules are the same as standard, except the <b>stockpile can only be played through once</b>. Once the stockpile is empty, the game ends. The goal is to get the highest score possible before the stockpile is empty.
           <br />
+          <br />
+          <br />
+          <br />
           <div id="back-link">
-            <Link to={'/'}>
-              <span style={{ textDecoration: 'underline', color: 'black' }}> Back to Game</span>
-            </Link>
+            <div>
+              <Link to={'/'}>
+                <div style={{
+                  cursor: 'pointer', padding: '8px 16px', borderRadius: '6px', borderStyle: 'solid', borderWidth: '2px', color: '#000', borderColor: '#000', backgroundColor: '#d4d4d8', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', fontSize: '14px'
+                }}
+                >
+                  <BackArrow width={20} height={20} />
+                  <div style={{ marginLeft: '6px' }} />
+                  <span>BACK</span>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
 
